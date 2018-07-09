@@ -55,7 +55,7 @@ PalletTownSignText:
 	done
 
 RedsHouseSignText:
-	text "RED'S HOUSE"
+	text "CHASE'S HOUSE"
 	done
 
 OaksLabSignText:
@@ -64,18 +64,20 @@ OaksLabSignText:
 	done
 
 BluesHouseSignText:
-	text "BLUE'S HOUSE"
+	text "TRACE'S HOUSE"
 	done
 
 PalletTown_MapEvents:
 	db 0, 0 ; filler
 
 	db 3 ; warp events
-	warp_event  5,  5, REDS_HOUSE_1F, 1
+	warp_event  5,  5, PLAYERS_HOUSE_1F, 1
 	warp_event 13,  5, BLUES_HOUSE, 1
 	warp_event 12, 11, OAKS_LAB, 1
 
-	db 0 ; coord events
+	db 2 ; coord events
+	coord_event 8, 0, SCENE_DEFAULT, PalletTown_OakStopsYou1
+	coord_event 9, 0, SCENE_DEFAULT, PalletTown_OakStopsYou2
 
 	db 4 ; bg events
 	bg_event  7,  9, BGEVENT_READ, PalletTownSign
