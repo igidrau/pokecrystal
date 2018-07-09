@@ -194,9 +194,9 @@ Text_GearIsImpressive:
 	line "it for you?"
 	done
 
-Text_WaitPlayer:
-	text "Wait, <PLAY_G>!"
-	done
+;Text_WaitPlayer:
+;	text "Wait, <PLAY_G>!"
+;	done
 
 Text_WhatDoYouThinkYoureDoing:
 	text "What do you think"

@@ -3,14 +3,38 @@
 	const PALLETTOWN_FISHER
 
 PalletTown_MapScripts:
-	db 0 ; scene scripts
+	db 2 ; scene scripts
+	scene_script .DummyScene0 ; SCENE_DEFAULT
+	scene_script .DummyScene1 ; SCENE_FINISHED
 
 	db 1 ; callbacks
 	callback MAPCALLBACK_NEWMAP, .FlyPoint
 
+.DummyScene0:
+	end
+
+.DummyScene1:
+	end
+
 .FlyPoint:
 	setflag ENGINE_FLYPOINT_PALLET
 	return
+
+PalletTown_OakStopsYou1:
+	opentext
+	writetext Text_WaitPlayer
+	waitbutton
+	closetext
+	turnobject PLAYER, DOWN
+	end
+
+PalletTown_OakStopsYou2:
+	opentext
+	writetext Text_WaitPlayer
+	waitbutton
+	closetext
+	turnobject PLAYER, DOWN
+	end
 
 PalletTownTeacherScript:
 	jumptextfaceplayer PalletTownTeacherText
@@ -29,6 +53,10 @@ OaksLabSign:
 
 BluesHouseSign:
 	jumptext BluesHouseSignText
+
+Text_WaitPlayer:
+	text "Wait, <PLAY_G>!"
+	done
 
 PalletTownTeacherText:
 	text "I'm raising #-"
@@ -55,7 +83,7 @@ PalletTownSignText:
 	done
 
 RedsHouseSignText:
-	text "CHASE'S HOUSE"
+	text "<PLAY_G>'S HOUSE"
 	done
 
 OaksLabSignText:
@@ -78,6 +106,7 @@ PalletTown_MapEvents:
 	db 2 ; coord events
 	coord_event 8, 0, SCENE_DEFAULT, PalletTown_OakStopsYou1
 	coord_event 9, 0, SCENE_DEFAULT, PalletTown_OakStopsYou2
+
 
 	db 4 ; bg events
 	bg_event  7,  9, BGEVENT_READ, PalletTownSign
