@@ -9,9 +9,9 @@ RGBFIX := rgbfix
 RGBGFX := rgbgfx
 RGBLINK := rgblink
 
-roms := pokepika.gbc pokecrystal11.gbc
+roms := pokepika.gbc pokepika11.gbc
 
-crystal_obj := \
+pika_obj := \
 audio.o \
 home.o \
 main.o \
@@ -27,23 +27,23 @@ gfx/pics.o \
 gfx/sprites.o \
 lib/mobile/main.o
 
-crystal11_obj := $(crystal_obj:.o=11.o)
+pika11_obj := $(pika_obj:.o=11.o)
 
 
 ### Build targets
 
 .SUFFIXES:
-.PHONY: all crystal crystal11 clean compare tools
+.PHONY: all pika pika11 clean compare tools
 .SECONDEXPANSION:
 .PRECIOUS:
 .SECONDARY:
 
-all: crystal
-crystal: pokepika.gbc
-crystal11: pokecrystal11.gbc
+all: pika
+pika: pokepika.gbc
+pika11: pokepika11.gbc
 
 clean:
-	rm -f $(roms) $(crystal_obj) $(crystal11_obj) $(roms:.gbc=.map) $(roms:.gbc=.sym)
+	rm -f $(roms) $(pika_obj) $(pika11_obj) $(roms:.gbc=.map) $(roms:.gbc=.sym)
 	$(MAKE) clean -C tools/
 
 compare: $(roms)
@@ -53,8 +53,8 @@ tools:
 	$(MAKE) -C tools/
 
 
-$(crystal_obj):   RGBASMFLAGS = -D _CRYSTAL
-$(crystal11_obj): RGBASMFLAGS = -D _CRYSTAL -D _CRYSTAL11
+$(pika_obj):   RGBASMFLAGS = -D _PIKA
+$(pika11_obj): RGBASMFLAGS = -D _PIKA -D _PIKA11
 
 # The dep rules have to be explicit or else missing files won't be reported.
 # As a side effect, they're evaluated immediately instead of when the rule is invoked.
@@ -70,21 +70,21 @@ ifeq (,$(filter clean tools,$(MAKECMDGOALS)))
 
 $(info $(shell $(MAKE) -C tools))
 
-$(foreach obj, $(crystal11_obj), $(eval $(call DEP,$(obj),$(obj:11.o=.asm))))
-$(foreach obj, $(crystal_obj), $(eval $(call DEP,$(obj),$(obj:.o=.asm))))
+$(foreach obj, $(pika11_obj), $(eval $(call DEP,$(obj),$(obj:11.o=.asm))))
+$(foreach obj, $(pika_obj), $(eval $(call DEP,$(obj),$(obj:.o=.asm))))
 
 endif
 
 
-pokecrystal.gbc: $(crystal_obj) pokecrystal.link
-	$(RGBLINK) -n pokecrystal.sym -m pokecrystal.map -l pokecrystal.link -o $@ $(crystal_obj)
-	$(RGBFIX) -Cjv -i BYTE -k 01 -l 0x33 -m 0x10 -p 0 -r 3 -t PM_CRYSTAL $@
-	tools/sort_symfile.sh pokecrystal.sym
+pokepika.gbc: $(pika_obj) pokepika.link
+	$(RGBLINK) -n pokepika.sym -m pokepika.map -l pokepika.link -o $@ $(pika_obj)
+	$(RGBFIX) -Cjv -i BYTE -k 01 -l 0x33 -m 0x10 -p 0 -r 3 -t PM_PIKA $@
+	tools/sort_symfile.sh pokepika.sym
 
-pokecrystal11.gbc: $(crystal11_obj) pokecrystal.link
-	$(RGBLINK) -n pokecrystal11.sym -m pokecrystal11.map -l pokecrystal.link -o $@ $(crystal11_obj)
-	$(RGBFIX) -Cjv -i BYTE -k 01 -l 0x33 -m 0x10 -n 1 -p 0 -r 3 -t PM_CRYSTAL $@
-	tools/sort_symfile.sh pokecrystal11.sym
+pokepika11.gbc: $(pika11_obj) pokepika.link
+	$(RGBLINK) -n pokepika11.sym -m pokepika11.map -l pokepika.link -o $@ $(pika11_obj)
+	$(RGBFIX) -Cjv -i BYTE -k 01 -l 0x33 -m 0x10 -n 1 -p 0 -r 3 -t PM_PIKA $@
+	tools/sort_symfile.sh pokepika11.sym
 
 
 # For files that the compressor can't match, there will be a .lz file suffixed with the md5 hash of the correct uncompressed file.
@@ -165,7 +165,7 @@ gfx/pokegear/pokegear_sprites.2bpp: tools/gfx += --trim-whitespace
 
 gfx/mystery_gift/mystery_gift.2bpp: tools/gfx += --trim-whitespace
 
-gfx/title/crystal.2bpp: tools/gfx += --interleave --png=$<
+gfx/title/pika.2bpp: tools/gfx += --interleave --png=$<
 gfx/title/old_fg.2bpp: tools/gfx += --interleave --png=$<
 gfx/title/logo.2bpp: rgbgfx += -x 4
 
