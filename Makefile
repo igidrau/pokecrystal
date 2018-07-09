@@ -9,7 +9,7 @@ RGBFIX := rgbfix
 RGBGFX := rgbgfx
 RGBLINK := rgblink
 
-roms := pokecrystal.gbc pokecrystal11.gbc
+roms := pokepika.gbc pokecrystal11.gbc
 
 crystal_obj := \
 audio.o \
@@ -39,7 +39,7 @@ crystal11_obj := $(crystal_obj:.o=11.o)
 .SECONDARY:
 
 all: crystal
-crystal: pokecrystal.gbc
+crystal: pokepika.gbc
 crystal11: pokecrystal11.gbc
 
 clean:
