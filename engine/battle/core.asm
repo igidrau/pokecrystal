@@ -8009,10 +8009,14 @@ StartBattle:
 ; This check prevents you from entering a battle without any Pokemon.
 ; Those using walk-through-walls to bypass getting a Pokemon experience
 ; the effects of this check.
+	ld a, [wBattleType]
+	cp BATTLETYPE_TUTORIAL
+	jr z, .battleBegins
 	ld a, [wPartyCount]
 	and a
 	ret z
 
+.battleBegins
 	ld a, [wTimeOfDayPal]
 	push af
 	call BattleIntro

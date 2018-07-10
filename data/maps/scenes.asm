@@ -25,7 +25,7 @@ MapScenes::
 	scene_var LANCES_ROOM,                                 wLancesRoomSceneID
 	scene_var HALL_OF_FAME,                                wHallOfFameSceneID
 	scene_var ROUTE_27,                                    wRoute27SceneID
-	scene_var PALLET_TOWN,                         		   wNewBarkTownSceneID
+	scene_var PALLET_TOWN,                         		   wPalletTownSceneID
 	scene_var ELMS_LAB,                                    wElmsLabSceneID
 	scene_var PLAYERS_HOUSE_1F,                            wPlayersHouse1FSceneID
 	scene_var ROUTE_29,                                    wRoute29SceneID

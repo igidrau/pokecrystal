@@ -2536,7 +2536,7 @@ wKarensRoomSceneID::                              db ; d982
 wLancesRoomSceneID::                              db ; d983
 wHallOfFameSceneID::                              db ; d984
 wRoute27SceneID::                                 db ; d985
-wNewBarkTownSceneID::                             db ; d986
+wPalletTownSceneID::                              db ; d986
 wElmsLabSceneID::                                 db ; d987
 wPlayersHouse1FSceneID::                          db ; d988
 wRoute29SceneID::                                 db ; d989

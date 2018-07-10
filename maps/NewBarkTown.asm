@@ -38,10 +38,6 @@ NewBarkTown_TeacherStopsYouScene1:
 	follow NEWBARKTOWN_TEACHER, PLAYER
 	applymovement NEWBARKTOWN_TEACHER, Movement_TeacherBringsYouBack1_NBT
 	stopfollow
-	opentext
-	writetext Text_ItsDangerousToGoAlone
-	waitbutton
-	closetext
 	special RestartMapMusic
 	end
 
@@ -62,10 +58,6 @@ NewBarkTown_TeacherStopsYouScene2:
 	follow NEWBARKTOWN_TEACHER, PLAYER
 	applymovement NEWBARKTOWN_TEACHER, Movement_TeacherBringsYouBack2_NBT
 	stopfollow
-	opentext
-	writetext Text_ItsDangerousToGoAlone
-	waitbutton
-	closetext
 	special RestartMapMusic
 	end
 
@@ -192,27 +184,6 @@ Text_GearIsImpressive:
 
 	para "Did your mom get"
 	line "it for you?"
-	done
-
-;Text_WaitPlayer:
-;	text "Wait, <PLAY_G>!"
-;	done
-
-Text_WhatDoYouThinkYoureDoing:
-	text "What do you think"
-	line "you're doing?"
-	done
-
-Text_ItsDangerousToGoAlone:
-	text "It's dangerous to"
-	line "go out without a"
-	cont "#MON!"
-
-	para "Wild #MON"
-	line "jump out of the"
-
-	para "grass on the way"
-	line "to the next town."
 	done
 
 Text_YourMonIsAdorable:

@@ -1,6 +1,7 @@
 	const_def 2 ; object constants
 	const PALLETTOWN_TEACHER
 	const PALLETTOWN_FISHER
+	const PALLETTOWN_OAK
 
 PalletTown_MapScripts:
 	db 2 ; scene scripts
@@ -23,18 +24,94 @@ PalletTown_MapScripts:
 PalletTown_OakStopsYou1:
 	opentext
 	writetext Text_WaitPlayer
+	moveobject PALLETTOWN_OAK, 8, 4
 	waitbutton
 	closetext
+	appear PALLETTOWN_OAK
 	turnobject PLAYER, DOWN
+	applymovement PALLETTOWN_OAK, Movement_OakRunsToYou
+	opentext
+	writetext Text_WhatDoYouThinkYoureDoing
+	waitbutton
+	closetext
+	loadwildmon PIKACHU, 5
+	catchtutorial BATTLETYPE_TUTORIAL
+	follow PALLETTOWN_OAK, PLAYER
+	applymovement PALLETTOWN_OAK, Movement_ToTheLab1
+	stopfollow
+	disappear PALLETTOWN_OAK
+	applymovement PLAYER, Movement_Up
 	end
 
 PalletTown_OakStopsYou2:
 	opentext
 	writetext Text_WaitPlayer
+	moveobject PALLETTOWN_OAK, 9, 4
 	waitbutton
 	closetext
+	appear PALLETTOWN_OAK
 	turnobject PLAYER, DOWN
+	applymovement PALLETTOWN_OAK, Movement_OakRunsToYou
+	opentext
+	writetext Text_WhatDoYouThinkYoureDoing
+	waitbutton
+	closetext
+	loadwildmon PIKACHU, 5
+	catchtutorial BATTLETYPE_TUTORIAL
+	follow PALLETTOWN_OAK, PLAYER
+	applymovement PALLETTOWN_OAK, Movement_ToTheLab2
+	stopfollow
+	disappear PALLETTOWN_OAK
+	applymovement PLAYER, Movement_Up
 	end
+
+Movement_OakRunsToYou:
+	step UP
+	step UP
+	step UP
+	step_end
+
+
+Movement_ToTheLab1:
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step RIGHT
+	step RIGHT
+	step RIGHT
+	step RIGHT
+	step UP
+	step_end
+
+Movement_ToTheLab2:
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step DOWN
+	step RIGHT
+	step RIGHT
+	step RIGHT
+	step UP
+	step_end
+
+Movement_Up:
+	step UP
+	step_end
 
 PalletTownTeacherScript:
 	jumptextfaceplayer PalletTownTeacherText
@@ -56,6 +133,20 @@ BluesHouseSign:
 
 Text_WaitPlayer:
 	text "Wait, <PLAY_G>!"
+	done
+
+Text_WhatDoYouThinkYoureDoing:
+	text "What do you think"
+	line "you're doing?"
+
+	para "It's dangerous to"
+	line "go out without a"
+	cont "#MON!"
+
+	para "Wild #MON"
+	line "jump out of the"
+	cont "grass on the way"
+	cont "to the next town."
 	done
 
 PalletTownTeacherText:
@@ -114,6 +205,7 @@ PalletTown_MapEvents:
 	bg_event 13, 13, BGEVENT_READ, OaksLabSign
 	bg_event 11,  5, BGEVENT_READ, BluesHouseSign
 
-	db 2 ; object events
+	db 3 ; object events
 	object_event  3,  8, SPRITE_TEACHER, SPRITEMOVEDATA_WANDER, 2, 2, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PalletTownTeacherScript, -1
 	object_event 12, 14, SPRITE_FISHER, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 2, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, PalletTownFisherScript, -1
+	object_event  -10,  -10, SPRITE_OAK, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, 0, -1
