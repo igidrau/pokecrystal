@@ -21,7 +21,13 @@ PalletTown_MapScripts:
 	setflag ENGINE_FLYPOINT_PALLET
 	return
 
+PalletTown_End:
+	end
+
 PalletTown_OakStopsYou1:
+	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
+	iftrue PalletTown_End
+	setevent EVENT_PIKACHU_CAPTURE
 	opentext
 	writetext Text_WaitPlayer
 	moveobject PALLETTOWN_OAK, 8, 4
@@ -34,6 +40,8 @@ PalletTown_OakStopsYou1:
 	writetext Text_WhatDoYouThinkYoureDoing
 	waitbutton
 	closetext
+	showemote EMOTE_SHOCK, PALLETTOWN_OAK, 15
+	turnobject PALLETTOWN_OAK, RIGHT
 	loadwildmon PIKACHU, 5
 	catchtutorial BATTLETYPE_TUTORIAL
 	follow PALLETTOWN_OAK, PLAYER
@@ -41,9 +49,13 @@ PalletTown_OakStopsYou1:
 	stopfollow
 	disappear PALLETTOWN_OAK
 	applymovement PLAYER, Movement_Up
+	warpfacing UP, OAKS_LAB, 5, 11
 	end
 
 PalletTown_OakStopsYou2:
+	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
+	iftrue PalletTown_End
+	setevent EVENT_PIKACHU_CAPTURE
 	opentext
 	writetext Text_WaitPlayer
 	moveobject PALLETTOWN_OAK, 9, 4
@@ -56,6 +68,8 @@ PalletTown_OakStopsYou2:
 	writetext Text_WhatDoYouThinkYoureDoing
 	waitbutton
 	closetext
+	showemote EMOTE_SHOCK, PALLETTOWN_OAK, 15
+	turnobject PALLETTOWN_OAK, LEFT
 	loadwildmon PIKACHU, 5
 	catchtutorial BATTLETYPE_TUTORIAL
 	follow PALLETTOWN_OAK, PLAYER
@@ -63,6 +77,7 @@ PalletTown_OakStopsYou2:
 	stopfollow
 	disappear PALLETTOWN_OAK
 	applymovement PLAYER, Movement_Up
+	warpfacing UP, OAKS_LAB, 5, 11
 	end
 
 Movement_OakRunsToYou:
@@ -194,9 +209,9 @@ PalletTown_MapEvents:
 	warp_event 13,  5, BLUES_HOUSE, 1
 	warp_event 12, 11, OAKS_LAB, 1
 
-	db 2 ; coord events
-	coord_event 8, 0, SCENE_DEFAULT, PalletTown_OakStopsYou1
-	coord_event 9, 0, SCENE_DEFAULT, PalletTown_OakStopsYou2
+	db 0 ; coord events
+	;coord_event 8, 0, SCENE_PALLETTOWN_OAK_STOP, PalletTown_OakStopsYou1
+	;coord_event 9, 0, SCENE_PALLETTOWN_OAK_STOP, PalletTown_OakStopsYou2
 
 
 	db 4 ; bg events
@@ -208,4 +223,4 @@ PalletTown_MapEvents:
 	db 3 ; object events
 	object_event  3,  8, SPRITE_TEACHER, SPRITEMOVEDATA_WANDER, 2, 2, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PalletTownTeacherScript, -1
 	object_event 12, 14, SPRITE_FISHER, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 2, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, PalletTownFisherScript, -1
-	object_event  -10,  -10, SPRITE_OAK, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, 0, -1
+	object_event  4,  2, SPRITE_OAK, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Oak, -1

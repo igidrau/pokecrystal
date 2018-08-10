@@ -5,11 +5,24 @@
 	const OAKSLAB_SCIENTIST3
 
 OaksLab_MapScripts:
-	db 0 ; scene scripts
+	db 2 ; scene scripts
+	scene_script .EnterOaksLab
+	scene_script .DummyScene
 
 	db 0 ; callbacks
 
+.EnterOaksLab:
+	priorityjump .EnterOaksLabScript
+	end
+
 .DummyScene:
+	end
+
+.EnterOaksLabScript:
+	opentext
+	writetext OaksLabPoster1Text
+	waitbutton
+	closetext
 	end
 
 Oak:

@@ -8,7 +8,7 @@
 	const ROUTE2_POKE_BALL4
 	const ROUTE2_FRUIT_TREE
 
-Route2_MapScripts:
+Route2Bottom_MapScripts:
 	db 0 ; scene scripts
 
 	db 0 ; callbacks
@@ -144,15 +144,12 @@ Route2DiglettsCaveSignText:
 	text "DIGLETT'S CAVE"
 	done
 
-Route2_MapEvents:
+Route2Bottom_MapEvents:
 	db 0, 0 ; filler
 
-	db 5 ; warp events
-	warp_event 15, 15, ROUTE_2_NUGGET_HOUSE, 1
+	db 1 ; warp events
 	warp_event 15, 31, ROUTE_2_GATE, 3
-	warp_event 16, 27, ROUTE_2_GATE, 1
-	warp_event 17, 27, ROUTE_2_GATE, 2
-	warp_event 12,  7, DIGLETTS_CAVE, 3
+
 
 	db 0 ; coord events
 
