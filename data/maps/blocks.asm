@@ -1043,11 +1043,10 @@ BetaBlank_Blocks:
 GoldenrodDeptStoreRoof_Blocks:
 	INCBIN "maps/GoldenrodDeptStoreRoof.blk"
 
+Route2_Blocks:
 Route2Bottom_Blocks:
-	INCBIN "maps/Route2Bottom.blk"
-
 Route2Top_Blocks:
-	INCBIN "maps/Route2Top.blk"
+	INCBIN "maps/Route2.blk"
 
 ViridianForest_Blocks:
 	INCBIN "maps/ViridianForest.blk"

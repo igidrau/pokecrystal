@@ -304,7 +304,7 @@ ENDM
 	map_const PEWTER_POKECENTER_1F,                         5,  4 ;  6
 	map_const PEWTER_POKECENTER_2F_BETA,                    8,  4 ;  7
 	map_const PEWTER_SNOOZE_SPEECH_HOUSE,                   4,  4 ;  8
-	map_const ROUTE_2_TOP,								   10, 17 ;  9
+	map_const ROUTE_2_TOP,								   10, 27 ;  9
 	map_const VIRIDIAN_FOREST,							   17, 24 ; 10
 
 	newgroup                                                      ; 15
@@ -432,7 +432,7 @@ ENDM
 
 	newgroup                                                      ; 23
 
-	map_const ROUTE_2_BOTTOM,                              10, 24 ;  1
+	map_const ROUTE_2_BOTTOM,                              10, 27 ;  1
 	map_const ROUTE_22,                                    20,  9 ;  2
 	map_const VIRIDIAN_CITY,                               20, 18 ;  3
 	map_const VIRIDIAN_GYM,                                 5,  9 ;  4

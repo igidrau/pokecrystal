@@ -61,20 +61,6 @@ TilesetParkAnim:
 	dw NULL,  StandingTileFrame8
 	dw NULL,  DoneTileAnimation
 
-TilesetForestAnim:
-	dw NULL,  ForestTreeLeftAnimation
-	dw NULL,  ForestTreeRightAnimation
-	dw NULL,  WaitTileAnimation
-	dw NULL,  WaitTileAnimation
-	dw NULL,  WaitTileAnimation
-	dw NULL,  ForestTreeLeftAnimation2
-	dw NULL,  ForestTreeRightAnimation2
-	dw NULL,  AnimateFlowerTile
-	dw vTiles2 tile $14, AnimateWaterTile
-	dw NULL,  TileAnimationPalette
-	dw NULL,  StandingTileFrame8
-	dw NULL,  DoneTileAnimation
-
 TilesetJohtoAnim:
 	dw vTiles2 tile $14, AnimateWaterTile
 	dw NULL,  WaitTileAnimation
@@ -268,6 +254,7 @@ TilesetHoOhWordRoomAnim:
 TilesetKabutoWordRoomAnim:
 TilesetOmanyteWordRoomAnim:
 TilesetAerodactylWordRoomAnim:
+TilesetForestAnim:
 	dw NULL,  WaitTileAnimation
 	dw NULL,  WaitTileAnimation
 	dw NULL,  WaitTileAnimation

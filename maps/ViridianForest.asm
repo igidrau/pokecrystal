@@ -8,7 +8,9 @@ ViridianForest_MapScripts:
 ViridianForest_MapEvents:
 	db 0, 0 ; filler
 
-	db 0 ; warp events
+	db 2 ; warp events
+	warp_event 15, 47, ROUTE_2_BOTTOM, 2
+	warp_event 1, 0, ROUTE_2_TOP, 5
 
 	db 0 ; coord events
 

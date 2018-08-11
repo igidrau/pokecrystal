@@ -5,29 +5,29 @@ KantoGrassWildMons:
 	map_id DIGLETTS_CAVE
 	db 4 percent, 2 percent, 8 percent ; encounter rates: morn/day/nite
 	; morn
-	db 3, DIGLETT
-	db 6, DIGLETT
-	db 12, DIGLETT
-	db 24, DIGLETT
-	db 24, DUGTRIO
-	db 24, DUGTRIO
-	db 24, DUGTRIO
+	db 18, DIGLETT
+	db 20, DIGLETT
+	db 16, DIGLETT
+	db 15, DIGLETT
+	db 22, DIGLETT
+	db 29, DUGTRIO
+	db 31, DUGTRIO
 	; day
-	db 2, DIGLETT
-	db 4, DIGLETT
-	db 8, DIGLETT
-	db 16, DIGLETT
-	db 16, DUGTRIO
-	db 16, DUGTRIO
-	db 16, DUGTRIO
+	db 12, DIGLETT
+	db 13, DIGLETT
+	db 11, DIGLETT
+	db 10, DIGLETT
+	db 15, DIGLETT
+	db 19, DUGTRIO
+	db 21, DUGTRIO
 	; nite
-	db 4, DIGLETT
-	db 8, DIGLETT
-	db 16, DIGLETT
-	db 32, DIGLETT
-	db 32, DUGTRIO
-	db 32, DUGTRIO
-	db 32, DUGTRIO
+	db 24, DIGLETT
+	db 26, DIGLETT
+	db 22, DIGLETT
+	db 20, DIGLETT
+	db 30, DIGLETT
+	db 38, DUGTRIO
+	db 42, DUGTRIO
 
 	map_id MOUNT_MOON
 	db 6 percent, 6 percent, 6 percent ; encounter rates: morn/day/nite
@@ -59,29 +59,29 @@ KantoGrassWildMons:
 	map_id ROCK_TUNNEL_1F
 	db 6 percent, 6 percent, 6 percent ; encounter rates: morn/day/nite
 	; morn
-	db 10, CUBONE
-	db 11, GEODUDE
-	db 12, MACHOP
-	db 12, ZUBAT
-	db 15, MACHOKE
-	db 12, MAROWAK
-	db 12, MAROWAK
+	db 16, ZUBAT
+	db 17, GEODUDE
+	db 15, MACHOP
+	db 18, ZUBAT
+	db 17, MACHOP
+	db 13, ONIX
+	db 15, ONIX
 	; day
-	db 10, CUBONE
 	db 11, GEODUDE
-	db 12, MACHOP
-	db 12, ZUBAT
-	db 15, MACHOKE
-	db 12, MAROWAK
-	db 12, MAROWAK
+	db 11, MACHOP
+	db 13, GEODUDE
+	db 11, ZUBAT
+	db 15, CUBONE
+	db 9, GEODUDE
+	db 15, GEODUDE
 	; nite
-	db 12, ZUBAT
-	db 11, GEODUDE
-	db 12, GEODUDE
-	db 17, HAUNTER
-	db 15, ZUBAT
-	db 15, ZUBAT
-	db 15, ZUBAT
+	db 22, ZUBAT
+	db 24, GEODUDE
+	db 20, ZUBAT
+	db 25, ZUBAT
+	db 23, ZUBAT
+	db 22, GASTLY
+	db 23, GOLBAT
 
 	map_id ROCK_TUNNEL_B1F
 	db 6 percent, 6 percent, 6 percent ; encounter rates: morn/day/nite
@@ -191,7 +191,8 @@ KantoGrassWildMons:
 	db 4, HOOTHOOT
 	db 4, HOOTHOOT
 
-	map_id ROUTE_2
+	map_id ROUTE_2_BOTTOM
+	map_id ROUTE_2_TOP
 	db 10 percent, 10 percent, 10 percent ; encounter rates: morn/day/nite
 	; morn
 	db 3, CATERPIE
@@ -811,5 +812,32 @@ KantoGrassWildMons:
 	db 42, GOLBAT
 	db 42, GOLBAT
 	db 42, GOLBAT
+
+	map_id VIRIDIAN_FOREST
+	db 8 percent, 6 percent, 10 percent ; encounter rates: morn/day/nite
+	; morn
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	; day
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	; nite
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
+	db 5, CATERPIE
 
 	db -1 ; end

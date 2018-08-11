@@ -205,7 +205,7 @@ ENDM
 	map_attributes Route2Top, ROUTE_2_TOP, $0f, NORTH
 	connection north, PewterCity, PEWTER_CITY, -3, 2, 16
 
-	map_attributes ViridianForest, VIRIDIAN_FOREST, $02, 0
+	map_attributes ViridianForest, VIRIDIAN_FOREST, $00, 0
 
 	map_attributes ViridianCity, VIRIDIAN_CITY, $0f, NORTH | SOUTH | WEST
 	connection north, Route2, ROUTE_2_BOTTOM, 5, 0, 10

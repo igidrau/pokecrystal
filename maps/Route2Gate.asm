@@ -29,8 +29,8 @@ Route2Gate_MapEvents:
 	db 4 ; warp events
 	warp_event  4,  0, ROUTE_2_TOP, 2
 	warp_event  5,  0, ROUTE_2_TOP, 3
-	warp_event  4,  7, ROUTE_2_BOTTOM, 2
-	warp_event  5,  7, ROUTE_2_BOTTOM, 2
+	warp_event  4,  7, ROUTE_2_BOTTOM, 1
+	warp_event  5,  7, ROUTE_2_BOTTOM, 1
 
 	db 0 ; coord events
 
