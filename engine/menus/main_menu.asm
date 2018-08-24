@@ -17,15 +17,15 @@ MainMenu:
 	call LoadMenuHeader
 	call MainMenuJoypadLoop
 	call CloseWindow
-	jr c, .quit
+	ret c   ;jr c, .quit
 	call ClearTileMap
 	ld a, [wMenuSelection]
 	ld hl, .Jumptable
 	rst JumpTable
 	jr MainMenu
 
-.quit
-	ret
+;.quit
+;	ret
 
 .MenuHeader:
 	db MENU_BACKUP_TILES ; flags
@@ -45,6 +45,7 @@ MainMenu:
 	db "NEW GAME@"
 	db "OPTION@"
 	db "MYSTERY GIFT@"
+	db "DEBUG@"
 	db "MOBILE@"
 	db "MOBILE STUDIUM@"
 
@@ -53,6 +54,7 @@ MainMenu:
 	dw MainMenu_NewGame
 	dw MainMenu_Options
 	dw MainMenu_MysteryGift
+	dw MainMenu_Debug
 	dw MainMenu_Mobile
 	dw MainMenu_MobileStudium
 
@@ -60,82 +62,92 @@ CONTINUE       EQU 0
 NEW_GAME       EQU 1
 OPTION         EQU 2
 MYSTERY_GIFT   EQU 3
-MOBILE         EQU 4
-MOBILE_STUDIUM EQU 5
+DEBUG 		   EQU 4
+MOBILE         EQU 5
+MOBILE_STUDIUM EQU 6
 
 MainMenuItems:
 
 NewGameMenu:
-	db 2
+	db 3
 	db NEW_GAME
 	db OPTION
+	db DEBUG
 	db -1
 
 ContinueMenu:
-	db 3
+	db 4
 	db CONTINUE
 	db NEW_GAME
 	db OPTION
+	db DEBUG
 	db -1
 
 MobileMysteryMenu:
-	db 5
+	db 6
 	db CONTINUE
 	db NEW_GAME
 	db OPTION
+	db DEBUG
 	db MYSTERY_GIFT
 	db MOBILE
 	db -1
 
 MobileMenu:
-	db 4
-	db CONTINUE
-	db NEW_GAME
-	db OPTION
-	db MOBILE
-	db -1
-
-MobileStudiumMenu:
 	db 5
 	db CONTINUE
 	db NEW_GAME
 	db OPTION
+	db DEBUG
+	db MOBILE
+	db -1
+
+MobileStudiumMenu:
+	db 6
+	db CONTINUE
+	db NEW_GAME
+	db OPTION
+	db DEBUG
 	db MOBILE
 	db MOBILE_STUDIUM
 	db -1
 
 MysteryMobileStudiumMenu:
-	db 6
+	db 7
 	db CONTINUE
 	db NEW_GAME
 	db OPTION
+	db DEBUG
 	db MYSTERY_GIFT
 	db MOBILE
 	db MOBILE_STUDIUM
 	db -1
 
 MysteryMenu:
-	db 4
-	db CONTINUE
-	db NEW_GAME
-	db OPTION
-	db MYSTERY_GIFT
-	db -1
-
-MysteryStudiumMenu:
 	db 5
 	db CONTINUE
 	db NEW_GAME
 	db OPTION
+	db DEBUG
+	db MYSTERY_GIFT
+	db -1
+
+MysteryStudiumMenu:
+	db 6
+	db CONTINUE
+	db NEW_GAME
+	db OPTION
+	db DEBUG
 	db MYSTERY_GIFT
 	db MOBILE_STUDIUM
 	db -1
 
 StudiumMenu:
-	db 4
+	db 5
 	db CONTINUE
 	db NEW_GAME
 	db OPTION
+	db DEBUG
 	db MOBILE_STUDIUM
 	db -1
 
@@ -334,4 +346,8 @@ MainMenu_Continue:
 
 MainMenu_MysteryGift:
 	farcall MysteryGift
+	ret
+
+MainMenu_Debug:
+	farcall DebugMenu ; ColorTest
 	ret

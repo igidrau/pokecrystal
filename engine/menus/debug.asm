@@ -1,3 +1,5 @@
+INCLUDE "engine/menus/debug_menu.asm"
+
 	const_def $6a
 	const DEBUGTEST_UP_ARROW ; $6a
 	const DEBUGTEST_TICKS    ; $6b
