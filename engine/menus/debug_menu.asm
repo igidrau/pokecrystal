@@ -4,7 +4,7 @@ DebugMenu:
 	call Function49ed0
 	;ld b, SCGB_DIPLOMA
 	;call GetSGBLayout
-	;call SetPalettes
+	call SetPalettes
 	ld hl, wGameTimerPause
 	res GAMETIMERPAUSE_TIMER_PAUSED_F, [hl]
 	ld [wWhichIndexSet], a
@@ -78,7 +78,7 @@ DebugMenuJoypadLoop:
 
 
 DebugMenu_ColorTest:
-	farcall ColorTest
+	call ColorTest
 	ret
 
 DebugMenu_BackToMain:

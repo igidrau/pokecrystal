@@ -765,200 +765,200 @@ ValidateTempWildMonSpecies:
 
 ; Finds a rare wild Pokemon in the route of the trainer calling, then checks if it's been Seen already.
 ; The trainer will then tell you about the Pokemon if you haven't seen it.
-RandomUnseenWildMon:
-	farcall GetCallerLocation
-	ld d, b
-	ld e, c
-	ld hl, JohtoGrassWildMons
-	ld bc, GRASS_WILDDATA_LENGTH
-	call LookUpWildmonsForMapDE
-	jr c, .GetGrassmon
-	ld hl, KantoGrassWildMons
-	call LookUpWildmonsForMapDE
-	jr nc, .done
+;RandomUnseenWildMon:
+;	farcall GetCallerLocation
+;	ld d, b
+;	ld e, c
+;	ld hl, JohtoGrassWildMons
+;	ld bc, GRASS_WILDDATA_LENGTH
+;	call LookUpWildmonsForMapDE
+;	jr c, .GetGrassmon
+;	ld hl, KantoGrassWildMons
+;	call LookUpWildmonsForMapDE
+;	jr nc, .done
 
-.GetGrassmon:
-	push hl
-	ld bc, 5 + 4 * 2 ; Location of the level of the 5th wild Pokemon in that map
-	add hl, bc
-	ld a, [wTimeOfDay]
-	ld bc, NUM_GRASSMON * 2
-	call AddNTimes
-.randloop1
-	call Random
-	and %11
-	jr z, .randloop1
-	dec a
-	ld c, a
-	ld b, 0
-	add hl, bc
-	add hl, bc
-; We now have the pointer to one of the last (rarest) three wild Pokemon found in that area.
-	inc hl
-	ld c, [hl] ; Contains the species index of this rare Pokemon
-	pop hl
-	ld de, 5 + 0 * 2
-	add hl, de
-	inc hl ; Species index of the most common Pokemon on that route
-	ld b, 4
-.loop2
-	ld a, [hli]
-	cp c ; Compare this most common Pokemon with the rare one stored in c.
-	jr z, .done
-	inc hl
-	dec b
-	jr nz, .loop2
-; This Pokemon truly is rare.
-	push bc
-	dec c
-	ld a, c
-	call CheckSeenMon
-	pop bc
-	jr nz, .done
-; Since we haven't seen it, have the caller tell us about it.
-	ld de, wStringBuffer1
-	call CopyName1
-	ld a, c
-	ld [wNamedObjectIndexBuffer], a
-	call GetPokemonName
-	ld hl, .SawRareMonText
-	call PrintText
-	xor a
-	ld [wScriptVar], a
-	ret
+;.GetGrassmon:
+;	push hl
+;	ld bc, 5 + 4 * 2 ; Location of the level of the 5th wild Pokemon in that map
+;	add hl, bc
+;	ld a, [wTimeOfDay]
+;	ld bc, NUM_GRASSMON * 2
+;	call AddNTimes
+;.randloop1
+;	call Random
+;	and %11
+;	jr z, .randloop1
+;	dec a
+;	ld c, a
+;	ld b, 0
+;	add hl, bc
+;	add hl, bc
+;; We now have the pointer to one of the last (rarest) three wild Pokemon found in that area.
+;	inc hl
+;	ld c, [hl] ; Contains the species index of this rare Pokemon
+;	pop hl
+;	ld de, 5 + 0 * 2
+;	add hl, de
+;	inc hl ; Species index of the most common Pokemon on that route
+;	ld b, 4
+;.loop2
+;	ld a, [hli]
+;	cp c ; Compare this most common Pokemon with the rare one stored in c.
+;	jr z, .done
+;	inc hl
+;	dec b
+;	jr nz, .loop2
+;; This Pokemon truly is rare.
+;	push bc
+;	dec c
+;	ld a, c
+;	call CheckSeenMon
+;	pop bc
+;	jr nz, .done
+;; Since we haven't seen it, have the caller tell us about it.
+;	ld de, wStringBuffer1
+;	call CopyName1
+;	ld a, c
+;	ld [wNamedObjectIndexBuffer], a
+;	call GetPokemonName
+;	ld hl, .SawRareMonText
+;	call PrintText
+;	xor a
+;	ld [wScriptVar], a
+;	ret
 
-.done
-	ld a, $1
-	ld [wScriptVar], a
-	ret
+;.done
+;	ld a, $1
+;	ld [wScriptVar], a
+;	ret
 
-.SawRareMonText:
-	; I just saw some rare @  in @ . I'll call you if I see another rare #MON, OK?
-	text_jump UnknownText_0x1bd34b
-	db "@"
+;.SawRareMonText:
+;	; I just saw some rare @  in @ . I'll call you if I see another rare #MON, OK?
+;	text_jump UnknownText_0x1bd34b
+;	db "@"
 
-RandomPhoneWildMon:
-	farcall GetCallerLocation
-	ld d, b
-	ld e, c
-	ld hl, JohtoGrassWildMons
-	ld bc, GRASS_WILDDATA_LENGTH
-	call LookUpWildmonsForMapDE
-	jr c, .ok
-	ld hl, KantoGrassWildMons
-	call LookUpWildmonsForMapDE
+;RandomPhoneWildMon:
+;	farcall GetCallerLocation
+;	ld d, b
+;	ld e, c
+;	ld hl, JohtoGrassWildMons
+;	ld bc, GRASS_WILDDATA_LENGTH
+;	call LookUpWildmonsForMapDE
+;	jr c, .ok
+;	ld hl, KantoGrassWildMons
+;	call LookUpWildmonsForMapDE
+;
+;.ok
+;	ld bc, 5 + 0 * 2
+;	add hl, bc
+;	ld a, [wTimeOfDay]
+;	inc a
+;	ld bc, NUM_GRASSMON * 2
+;.loop
+;	dec a
+;	jr z, .done
+;	add hl, bc
+;	jr .loop
+;
+;.done
+;	call Random
+;	and %11
+;	ld c, a
+;	ld b, 0
+;	add hl, bc
+;	add hl, bc
+;	inc hl
+;	ld a, [hl]
+;	ld [wNamedObjectIndexBuffer], a
+;	call GetPokemonName
+;	ld hl, wStringBuffer1
+;	ld de, wStringBuffer4
+;	ld bc, MON_NAME_LENGTH
+;	jp CopyBytes
 
-.ok
-	ld bc, 5 + 0 * 2
-	add hl, bc
-	ld a, [wTimeOfDay]
-	inc a
-	ld bc, NUM_GRASSMON * 2
-.loop
-	dec a
-	jr z, .done
-	add hl, bc
-	jr .loop
-
-.done
-	call Random
-	and %11
-	ld c, a
-	ld b, 0
-	add hl, bc
-	add hl, bc
-	inc hl
-	ld a, [hl]
-	ld [wNamedObjectIndexBuffer], a
-	call GetPokemonName
-	ld hl, wStringBuffer1
-	ld de, wStringBuffer4
-	ld bc, MON_NAME_LENGTH
-	jp CopyBytes
-
-RandomPhoneMon:
+;RandomPhoneMon:
 ; Get a random monster owned by the trainer who's calling.
-	farcall GetCallerLocation
-	ld hl, TrainerGroups
-	ld a, d
-	dec a
-	ld c, a
-	ld b, 0
-	add hl, bc
-	add hl, bc
-	ld a, BANK(TrainerGroups)
-	call GetFarHalfword
-
-.skip_trainer
-	dec e
-	jr z, .skipped
-.skip
-	ld a, BANK(Trainers)
-	call GetFarByte
-	inc hl
-	cp -1
-	jr nz, .skip
-	jr .skip_trainer
-.skipped
-
-.skip_name
-	ld a, BANK(Trainers)
-	call GetFarByte
-	inc hl
-	cp "@"
-	jr nz, .skip_name
-
-	ld a, BANK(Trainers)
-	call GetFarByte
-	inc hl
-	ld bc, 2 ; level, species
-	cp TRAINERTYPE_NORMAL
-	jr z, .got_mon_length
-	ld bc, 2 + NUM_MOVES ; level, species, moves
-	cp TRAINERTYPE_MOVES
-	jr z, .got_mon_length
-	ld bc, 2 + 1 ; level, species, item
-	cp TRAINERTYPE_ITEM
-	jr z, .got_mon_length
-	; TRAINERTYPE_ITEM_MOVES
-	ld bc, 2 + 1 + NUM_MOVES ; level, species, item, moves
-.got_mon_length
-
-	ld e, 0
-	push hl
-.count_mon
-	inc e
-	add hl, bc
-	ld a, BANK(Trainers)
-	call GetFarByte
-	cp -1
-	jr nz, .count_mon
-	pop hl
-
-.rand
-	call Random
-	maskbits PARTY_LENGTH
-	cp e
-	jr nc, .rand
-
-	inc a
-.get_mon
-	dec a
-	jr z, .got_mon
-	add hl, bc
-	jr .get_mon
-.got_mon
-
-	inc hl ; species
-	ld a, BANK(Trainers)
-	call GetFarByte
-	ld [wNamedObjectIndexBuffer], a
-	call GetPokemonName
-	ld hl, wStringBuffer1
-	ld de, wStringBuffer4
-	ld bc, MON_NAME_LENGTH
-	jp CopyBytes
-
+;	farcall GetCallerLocation
+;	ld hl, TrainerGroups
+;	ld a, d
+;	dec a
+;	ld c, a
+;	ld b, 0
+;	add hl, bc
+;	add hl, bc
+;	ld a, BANK(TrainerGroups)
+;	call GetFarHalfword
+;
+;.skip_trainer
+;	dec e
+;	jr z, .skipped
+;.skip
+;	ld a, BANK(Trainers)
+;	call GetFarByte
+;	inc hl
+;	cp -1
+;	jr nz, .skip
+;	jr .skip_trainer
+;.skipped
+;
+;.skip_name
+;	ld a, BANK(Trainers)
+;	call GetFarByte
+;	inc hl
+;	cp "@"
+;	jr nz, .skip_name
+;
+;	ld a, BANK(Trainers)
+;	call GetFarByte
+;	inc hl
+;	ld bc, 2 ; level, species
+;	cp TRAINERTYPE_NORMAL
+;	jr z, .got_mon_length
+;	ld bc, 2 + NUM_MOVES ; level, species, moves
+;	cp TRAINERTYPE_MOVES
+;	jr z, .got_mon_length
+;	ld bc, 2 + 1 ; level, species, item
+;	cp TRAINERTYPE_ITEM
+;	jr z, .got_mon_length
+;	; TRAINERTYPE_ITEM_MOVES
+;	ld bc, 2 + 1 + NUM_MOVES ; level, species, item, moves
+;.got_mon_length
+;
+;	ld e, 0
+;	push hl
+;.count_mon
+;	inc e
+;	add hl, bc
+;	ld a, BANK(Trainers)
+;	call GetFarByte
+;	cp -1
+;	jr nz, .count_mon
+;	pop hl
+;
+;.rand
+;	call Random
+;	maskbits PARTY_LENGTH
+;	cp e
+;	jr nc, .rand
+;
+;	inc a
+;.get_mon
+;	dec a
+;	jr z, .got_mon
+;	add hl, bc
+;	jr .get_mon
+;.got_mon
+;
+;	inc hl ; species
+;	ld a, BANK(Trainers)
+;	call GetFarByte
+;	ld [wNamedObjectIndexBuffer], a
+;	call GetPokemonName
+;	ld hl, wStringBuffer1
+;	ld de, wStringBuffer4
+;	ld bc, MON_NAME_LENGTH
+;	jp CopyBytes
+;
 INCLUDE "data/wild/johto_grass.asm"
 INCLUDE "data/wild/johto_water.asm"
 INCLUDE "data/wild/kanto_grass.asm"

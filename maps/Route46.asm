@@ -26,44 +26,45 @@ TrainerPicnickerErin1:
 	trainer PICNICKER, ERIN1, EVENT_BEAT_PICNICKER_ERIN, PicnickerErin1SeenText, PicnickerErin1BeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_PICNICKER_ERIN
+;	writecode VAR_CALLERID, PHONE_PICNICKER_ERIN
 	endifjustbattled
 	opentext
 	checkflag ENGINE_ERIN
 	iftrue .WantsBattle
-	checkcellnum PHONE_PICNICKER_ERIN
-	iftrue Route46NumberAcceptedF
-	checkevent EVENT_ERIN_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskedAlready
-	writetext PicnickerErinAfterBattleText
-	buttonsound
-	setevent EVENT_ERIN_ASKED_FOR_PHONE_NUMBER
-	scall Route46AskNumber1F
-	jump .AskForNumber
-
-.AskedAlready:
-	scall Route46AskNumber2F
-.AskForNumber:
-	askforphonenumber PHONE_PICNICKER_ERIN
-	ifequal PHONE_CONTACTS_FULL, Route46PhoneFullF
-	ifequal PHONE_CONTACT_REFUSED, Route46NumberDeclinedF
-	trainertotext PICNICKER, ERIN1, MEM_BUFFER_0
-	scall Route46RegisteredNumberF
-	jump Route46NumberAcceptedF
-
+	end
+;	checkcellnum PHONE_PICNICKER_ERIN
+;	iftrue Route46NumberAcceptedF
+;	checkevent EVENT_ERIN_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskedAlready
+;	writetext PicnickerErinAfterBattleText
+;	buttonsound
+;	setevent EVENT_ERIN_ASKED_FOR_PHONE_NUMBER
+;	scall Route46AskNumber1F
+;	jump .AskForNumber
+;
+;.AskedAlready:
+;	scall Route46AskNumber2F
+;.AskForNumber:
+;	askforphonenumber PHONE_PICNICKER_ERIN
+;	ifequal PHONE_CONTACTS_FULL, Route46PhoneFullF
+;	ifequal PHONE_CONTACT_REFUSED, Route46NumberDeclinedF
+;	trainertotext PICNICKER, ERIN1, MEM_BUFFER_0
+;	scall Route46RegisteredNumberF
+;	jump Route46NumberAcceptedF
+;
 .WantsBattle:
-	scall Route46RematchF
+;	scall Route46RematchF
 	winlosstext PicnickerErin1BeatenText, 0
-	copybytetovar wErinFightCount
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight2:
-	checkevent EVENT_RESTORED_POWER_TO_KANTO
-	iftrue .LoadFight2
-.Fight1:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight1
+;	copybytetovar wErinFightCount
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight2:
+;	checkevent EVENT_RESTORED_POWER_TO_KANTO
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer PICNICKER, ERIN1
 	startbattle
@@ -72,78 +73,78 @@ TrainerPicnickerErin1:
 	clearflag ENGINE_ERIN
 	end
 
-.LoadFight1:
-	loadtrainer PICNICKER, ERIN2
-	startbattle
-	reloadmapafterbattle
-	loadvar wErinFightCount, 2
-	clearflag ENGINE_ERIN
-	end
+;.LoadFight1:
+;	loadtrainer PICNICKER, ERIN2
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wErinFightCount, 2
+;	clearflag ENGINE_ERIN
+;	end
+;
+;.LoadFight2:
+;	loadtrainer PICNICKER, ERIN3
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_ERIN
+;	checkevent EVENT_ERIN_CALCIUM
+;	iftrue .HasCalcium
+;	checkevent EVENT_GOT_CALCIUM_FROM_ERIN
+;	iftrue .GotCalciumAlready
+;	scall Route46RematchGiftF
+;	verbosegiveitem CALCIUM
+;	iffalse ErinNoRoomForCalcium
+;	setevent EVENT_GOT_CALCIUM_FROM_ERIN
+;	jump Route46NumberAcceptedF
+;
+;.GotCalciumAlready:
+;	end
+;
+;.HasCalcium:
+;	opentext
+;	writetext PicnickerErin2BeatenText
+;	waitbutton
+;	verbosegiveitem CALCIUM
+;	iffalse ErinNoRoomForCalcium
+;	clearevent EVENT_ERIN_CALCIUM
+;	setevent EVENT_GOT_CALCIUM_FROM_ERIN
+;	jump Route46NumberAcceptedF
 
-.LoadFight2:
-	loadtrainer PICNICKER, ERIN3
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_ERIN
-	checkevent EVENT_ERIN_CALCIUM
-	iftrue .HasCalcium
-	checkevent EVENT_GOT_CALCIUM_FROM_ERIN
-	iftrue .GotCalciumAlready
-	scall Route46RematchGiftF
-	verbosegiveitem CALCIUM
-	iffalse ErinNoRoomForCalcium
-	setevent EVENT_GOT_CALCIUM_FROM_ERIN
-	jump Route46NumberAcceptedF
+;Route46AskNumber1F:
+;	jumpstd asknumber1f
+;	end
 
-.GotCalciumAlready:
-	end
+;Route46AskNumber2F:
+;	jumpstd asknumber2f
+;	end
 
-.HasCalcium:
-	opentext
-	writetext PicnickerErin2BeatenText
-	waitbutton
-	verbosegiveitem CALCIUM
-	iffalse ErinNoRoomForCalcium
-	clearevent EVENT_ERIN_CALCIUM
-	setevent EVENT_GOT_CALCIUM_FROM_ERIN
-	jump Route46NumberAcceptedF
+;Route46RegisteredNumberF:
+;	jumpstd registerednumberf
+;	end
 
-Route46AskNumber1F:
-	jumpstd asknumber1f
-	end
+;Route46NumberAcceptedF:
+;	jumpstd numberacceptedf
+;	end
 
-Route46AskNumber2F:
-	jumpstd asknumber2f
-	end
+;Route46NumberDeclinedF:
+;	jumpstd numberdeclinedf
+;	end
 
-Route46RegisteredNumberF:
-	jumpstd registerednumberf
-	end
+;Route46PhoneFullF:
+;	jumpstd phonefullf
+;	end
 
-Route46NumberAcceptedF:
-	jumpstd numberacceptedf
-	end
+;Route46RematchF:
+;	jumpstd rematchf
+;	end
 
-Route46NumberDeclinedF:
-	jumpstd numberdeclinedf
-	end
+;ErinNoRoomForCalcium:
+;	setevent EVENT_ERIN_CALCIUM
+;	jumpstd packfullf
+;	end
 
-Route46PhoneFullF:
-	jumpstd phonefullf
-	end
-
-Route46RematchF:
-	jumpstd rematchf
-	end
-
-ErinNoRoomForCalcium:
-	setevent EVENT_ERIN_CALCIUM
-	jumpstd packfullf
-	end
-
-Route46RematchGiftF:
-	jumpstd rematchgiftf
-	end
+;Route46RematchGiftF:
+;	jumpstd rematchgiftf
+;	end
 
 TrainerHikerBailey:
 	trainer HIKER, BAILEY, EVENT_BEAT_HIKER_BAILEY, HikerBaileySeenText, HikerBaileyBeatenText, 0, .Script

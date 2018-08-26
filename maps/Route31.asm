@@ -19,61 +19,62 @@ Route31_MapScripts:
 	return
 
 .DoMomCall:
-	specialphonecall SPECIALCALL_WORRIED
+;	specialphonecall SPECIALCALL_WORRIED
 	return
 
 TrainerBugCatcherWade1:
 	trainer BUG_CATCHER, WADE1, EVENT_BEAT_BUG_CATCHER_WADE, BugCatcherWade1SeenText, BugCatcherWade1BeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_BUG_CATCHER_WADE
+;	writecode VAR_CALLERID, PHONE_BUG_CATCHER_WADE
 	endifjustbattled
 	opentext
 	checkflag ENGINE_WADE
 	iftrue .WadeRematch
-	checkflag ENGINE_WADE_HAS_ITEM
-	iftrue .WadeItem
-	checkcellnum PHONE_BUG_CATCHER_WADE
-	iftrue .AcceptedNumberSTD
-	checkevent EVENT_WADE_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskAgain
-	writetext BugCatcherWade1AfterText
-	waitbutton
-	setevent EVENT_WADE_ASKED_FOR_PHONE_NUMBER
-	scall .AskPhoneNumberSTD
-	jump .Continue
-
-.AskAgain:
-	scall .AskAgainSTD
-.Continue:
-	askforphonenumber PHONE_BUG_CATCHER_WADE
-	ifequal PHONE_CONTACTS_FULL, .PhoneFullSTD
-	ifequal PHONE_CONTACT_REFUSED, .DeclinedNumberSTD
-	trainertotext BUG_CATCHER, WADE1, MEM_BUFFER_0
-	scall .RegisterNumberSTD
-	jump .AcceptedNumberSTD
-
+	end
+;	checkflag ENGINE_WADE_HAS_ITEM
+;	iftrue .WadeItem
+;	checkcellnum PHONE_BUG_CATCHER_WADE
+;	iftrue .AcceptedNumberSTD
+;	checkevent EVENT_WADE_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskAgain
+;	writetext BugCatcherWade1AfterText
+;	waitbutton
+;	setevent EVENT_WADE_ASKED_FOR_PHONE_NUMBER
+;	scall .AskPhoneNumberSTD
+;	jump .Continue
+;
+;.AskAgain:
+;	scall .AskAgainSTD
+;.Continue:
+;	askforphonenumber PHONE_BUG_CATCHER_WADE
+;	ifequal PHONE_CONTACTS_FULL, .PhoneFullSTD
+;	ifequal PHONE_CONTACT_REFUSED, .DeclinedNumberSTD
+;	trainertotext BUG_CATCHER, WADE1, MEM_BUFFER_0
+;	scall .RegisterNumberSTD
+;	jump .AcceptedNumberSTD
+;
 .WadeRematch:
-	scall .RematchSTD
+;	scall .RematchSTD
 	winlosstext BugCatcherWade1BeatenText, 0
-	copybytetovar wWadeFightCount
-	ifequal 4, .Fight4
-	ifequal 3, .Fight3
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight4:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight4
-.Fight3:
-	checkevent EVENT_CLEARED_RADIO_TOWER
-	iftrue .LoadFight3
-.Fight2:
-	checkflag ENGINE_FLYPOINT_MAHOGANY
-	iftrue .LoadFight2
-.Fight1:
-	checkflag ENGINE_FLYPOINT_GOLDENROD
-	iftrue .LoadFight1
+;	copybytetovar wWadeFightCount
+;	ifequal 4, .Fight4
+;	ifequal 3, .Fight3
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight4:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight4
+;.Fight3:
+;	checkevent EVENT_CLEARED_RADIO_TOWER
+;	iftrue .LoadFight3
+;.Fight2:
+;	checkflag ENGINE_FLYPOINT_MAHOGANY
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkflag ENGINE_FLYPOINT_GOLDENROD
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer BUG_CATCHER, WADE1
 	startbattle
@@ -82,103 +83,103 @@ TrainerBugCatcherWade1:
 	clearflag ENGINE_WADE
 	end
 
-.LoadFight1:
-	loadtrainer BUG_CATCHER, WADE2
-	startbattle
-	reloadmapafterbattle
-	loadvar wWadeFightCount, 2
-	clearflag ENGINE_WADE
-	end
-
-.LoadFight2:
-	loadtrainer BUG_CATCHER, WADE3
-	startbattle
-	reloadmapafterbattle
-	loadvar wWadeFightCount, 3
-	clearflag ENGINE_WADE
-	end
-
-.LoadFight3:
-	loadtrainer BUG_CATCHER, WADE4
-	startbattle
-	reloadmapafterbattle
-	loadvar wWadeFightCount, 4
-	clearflag ENGINE_WADE
-	end
-
-.LoadFight4:
-	loadtrainer BUG_CATCHER, WADE5
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_WADE
-	end
-
-.WadeItem:
-	scall .ItemSTD
-	checkevent EVENT_WADE_HAS_BERRY
-	iftrue .Berry
-	checkevent EVENT_WADE_HAS_PSNCUREBERRY
-	iftrue .Psncureberry
-	checkevent EVENT_WADE_HAS_PRZCUREBERRY
-	iftrue .Przcureberry
-	checkevent EVENT_WADE_HAS_BITTER_BERRY
-	iftrue .BitterBerry
-.Berry:
-	verbosegiveitem BERRY
-	iffalse .PackFull
-	jump .Done
-.Psncureberry:
-	verbosegiveitem PSNCUREBERRY
-	iffalse .PackFull
-	jump .Done
-.Przcureberry:
-	verbosegiveitem PRZCUREBERRY
-	iffalse .PackFull
-	jump .Done
-.BitterBerry:
-	verbosegiveitem BITTER_BERRY
-	iffalse .PackFull
-.Done:
-	clearflag ENGINE_WADE_HAS_ITEM
-	jump .AcceptedNumberSTD
-.PackFull:
-	jump .PackFullSTD
-
-.AskPhoneNumberSTD:
-	jumpstd asknumber1m
-	end
-
-.AskAgainSTD:
-	jumpstd asknumber2m
-	end
-
-.RegisterNumberSTD:
-	jumpstd registerednumberm
-	end
-
-.AcceptedNumberSTD:
-	jumpstd numberacceptedm
-	end
-
-.DeclinedNumberSTD:
-	jumpstd numberdeclinedm
-	end
-
-.PhoneFullSTD:
-	jumpstd phonefullm
-	end
-
-.RematchSTD:
-	jumpstd rematchm
-	end
-
-.ItemSTD:
-	jumpstd giftm
-	end
-
-.PackFullSTD:
-	jumpstd packfullm
-	end
+;.LoadFight1:
+;	loadtrainer BUG_CATCHER, WADE2
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wWadeFightCount, 2
+;	clearflag ENGINE_WADE
+;	end
+;
+;.LoadFight2:
+;	loadtrainer BUG_CATCHER, WADE3
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wWadeFightCount, 3
+;	clearflag ENGINE_WADE
+;	end
+;
+;.LoadFight3:
+;	loadtrainer BUG_CATCHER, WADE4
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wWadeFightCount, 4
+;	clearflag ENGINE_WADE
+;	end
+;
+;.LoadFight4:
+;	loadtrainer BUG_CATCHER, WADE5
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_WADE
+;	end
+;
+;.WadeItem:
+;	scall .ItemSTD
+;	checkevent EVENT_WADE_HAS_BERRY
+;	iftrue .Berry
+;	checkevent EVENT_WADE_HAS_PSNCUREBERRY
+;	iftrue .Psncureberry
+;	checkevent EVENT_WADE_HAS_PRZCUREBERRY
+;	iftrue .Przcureberry
+;	checkevent EVENT_WADE_HAS_BITTER_BERRY
+;	iftrue .BitterBerry
+;.Berry:
+;	verbosegiveitem BERRY
+;	iffalse .PackFull
+;	jump .Done
+;.Psncureberry:
+;	verbosegiveitem PSNCUREBERRY
+;	iffalse .PackFull
+;	jump .Done
+;.Przcureberry:
+;	verbosegiveitem PRZCUREBERRY
+;	iffalse .PackFull
+;	jump .Done
+;.BitterBerry:
+;	verbosegiveitem BITTER_BERRY
+;	iffalse .PackFull
+;.Done:
+;	clearflag ENGINE_WADE_HAS_ITEM
+;	jump .AcceptedNumberSTD
+;.PackFull:
+;	jump .PackFullSTD
+;
+;.AskPhoneNumberSTD:
+;	jumpstd asknumber1m
+;	end
+;
+;.AskAgainSTD:
+;	jumpstd asknumber2m
+;	end
+;
+;.RegisterNumberSTD:
+;	jumpstd registerednumberm
+;	end
+;
+;.AcceptedNumberSTD:
+;	jumpstd numberacceptedm
+;	end
+;
+;.DeclinedNumberSTD:
+;	jumpstd numberdeclinedm
+;	end
+;
+;.PhoneFullSTD:
+;	jumpstd phonefullm
+;	end
+;
+;.RematchSTD:
+;	jumpstd rematchm
+;	end
+;
+;.ItemSTD:
+;	jumpstd giftm
+;	end
+;
+;.PackFullSTD:
+;	jumpstd packfullm
+;	end
 
 Route31MailRecipientScript:
 	faceplayer

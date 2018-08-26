@@ -102,9 +102,9 @@ SpecialsPointers::
 	add_special DisplayLinkRecord ; $58
 	add_special GetFirstPokemonHappiness
 	add_special CheckFirstMonIsEgg
-	add_special RandomUnseenWildMon
-	add_special RandomPhoneWildMon
-	add_special RandomPhoneMon
+;	add_special RandomUnseenWildMon
+;	add_special RandomPhoneWildMon
+;	add_special RandomPhoneMon
 	add_special LoadUsedSpritesGFX
 	add_special PlaySlowCry
 	add_special SnorlaxAwake ; $60

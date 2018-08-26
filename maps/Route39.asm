@@ -27,80 +27,83 @@ TrainerPokefanmDerek:
 	trainer POKEFANM, DEREK1, EVENT_BEAT_POKEFANM_DEREK, PokefanmDerekSeenText, PokefanmDerekBeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_POKEFANM_DEREK
+;	writecode VAR_CALLERID, PHONE_POKEFANM_DEREK
 	endifjustbattled
 	opentext
-	checkflag ENGINE_DEREK_HAS_NUGGET
-	iftrue .HasNugget
-	checkcellnum PHONE_POKEFANM_DEREK
-	iftrue .NumberAccepted
+;	checkflag ENGINE_DEREK_HAS_NUGGET
+;	iftrue .HasNugget
+;	checkcellnum PHONE_POKEFANM_DEREK
+;	iftrue .NumberAccepted
 	checkpoke PIKACHU
 	iffalse .WantsPikachu
-	checkevent EVENT_DEREK_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskedAlready
+;	checkevent EVENT_DEREK_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskedAlready
 	writetext PokefanMDerekText_NotBragging
-	buttonsound
-	setevent EVENT_DEREK_ASKED_FOR_PHONE_NUMBER
-	scall .AskNumber1
-	jump .AskForNumber
-
-.AskedAlready:
-	scall .AskNumber2
-.AskForNumber:
-	askforphonenumber PHONE_POKEFANM_DEREK
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
-	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	trainertotext POKEFANM, DEREK1, MEM_BUFFER_0
-	scall .RegisteredNumber
-	jump .NumberAccepted
-
-.HasNugget:
-	scall .Gift
-	verbosegiveitem NUGGET
-	iffalse .NoRoom
-	clearflag ENGINE_DEREK_HAS_NUGGET
-	jump .NumberAccepted
-
-.NoRoom:
-	jump .PackFull
-
+	waitbutton
+	closetext
+	end
+;	buttonsound
+;	setevent EVENT_DEREK_ASKED_FOR_PHONE_NUMBER
+;	scall .AskNumber1
+;	jump .AskForNumber
+;
+;.AskedAlready:
+;	scall .AskNumber2
+;.AskForNumber:
+;	askforphonenumber PHONE_POKEFANM_DEREK
+;	ifequal PHONE_CONTACTS_FULL, .PhoneFull
+;	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
+;	trainertotext POKEFANM, DEREK1, MEM_BUFFER_0
+;	scall .RegisteredNumber
+;	jump .NumberAccepted
+;
+;.HasNugget:
+;	scall .Gift
+;	verbosegiveitem NUGGET
+;	iffalse .NoRoom
+;	clearflag ENGINE_DEREK_HAS_NUGGET
+;	jump .NumberAccepted
+;
+;.NoRoom:
+;	jump .PackFull
+;
 .WantsPikachu:
 	writetext PokefanMDerekPikachuIsItText
 	waitbutton
 	closetext
 	end
 
-.AskNumber1:
-	jumpstd asknumber1m
-	end
-
-.AskNumber2:
-	jumpstd asknumber2m
-	end
-
-.RegisteredNumber:
-	jumpstd registerednumberm
-	end
-
-.NumberAccepted:
-	jumpstd numberacceptedm
-	end
-
-.NumberDeclined:
-	jumpstd numberdeclinedm
-	end
-
-.PhoneFull:
-	jumpstd phonefullm
-	end
-
-.Gift:
-	jumpstd giftm
-	end
-
-.PackFull:
-	jumpstd packfullm
-	end
+;.AskNumber1:
+;	jumpstd asknumber1m
+;	end
+;
+;.AskNumber2:
+;	jumpstd asknumber2m
+;	end
+;
+;.RegisteredNumber:
+;	jumpstd registerednumberm
+;	end
+;
+;.NumberAccepted:
+;	jumpstd numberacceptedm
+;	end
+;
+;.NumberDeclined:
+;	jumpstd numberdeclinedm
+;	end
+;
+;.PhoneFull:
+;	jumpstd phonefullm
+;	end
+;
+;.Gift:
+;	jumpstd giftm
+;	end
+;
+;.PackFull:
+;	jumpstd packfullm
+;	end
 
 TrainerPokefanfRuth:
 	trainer POKEFANF, RUTH, EVENT_BEAT_POKEFANF_RUTH, PokefanfRuthSeenText, PokefanfRuthBeatenText, 0, .Script

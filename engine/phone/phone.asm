@@ -236,62 +236,62 @@ GetAvailableCallers:
 	jr nz, .loop
 	ret
 
-CheckSpecialPhoneCall::
-	ld a, [wSpecialPhoneCallID]
-	and a
-	jr z, .NoPhoneCall
-
-	dec a
-	ld c, a
-	ld b, 0
-	ld hl, SpecialPhoneCallList
-	ld a, 6
-	call AddNTimes
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	call _hl_
-	jr nc, .NoPhoneCall
-
-	call .DoSpecialPhoneCall
-	inc hl
-	inc hl
-	ld a, [hli]
-	ld e, a
-	push hl
-	call LoadCallerScript
-	pop hl
-	ld de, wPhoneScriptPointer
-	ld a, [hli]
-	ld [de], a
-	inc de
-	ld a, [hli]
-	ld [de], a
-	inc de
-	ld a, [hli]
-	ld [de], a
-	ld a, BANK(.script)
-	ld hl, .script
-	call CallScript
-	scf
-	ret
-.NoPhoneCall:
-	xor a
-	ret
-
-.script
-	pause 30
-	jump Script_ReceivePhoneCall
-
-.DoSpecialPhoneCall:
-	ld a, [wSpecialPhoneCallID]
-	dec a
-	ld c, a
-	ld b, 0
-	ld hl, SpecialPhoneCallList
-	ld a, 6
-	call AddNTimes
-	ret
+;CheckSpecialPhoneCall::
+;	ld a, [wSpecialPhoneCallID]
+;	and a
+;	jr z, .NoPhoneCall
+;
+;	dec a
+;	ld c, a
+;	ld b, 0
+;	ld hl, SpecialPhoneCallList
+;	ld a, 6
+;	call AddNTimes
+;	ld a, [hli]
+;	ld h, [hl]
+;	ld l, a
+;	call _hl_
+;	jr nc, .NoPhoneCall
+;
+;	call .DoSpecialPhoneCall
+;	inc hl
+;	inc hl
+;	ld a, [hli]
+;	ld e, a
+;	push hl
+;	call LoadCallerScript
+;	pop hl
+;	ld de, wPhoneScriptPointer
+;	ld a, [hli]
+;	ld [de], a
+;	inc de
+;	ld a, [hli]
+;	ld [de], a
+;	inc de
+;	ld a, [hli]
+;	ld [de], a
+;	ld a, BANK(.script)
+;	ld hl, .script
+;	call CallScript
+;	scf
+;	ret
+;.NoPhoneCall:
+;	xor a
+;	ret
+;
+;.script
+;	pause 30
+;	jump Script_ReceivePhoneCall
+;
+;.DoSpecialPhoneCall:
+;	ld a, [wSpecialPhoneCallID]
+;	dec a
+;	ld c, a
+;	ld b, 0
+;	ld hl, SpecialPhoneCallList
+;	ld a, 6
+;	call AddNTimes
+;	ret
 
 SpecialCallOnlyWhenOutside:
 	ld a, [wEnvironment]
@@ -700,9 +700,9 @@ GetCallerLocation:
 	pop de
 	ret
 
-INCLUDE "data/phone/phone_contacts.asm"
+;INCLUDE "data/phone/phone_contacts.asm"
 
-INCLUDE "data/phone/special_calls.asm"
+;INCLUDE "data/phone/special_calls.asm"
 
 UnknownScript_0x90657:
 	writetext UnknownText_0x9065b

@@ -89,54 +89,55 @@ TrainerCamperTodd1:
 	trainer CAMPER, TODD1, EVENT_BEAT_CAMPER_TODD, CamperTodd1SeenText, CamperTodd1BeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_CAMPER_TODD
+;	writecode VAR_CALLERID, PHONE_CAMPER_TODD
 	endifjustbattled
 	opentext
 	checkflag ENGINE_TODD
 	iftrue .Rematch
-	checkflag ENGINE_GOLDENROD_DEPT_STORE_SALE_IS_ON
-	iftrue .SaleIsOn
-	checkcellnum PHONE_CAMPER_TODD
-	iftrue .NumberAccepted
-	checkevent EVENT_TODD_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskAgain
-	writetext CamperTodd1AfterText
-	buttonsound
-	setevent EVENT_TODD_ASKED_FOR_PHONE_NUMBER
-	scall .AskNumber
-	jump .FinishAsk
-
-.AskAgain:
-	scall .AskNumber2
-.FinishAsk:
-	askforphonenumber PHONE_CAMPER_TODD
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
-	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	trainertotext CAMPER, TODD1, MEM_BUFFER_0
-	scall .RegisteredNumber
-	jump .NumberAccepted
-
+	end
+;	checkflag ENGINE_GOLDENROD_DEPT_STORE_SALE_IS_ON
+;	iftrue .SaleIsOn
+;	checkcellnum PHONE_CAMPER_TODD
+;	iftrue .NumberAccepted
+;	checkevent EVENT_TODD_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskAgain
+;	writetext CamperTodd1AfterText
+;	buttonsound
+;	setevent EVENT_TODD_ASKED_FOR_PHONE_NUMBER
+;	scall .AskNumber
+;	jump .FinishAsk
+;
+;.AskAgain:
+;	scall .AskNumber2
+;.FinishAsk:
+;	askforphonenumber PHONE_CAMPER_TODD
+;	ifequal PHONE_CONTACTS_FULL, .PhoneFull
+;	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
+;	trainertotext CAMPER, TODD1, MEM_BUFFER_0
+;	scall .RegisteredNumber
+;	jump .NumberAccepted
+;
 .Rematch:
-	scall .RematchStd
+;	scall .RematchStd
 	winlosstext CamperTodd1BeatenText, 0
-	copybytetovar wToddFightCount
-	ifequal 4, .Fight4
-	ifequal 3, .Fight3
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight4:
-	checkevent EVENT_RESTORED_POWER_TO_KANTO
-	iftrue .LoadFight4
-.Fight3:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight3
-.Fight2:
-	checkflag ENGINE_FLYPOINT_BLACKTHORN
-	iftrue .LoadFight2
-.Fight1:
-	checkflag ENGINE_FLYPOINT_CIANWOOD
-	iftrue .LoadFight1
+;	copybytetovar wToddFightCount
+;	ifequal 4, .Fight4
+;	ifequal 3, .Fight3
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight4:
+;	checkevent EVENT_RESTORED_POWER_TO_KANTO
+;	iftrue .LoadFight4
+;.Fight3:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight3
+;.Fight2:
+;	checkflag ENGINE_FLYPOINT_BLACKTHORN
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkflag ENGINE_FLYPOINT_CIANWOOD
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer CAMPER, TODD1
 	startbattle
@@ -145,123 +146,124 @@ TrainerCamperTodd1:
 	clearflag ENGINE_TODD
 	end
 
-.LoadFight1:
-	loadtrainer CAMPER, TODD2
-	startbattle
-	reloadmapafterbattle
-	loadvar wToddFightCount, 2
-	clearflag ENGINE_TODD
-	end
-
-.LoadFight2:
-	loadtrainer CAMPER, TODD3
-	startbattle
-	reloadmapafterbattle
-	loadvar wToddFightCount, 3
-	clearflag ENGINE_TODD
-	end
-
-.LoadFight3:
-	loadtrainer CAMPER, TODD4
-	startbattle
-	reloadmapafterbattle
-	loadvar wToddFightCount, 4
-	clearflag ENGINE_TODD
-	end
-
-.LoadFight4:
-	loadtrainer CAMPER, TODD5
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_TODD
-	end
-
-.SaleIsOn:
-	writetext CamperToddSaleText
-	waitbutton
-	closetext
-	end
-
-.AskNumber:
-	jumpstd asknumber1m
-	end
-
-.AskNumber2:
-	jumpstd asknumber2m
-	end
-
-.RegisteredNumber:
-	jumpstd registerednumberm
-	end
-
-.NumberAccepted:
-	jumpstd numberacceptedm
-	end
-
-.NumberDeclined:
-	jumpstd numberdeclinedm
-	end
-
-.PhoneFull:
-	jumpstd phonefullm
-	end
-
-.RematchStd:
-	jumpstd rematchm
-	end
+;.LoadFight1:
+;	loadtrainer CAMPER, TODD2
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wToddFightCount, 2
+;	clearflag ENGINE_TODD
+;	end
+;
+;.LoadFight2:
+;	loadtrainer CAMPER, TODD3
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wToddFightCount, 3
+;	clearflag ENGINE_TODD
+;	end
+;
+;.LoadFight3:
+;	loadtrainer CAMPER, TODD4
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wToddFightCount, 4
+;	clearflag ENGINE_TODD
+;	end
+;
+;.LoadFight4:
+;	loadtrainer CAMPER, TODD5
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_TODD
+;	end
+;
+;.SaleIsOn:
+;	writetext CamperToddSaleText
+;	waitbutton
+;	closetext
+;	end
+;
+;.AskNumber:
+;	jumpstd asknumber1m
+;	end
+;
+;.AskNumber2:
+;	jumpstd asknumber2m
+;	end
+;
+;.RegisteredNumber:
+;	jumpstd registerednumberm
+;	end
+;
+;.NumberAccepted:
+;	jumpstd numberacceptedm
+;	end
+;
+;.NumberDeclined:
+;	jumpstd numberdeclinedm
+;	end
+;
+;.PhoneFull:
+;	jumpstd phonefullm
+;	end
+;
+;.RematchStd:
+;	jumpstd rematchm
+;	end
 
 TrainerPicnickerGina1:
 	trainer PICNICKER, GINA1, EVENT_BEAT_PICNICKER_GINA, PicnickerGina1SeenText, PicnickerGina1BeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_PICNICKER_GINA
+;	writecode VAR_CALLERID, PHONE_PICNICKER_GINA
 	endifjustbattled
 	opentext
 	checkflag ENGINE_GINA
 	iftrue .Rematch
-	checkflag ENGINE_GINA_HAS_LEAF_STONE
-	iftrue .LeafStone
-	checkcellnum PHONE_PICNICKER_GINA
-	iftrue .NumberAccepted
-	checkevent EVENT_GINA_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskAgain
-	writetext PicnickerGina1AfterText
-	buttonsound
-	setevent EVENT_GINA_ASKED_FOR_PHONE_NUMBER
-	scall .AskNumber1
-	jump .FinishAsk
-
-.AskAgain:
-	scall .AskNumber2
-.FinishAsk:
-	askforphonenumber PHONE_PICNICKER_GINA
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
-	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	trainertotext PICNICKER, GINA1, MEM_BUFFER_0
-	scall .RegisteredNumber
-	jump .NumberAccepted
-
+	end
+;	checkflag ENGINE_GINA_HAS_LEAF_STONE
+;	iftrue .LeafStone
+;	checkcellnum PHONE_PICNICKER_GINA
+;	iftrue .NumberAccepted
+;	checkevent EVENT_GINA_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskAgain
+;	writetext PicnickerGina1AfterText
+;	buttonsound
+;	setevent EVENT_GINA_ASKED_FOR_PHONE_NUMBER
+;	scall .AskNumber1
+;	jump .FinishAsk
+;
+;.AskAgain:
+;	scall .AskNumber2
+;.FinishAsk:
+;	askforphonenumber PHONE_PICNICKER_GINA
+;	ifequal PHONE_CONTACTS_FULL, .PhoneFull
+;	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
+;	trainertotext PICNICKER, GINA1, MEM_BUFFER_0
+;	scall .RegisteredNumber
+;	jump .NumberAccepted
+;
 .Rematch:
-	scall .RematchStd
+;	scall .RematchStd
 	winlosstext PicnickerGina1BeatenText, 0
-	copybytetovar wGinaFightCount
-	ifequal 4, .Fight4
-	ifequal 3, .Fight3
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight4:
-	checkevent EVENT_RESTORED_POWER_TO_KANTO
-	iftrue .LoadFight4
-.Fight3:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight3
-.Fight2:
-	checkevent EVENT_CLEARED_RADIO_TOWER
-	iftrue .LoadFight2
-.Fight1:
-	checkflag ENGINE_FLYPOINT_MAHOGANY
-	iftrue .LoadFight1
+;	copybytetovar wGinaFightCount
+;	ifequal 4, .Fight4
+;	ifequal 3, .Fight3
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight4:
+;	checkevent EVENT_RESTORED_POWER_TO_KANTO
+;	iftrue .LoadFight4
+;.Fight3:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight3
+;.Fight2:
+;	checkevent EVENT_CLEARED_RADIO_TOWER
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkflag ENGINE_FLYPOINT_MAHOGANY
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer PICNICKER, GINA1
 	startbattle
@@ -270,83 +272,83 @@ TrainerPicnickerGina1:
 	clearflag ENGINE_GINA
 	end
 
-.LoadFight1:
-	loadtrainer PICNICKER, GINA2
-	startbattle
-	reloadmapafterbattle
-	loadvar wGinaFightCount, 2
-	clearflag ENGINE_GINA
-	end
-
-.LoadFight2:
-	loadtrainer PICNICKER, GINA3
-	startbattle
-	reloadmapafterbattle
-	loadvar wGinaFightCount, 3
-	clearflag ENGINE_GINA
-	end
-
-.LoadFight3:
-	loadtrainer PICNICKER, GINA4
-	startbattle
-	reloadmapafterbattle
-	loadvar wGinaFightCount, 4
-	clearflag ENGINE_GINA
-	end
-
-.LoadFight4:
-	loadtrainer PICNICKER, GINA5
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_GINA
-	end
-
-.LeafStone:
-	scall .Gift
-	verbosegiveitem LEAF_STONE
-	iffalse .BagFull
-	clearflag ENGINE_GINA_HAS_LEAF_STONE
-	setevent EVENT_GINA_GAVE_LEAF_STONE
-	jump .NumberAccepted
-
-.BagFull:
-	jump .PackFull
-
-.AskNumber1:
-	jumpstd asknumber1f
-	end
-
-.AskNumber2:
-	jumpstd asknumber2f
-	end
-
-.RegisteredNumber:
-	jumpstd registerednumberf
-	end
-
-.NumberAccepted:
-	jumpstd numberacceptedf
-	end
-
-.NumberDeclined:
-	jumpstd numberdeclinedf
-	end
-
-.PhoneFull:
-	jumpstd phonefullf
-	end
-
-.RematchStd:
-	jumpstd rematchf
-	end
-
-.Gift:
-	jumpstd giftf
-	end
-
-.PackFull:
-	jumpstd packfullf
-	end
+;.LoadFight1:
+;	loadtrainer PICNICKER, GINA2
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wGinaFightCount, 2
+;	clearflag ENGINE_GINA
+;	end
+;
+;.LoadFight2:
+;	loadtrainer PICNICKER, GINA3
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wGinaFightCount, 3
+;	clearflag ENGINE_GINA
+;	end
+;
+;.LoadFight3:
+;	loadtrainer PICNICKER, GINA4
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wGinaFightCount, 4
+;	clearflag ENGINE_GINA
+;	end
+;
+;.LoadFight4:
+;	loadtrainer PICNICKER, GINA5
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_GINA
+;	end
+;
+;.LeafStone:
+;	scall .Gift
+;	verbosegiveitem LEAF_STONE
+;	iffalse .BagFull
+;	clearflag ENGINE_GINA_HAS_LEAF_STONE
+;	setevent EVENT_GINA_GAVE_LEAF_STONE
+;	jump .NumberAccepted
+;
+;.BagFull:
+;	jump .PackFull
+;
+;.AskNumber1:
+;	jumpstd asknumber1f
+;	end
+;
+;.AskNumber2:
+;	jumpstd asknumber2f
+;	end
+;
+;.RegisteredNumber:
+;	jumpstd registerednumberf
+;	end
+;
+;.NumberAccepted:
+;	jumpstd numberacceptedf
+;	end
+;
+;.NumberDeclined:
+;	jumpstd numberdeclinedf
+;	end
+;
+;.PhoneFull:
+;	jumpstd phonefullf
+;	end
+;
+;.RematchStd:
+;	jumpstd rematchf
+;	end
+;
+;.Gift:
+;	jumpstd giftf
+;	end
+;
+;.PackFull:
+;	jumpstd packfullf
+;	end
 
 OfficerKeithScript:
 	faceplayer

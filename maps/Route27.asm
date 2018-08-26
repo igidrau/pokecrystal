@@ -61,46 +61,47 @@ TrainerBirdKeeperJose2:
 	trainer BIRD_KEEPER, JOSE2, EVENT_BEAT_BIRD_KEEPER_JOSE2, BirdKeeperJose2SeenText, BirdKeeperJose2BeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_BIRDKEEPER_JOSE
+;	writecode VAR_CALLERID, PHONE_BIRDKEEPER_JOSE
 	endifjustbattled
 	opentext
 	checkflag ENGINE_JOSE
 	iftrue .WantsBattle
-	checkflag ENGINE_JOSE_HAS_STAR_PIECE
-	iftrue .HasStarPiece
-	checkcellnum PHONE_BIRDKEEPER_JOSE
-	iftrue .NumberAccepted
-	checkevent EVENT_JOSE_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskedAlready
-	writetext BirdKeeperJose2AfterBattleText
-	buttonsound
-	setevent EVENT_JOSE_ASKED_FOR_PHONE_NUMBER
-	scall .AskNumber1
-	jump .AskForNumber
-
-.AskedAlready:
-	scall .AskNumber2
-.AskForNumber:
-	askforphonenumber PHONE_BIRDKEEPER_JOSE
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
-	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	trainertotext BIRD_KEEPER, JOSE2, MEM_BUFFER_0
-	scall .RegisteredNumber
-	jump .NumberAccepted
-
+	end
+;	checkflag ENGINE_JOSE_HAS_STAR_PIECE
+;	iftrue .HasStarPiece
+;	checkcellnum PHONE_BIRDKEEPER_JOSE
+;	iftrue .NumberAccepted
+;	checkevent EVENT_JOSE_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskedAlready
+;	writetext BirdKeeperJose2AfterBattleText
+;	buttonsound
+;	setevent EVENT_JOSE_ASKED_FOR_PHONE_NUMBER
+;	scall .AskNumber1
+;	jump .AskForNumber
+;
+;.AskedAlready:
+;	scall .AskNumber2
+;.AskForNumber:
+;	askforphonenumber PHONE_BIRDKEEPER_JOSE
+;	ifequal PHONE_CONTACTS_FULL, .PhoneFull
+;	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
+;	trainertotext BIRD_KEEPER, JOSE2, MEM_BUFFER_0
+;	scall .RegisteredNumber
+;	jump .NumberAccepted
+;
 .WantsBattle:
-	scall .Rematch
+;	scall .Rematch
 	winlosstext BirdKeeperJose2BeatenText, 0
-	copybytetovar wJoseFightCount
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight2:
-	checkevent EVENT_RESTORED_POWER_TO_KANTO
-	iftrue .LoadFight2
-.Fight1:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight1
+;	copybytetovar wJoseFightCount
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight2:
+;	checkevent EVENT_RESTORED_POWER_TO_KANTO
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer BIRD_KEEPER, JOSE2
 	startbattle
@@ -109,66 +110,66 @@ TrainerBirdKeeperJose2:
 	clearflag ENGINE_JOSE
 	end
 
-.LoadFight1:
-	loadtrainer BIRD_KEEPER, JOSE1
-	startbattle
-	reloadmapafterbattle
-	loadvar wJoseFightCount, 2
-	clearflag ENGINE_JOSE
-	end
-
-.LoadFight2:
-	loadtrainer BIRD_KEEPER, JOSE3
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_JOSE
-	end
-
-.HasStarPiece:
-	scall .Gift
-	verbosegiveitem STAR_PIECE
-	iffalse .NoRoom
-	clearflag ENGINE_JOSE_HAS_STAR_PIECE
-	jump .NumberAccepted
-
-.NoRoom:
-	jump .PackFull
-
-.AskNumber1:
-	jumpstd asknumber1m
-	end
-
-.AskNumber2:
-	jumpstd asknumber2m
-	end
-
-.RegisteredNumber:
-	jumpstd registerednumberm
-	end
-
-.NumberAccepted:
-	jumpstd numberacceptedm
-	end
-
-.NumberDeclined:
-	jumpstd numberdeclinedm
-	end
-
-.PhoneFull:
-	jumpstd phonefullm
-	end
-
-.Rematch:
-	jumpstd rematchm
-	end
-
-.Gift:
-	jumpstd giftm
-	end
-
-.PackFull:
-	jumpstd packfullm
-	end
+;.LoadFight1:
+;	loadtrainer BIRD_KEEPER, JOSE1
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wJoseFightCount, 2
+;	clearflag ENGINE_JOSE
+;	end
+;
+;.LoadFight2:
+;	loadtrainer BIRD_KEEPER, JOSE3
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_JOSE
+;	end
+;
+;.HasStarPiece:
+;	scall .Gift
+;	verbosegiveitem STAR_PIECE
+;	iffalse .NoRoom
+;	clearflag ENGINE_JOSE_HAS_STAR_PIECE
+;	jump .NumberAccepted
+;
+;.NoRoom:
+;	jump .PackFull
+;
+;.AskNumber1:
+;	jumpstd asknumber1m
+;	end
+;
+;.AskNumber2:
+;	jumpstd asknumber2m
+;	end
+;
+;.RegisteredNumber:
+;	jumpstd registerednumberm
+;	end
+;
+;.NumberAccepted:
+;	jumpstd numberacceptedm
+;	end
+;
+;.NumberDeclined:
+;	jumpstd numberdeclinedm
+;	end
+;
+;.PhoneFull:
+;	jumpstd phonefullm
+;	end
+;
+;.Rematch:
+;	jumpstd rematchm
+;	end
+;
+;.Gift:
+;	jumpstd giftm
+;	end
+;
+;.PackFull:
+;	jumpstd packfullm
+;	end
 
 TrainerCooltrainermBlake:
 	trainer COOLTRAINERM, BLAKE, EVENT_BEAT_COOLTRAINERM_BLAKE, CooltrainermBlakeSeenText, CooltrainermBlakeBeatenText, 0, .Script
@@ -196,44 +197,45 @@ TrainerCooltrainerfReena:
 	trainer COOLTRAINERF, REENA1, EVENT_BEAT_COOLTRAINERF_REENA, CooltrainerfReenaSeenText, CooltrainerfReenaBeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_COOLTRAINERF_REENA
+;	writecode VAR_CALLERID, PHONE_COOLTRAINERF_REENA
 	endifjustbattled
 	opentext
 	checkflag ENGINE_REENA
 	iftrue .WantsBattle
-	checkcellnum PHONE_COOLTRAINERF_REENA
-	iftrue .NumberAccepted
-	checkevent EVENT_REENA_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskedAlready
-	writetext CooltrainerfReenaAfterBattleText
-	buttonsound
-	setevent EVENT_REENA_ASKED_FOR_PHONE_NUMBER
-	scall .AskNumber1
-	jump .AskForNumber
-
-.AskedAlready:
-	scall .AskNumber2
-.AskForNumber:
-	askforphonenumber PHONE_COOLTRAINERF_REENA
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
-	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	trainertotext COOLTRAINERF, REENA1, MEM_BUFFER_0
-	scall .RegisteredNumber
-	jump .NumberAccepted
-
+	end
+;	checkcellnum PHONE_COOLTRAINERF_REENA
+;	iftrue .NumberAccepted
+;	checkevent EVENT_REENA_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskedAlready
+;	writetext CooltrainerfReenaAfterBattleText
+;	buttonsound
+;	setevent EVENT_REENA_ASKED_FOR_PHONE_NUMBER
+;	scall .AskNumber1
+;	jump .AskForNumber
+;
+;.AskedAlready:
+;	scall .AskNumber2
+;.AskForNumber:
+;	askforphonenumber PHONE_COOLTRAINERF_REENA
+;	ifequal PHONE_CONTACTS_FULL, .PhoneFull
+;	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
+;	trainertotext COOLTRAINERF, REENA1, MEM_BUFFER_0
+;	scall .RegisteredNumber
+;	jump .NumberAccepted
+;
 .WantsBattle:
-	scall .Rematch
+;	scall .Rematch
 	winlosstext CooltrainerfReenaBeatenText, 0
-	copybytetovar wReenaFightCount
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight2:
-	checkevent EVENT_RESTORED_POWER_TO_KANTO
-	iftrue .LoadFight2
-.Fight1:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight1
+;	copybytetovar wReenaFightCount
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight2:
+;	checkevent EVENT_RESTORED_POWER_TO_KANTO
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer COOLTRAINERF, REENA1
 	startbattle
@@ -242,48 +244,48 @@ TrainerCooltrainerfReena:
 	clearflag ENGINE_REENA
 	end
 
-.LoadFight1:
-	loadtrainer COOLTRAINERF, REENA2
-	startbattle
-	reloadmapafterbattle
-	loadvar wReenaFightCount, 2
-	clearflag ENGINE_REENA
-	end
-
-.LoadFight2:
-	loadtrainer COOLTRAINERF, REENA3
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_REENA
-	end
-
-.AskNumber1:
-	jumpstd asknumber1f
-	end
-
-.AskNumber2:
-	jumpstd asknumber2f
-	end
-
-.RegisteredNumber:
-	jumpstd registerednumberf
-	end
-
-.NumberAccepted:
-	jumpstd numberacceptedf
-	end
-
-.NumberDeclined:
-	jumpstd numberdeclinedf
-	end
-
-.PhoneFull:
-	jumpstd phonefullf
-	end
-
-.Rematch:
-	jumpstd rematchf
-	end
+;.LoadFight1:
+;	loadtrainer COOLTRAINERF, REENA2
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wReenaFightCount, 2
+;	clearflag ENGINE_REENA
+;	end
+;
+;.LoadFight2:
+;	loadtrainer COOLTRAINERF, REENA3
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_REENA
+;	end
+;
+;.AskNumber1:
+;	jumpstd asknumber1f
+;	end
+;
+;.AskNumber2:
+;	jumpstd asknumber2f
+;	end
+;
+;.RegisteredNumber:
+;	jumpstd registerednumberf
+;	end
+;
+;.NumberAccepted:
+;	jumpstd numberacceptedf
+;	end
+;
+;.NumberDeclined:
+;	jumpstd numberdeclinedf
+;	end
+;
+;.PhoneFull:
+;	jumpstd phonefullf
+;	end
+;
+;.Rematch:
+;	jumpstd rematchf
+;	end
 
 TrainerCooltrainerfMegan:
 	trainer COOLTRAINERF, MEGAN, EVENT_BEAT_COOLTRAINERF_MEGAN, CooltrainerfMeganSeenText, CooltrainerfMeganBeatenText, 0, .Script

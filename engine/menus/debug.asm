@@ -1,6 +1,6 @@
-INCLUDE "engine/menus/debug_menu.asm"
+;INCLUDE "engine/menus/debug_menu.asm"
 
-	const_def $6a
+	const_def $5a
 	const DEBUGTEST_UP_ARROW ; $6a
 	const DEBUGTEST_TICKS    ; $6b
 	const DEBUGTEST_WHITE    ; $6c
@@ -42,6 +42,7 @@ ColorTest:
 	call DisableLCD
 	call Function81948
 	call Function8197c
+	call Function8197cBis
 	call Function819a7
 	call Function818f4
 	call EnableLCD
@@ -151,6 +152,28 @@ Function81948:
 Function8197c:
 	ld hl, DebugColorTestGFX + 1 tiles
 	ld de, vTiles2 tile DEBUGTEST_UP_ARROW
+	ld bc, 22 tiles
+	call CopyBytes
+	ld hl, DebugColorTestGFX
+	ld de, vTiles0
+	ld bc, 1 tiles
+	call CopyBytes
+	call LoadStandardFont
+	ld hl, vTiles1
+	lb bc, 8, 0
+.asm_8199d
+	ld a, [hl]
+	xor $ff
+	ld [hli], a
+	dec bc
+	ld a, c
+	or b
+	jr nz, .asm_8199d
+	ret
+
+Function8197cBis:
+	ld hl, DebugColorTestGFX + 1 tiles
+	ld de, vTiles2 tile $7a
 	ld bc, 22 tiles
 	call CopyBytes
 	ld hl, DebugColorTestGFX
@@ -340,17 +363,17 @@ Function81adb:
 	ld a, [wd003]
 	and a
 	jr z, .asm_81b66
-	ld de, String_81baf
+	ld de, String_Shiny
 	jr .asm_81b69
 
 .asm_81b66
-	ld de, String_81bb4
+	ld de, String_Normal
 
 .asm_81b69
-	hlcoord 7, 17
+	hlcoord 8, 17
 	call PlaceString
 	hlcoord 0, 17
-	ld de, String_81bb9
+	ld de, String_PressA
 	call PlaceString
 	jr .asm_81ba9
 
@@ -375,9 +398,9 @@ Function81adb:
 	ld [wJumptableIndex], a
 	ret
 
-String_81baf: db "レア", DEBUGTEST_BLACK, DEBUGTEST_BLACK, "@" ; rare (shiny)
-String_81bb4: db "ノーマル@" ; normal
-String_81bb9: db DEBUGTEST_A, "きりかえ▶@" ; (A) switches
+String_Shiny: db "Shiny@" ; "レア", DEBUGTEST_BLACK, DEBUGTEST_BLACK, "@" ; rare (shiny)
+String_Normal: db "Normal@" ; "ノーマル@" ; normal
+String_PressA: db "Press ", DEBUGTEST_A, "@" ; DEBUGTEST_A, "きりかえ▶@" ; (A) switches
 
 Function81bc0:
 	decoord 0, 11, wAttrMap
@@ -665,8 +688,8 @@ Function81d8e:
 	ld bc, $a0
 	ld a, DEBUGTEST_BLACK
 	call ByteFill
-	hlcoord 2, 12
-	ld de, String_81fcd
+	hlcoord 1, 12
+	ld de, String_FinishedYN
 	call PlaceString
 	xor a
 	ld [wd004], a
@@ -677,9 +700,12 @@ Function81d8e:
 
 Function81daf:
 	ld hl, hJoyPressed
+;	ld a, [hl]
+;	and B_BUTTON
+;	jr nz, .asm_81dbb
 	ld a, [hl]
-	and B_BUTTON
-	jr nz, .asm_81dbb
+	and A_BUTTON
+	jp nz, DebugMenu ; .asm_81dbb ; 
 	call Function81dc7
 	ret
 
@@ -745,7 +771,7 @@ Function81df4:
 	ld a, [wd265]
 	ld [wPutativeTMHMMove], a
 	call GetMoveName
-	hlcoord 10, 12
+	hlcoord 8, 14
 	call PlaceString
 	ld a, [wd004]
 	call Function81e55
@@ -753,17 +779,17 @@ Function81df4:
 	predef CanLearnTMHMMove
 	ld a, c
 	and a
-	ld de, String_81e46
+	ld de, String_Can
 	jr nz, .asm_81e3f
-	ld de, String_81e4d
+	ld de, String_Cannot
 
 .asm_81e3f
-	hlcoord 10, 14
+	hlcoord 10, 15
 	call PlaceString
 	ret
 
-String_81e46: db "おぼえられる@" ; can be taught
-String_81e4d: db "おぼえられない@" ; cannot be taught
+String_Can: db "Can learn @" ; "おぼえられる@" ; can be taught
+String_Cannot: db "Can't learn@" ; "おぼえられない@" ; cannot be taught
 
 Function81e55:
 	cp $32
@@ -1027,10 +1053,10 @@ Function81f5e:
 	call ClearSprites
 	ret
 
-String_81fcd:
-	db   "おわりますか？" ; Are you finished?
-	next "はい<DOT><DOT><DOT>", DEBUGTEST_A ; YES...(A)
-	next "いいえ<DOT><DOT>", DEBUGTEST_B ; NO..(B)
+String_FinishedYN:
+	db   "Finished?" ; "おわりますか？" ; Are you finished?
+	next "Yes ", DEBUGTEST_A ; "はい<DOT><DOT><DOT>", DEBUGTEST_A ; YES...(A)
+	next "No  ", DEBUGTEST_B ; "いいえ<DOT><DOT>", DEBUGTEST_B ; NO..(B)
 	db   "@"
 
 DebugColorTestGFX:
