@@ -349,5 +349,5 @@ MainMenu_MysteryGift:
 	ret
 
 MainMenu_Debug:
-	farcall DebugMenu ; ColorTest
+	farcall DebugMenu ; ColorTest ; 
 	ret
