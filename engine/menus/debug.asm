@@ -43,7 +43,7 @@ ColorTest:
 	call DisableLCD
 	call Function81948
 	call LoadDebugTiles
-	call LoadDebugTilesBis
+	call LoadDebugTilesBis 		; This is truly awful, I should find a way to do that better (The purpose is to load a black tile in place of the font's space)
 	call LoadDebugBGPalettes
 	call TrainersOrPokemons
 	call EnableLCD
