@@ -23,6 +23,7 @@ SimpleMultiply::
 	pop bc
 	ret
 
+
 SimpleDivide::
 ; Divide a by c. Return quotient b and remainder a.
 	ld b, 0

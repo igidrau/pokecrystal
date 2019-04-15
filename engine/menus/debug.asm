@@ -1,28 +1,26 @@
-;INCLUDE "engine/menus/debug_menu.asm"
-
 	const_def $5a
-	const DEBUGTEST_UP_ARROW ; $6a
-	const DEBUGTEST_TICKS    ; $6b
-	const DEBUGTEST_WHITE    ; $6c
-	const DEBUGTEST_LIGHT    ; $6d
-	const DEBUGTEST_DARK     ; $6e
-	const DEBUGTEST_BLACK    ; $6f
-	const DEBUGTEST_0        ; $70
-	const DEBUGTEST_1        ; $71
-	const DEBUGTEST_2        ; $72
-	const DEBUGTEST_3        ; $73
-	const DEBUGTEST_4        ; $74
-	const DEBUGTEST_5        ; $75
-	const DEBUGTEST_6        ; $76
-	const DEBUGTEST_7        ; $77
-	const DEBUGTEST_8        ; $78
-	const DEBUGTEST_9        ; $79
-	const DEBUGTEST_A        ; $7a
-	const DEBUGTEST_B        ; $7b
-	const DEBUGTEST_C        ; $7c
-	const DEBUGTEST_D        ; $7d
-	const DEBUGTEST_E        ; $7e
-	const DEBUGTEST_F        ; $7f
+	const DEBUGTEST_UP_ARROW ; $5a
+	const DEBUGTEST_TICKS    ; $5b
+	const DEBUGTEST_WHITE    ; $5c
+	const DEBUGTEST_LIGHT    ; $5d
+	const DEBUGTEST_DARK     ; $5e
+	const DEBUGTEST_BLACK    ; $5f
+	const DEBUGTEST_0        ; $60
+	const DEBUGTEST_1        ; $61
+	const DEBUGTEST_2        ; $62
+	const DEBUGTEST_3        ; $63
+	const DEBUGTEST_4        ; $64
+	const DEBUGTEST_5        ; $65
+	const DEBUGTEST_6        ; $66
+	const DEBUGTEST_7        ; $67
+	const DEBUGTEST_8        ; $68
+	const DEBUGTEST_9        ; $69
+	const DEBUGTEST_A        ; $6a
+	const DEBUGTEST_B        ; $6b
+	const DEBUGTEST_C        ; $6c
+	const DEBUGTEST_D        ; $6d
+	const DEBUGTEST_E        ; $6e
+	const DEBUGTEST_F        ; $6f
 
 ColorTest:
 ; A debug menu to test monster and trainer palettes at runtime.
@@ -43,7 +41,6 @@ ColorTest:
 	call DisableLCD
 	call Function81948
 	call LoadDebugTiles
-	call LoadDebugTilesBis 		; This is truly awful, I should find a way to do that better (The purpose is to load a black tile in place of the font's space)
 	call LoadDebugBGPalettes
 	call TrainersOrPokemons
 	call EnableLCD
@@ -160,37 +157,23 @@ Function81948:
 	ret
 
 LoadDebugTiles:
-	ld hl, DebugColorTestGFX + 1 tiles
+	ld hl, DebugColorTestGFX + 1 tiles 		; BG tiles (the whole file except the arrow)
 	ld de, vTiles2 tile DEBUGTEST_UP_ARROW
 	ld bc, 22 tiles
 	call CopyBytes
-	ld hl, DebugColorTestGFX
-	ld de, vTiles0
-	ld bc, 1 tiles
-	call CopyBytes
-	call LoadStandardFont
-	ld hl, vTiles1
-	lb bc, 8, 0
-.asm_8199d
-	ld a, [hl]
-	xor $ff
-	ld [hli], a
-	dec bc
-	ld a, c
-	or b
-	jr nz, .asm_8199d
-	ret
 
-LoadDebugTilesBis:
-	ld hl, DebugColorTestGFX + 1 tiles
-	ld de, vTiles2 tile $7a
-	ld bc, 22 tiles
-	call CopyBytes
-	ld hl, DebugColorTestGFX
+	ld hl, DebugColorTestGFX 				; OB tiles (the arrow)
 	ld de, vTiles0
 	ld bc, 1 tiles
 	call CopyBytes
-	call LoadStandardFont
+
+											; BG tiles (a black space)
+	ld hl, DebugColorTestGFX + 6 tiles ; FontsExtra_SolidBlackGFX ; Why didn't it work ?
+	ld de, vTiles2 tile " "
+	ld bc, 1 tiles
+	call CopyBytes
+
+	call LoadStandardFont 		; Inverts the font's colour (white on black)
 	ld hl, vTiles1
 	lb bc, 8, 0
 .asm_8199d
@@ -215,15 +198,18 @@ LoadDebugBGPalettes:
 	ld de, wBGPals2
 	ld bc, 16 palettes
 	call CopyBytes
+
 	ld a, 1 << rBGPI_AUTO_INCREMENT
 	ld [rBGPI], a
 	ld hl, Palette_DebugBG
 	ld c, 8 palettes
 	xor a
 .asm_819c8
+	add a, $07
 	ld [rBGPD], a
 	dec c
 	jr nz, .asm_819c8
+
 	ld a, 1 << rOBPI_AUTO_INCREMENT
 	ld [rOBPI], a
 	ld hl, Palette_DebugOB
@@ -233,6 +219,7 @@ LoadDebugBGPalettes:
 	ld [rOBPD], a
 	dec c
 	jr nz, .asm_819d6
+
 	ld a, $94
 	ld [wc608], a
 	ld a, $52
@@ -278,7 +265,7 @@ Function81a74:
 
 .Select
 	call Function81eca
-	call Function81ac3
+	call LoopAroundPics
 	ld e, a
 	ld a, [wcf66]
 	inc a
@@ -293,7 +280,7 @@ Function81a74:
 	dec a
 	cp $ff
 	jr nz, .asm_81aba
-	call Function81ac3
+	call LoopAroundPics
 	dec a
 
 .asm_81aba
@@ -302,15 +289,15 @@ Function81a74:
 	ld [wJumptableIndex], a
 	ret
 
-Function81ac3:
+LoopAroundPics:
 ; Looping back around the pic set.
 	ld a, [wd002]
 	and a
-	jr nz, .asm_81acc
+	jr nz, .trainers
 	ld a, NUM_POKEMON ; CELEBI
 	ret
 
-.asm_81acc
+.trainers
 	ld a, NUM_TRAINER_CLASSES - 1 ; MYSTICALMAN
 	ret
 
@@ -377,14 +364,14 @@ Function81adb:
 	predef PlaceGraphic
 	ld a, [wd003]
 	and a
-	jr z, .asm_81b66
+	jr z, .normalString
 	ld de, String_Shiny
-	jr .asm_81b69
+	jr .placeNormalShineyString
 
-.asm_81b66
+.normalString
 	ld de, String_Normal
 
-.asm_81b69
+.placeNormalShineyString
 	hlcoord 8, 17
 	call PlaceString
 	hlcoord 0, 17
@@ -415,7 +402,7 @@ Function81adb:
 
 String_Shiny: db "Shiny@" ; "レア", DEBUGTEST_BLACK, DEBUGTEST_BLACK, "@" ; rare (shiny)
 String_Normal: db "Normal@" ; "ノーマル@" ; normal
-String_PressA: db "Press ", DEBUGTEST_A, "@" ; DEBUGTEST_A, "きりかえ▶@" ; (A) switches
+String_PressA: db "Press ", DEBUGTEST_A, "@" ; $7c, $7d, $7e, $7f, $80, $81, "@" ; DEBUGTEST_A, "きりかえ▶@" ; (A) switches
 
 DispRulers:
 	decoord 0, 11, wAttrMap
@@ -895,7 +882,7 @@ Function81eca:
 	add hl, hl
 	ld de, wOverworldMapBlocks
 	add hl, de
-	ld e, l
+	ld e, l 					; de = ([wcf66]*$400+$c800)%$ff
 	ld d, h
 	ld hl, wc608
 	ld bc, 4

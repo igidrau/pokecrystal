@@ -207,11 +207,11 @@ PalletTown_MapEvents:
 	db 3 ; warp events
 	warp_event  5,  5, PLAYERS_HOUSE_1F, 1
 	warp_event 13,  5, BLUES_HOUSE, 1
-	warp_event 12, 11, OAKS_LAB, 1
+	warp_event 12, 11, OAKS_LAB, 1 ; ELMS_LAB, 1
 
-	db 0 ; coord events
-	;coord_event 8, 0, SCENE_PALLETTOWN_OAK_STOP, PalletTown_OakStopsYou1
-	;coord_event 9, 0, SCENE_PALLETTOWN_OAK_STOP, PalletTown_OakStopsYou2
+	db 2 ; coord events
+	coord_event 8, 0, SCENE_PALLETTOWN_OAK_STOP, PalletTown_OakStopsYou1
+	coord_event 9, 0, SCENE_PALLETTOWN_OAK_STOP, PalletTown_OakStopsYou2
 
 
 	db 4 ; bg events
