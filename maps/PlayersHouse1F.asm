@@ -298,6 +298,7 @@ HurryUpElmIsWaitingText:
 	para "Hurry up, baby!"
 	done
 
+
 AfterGotAMonText:
 	text "So, what was PROF."
 	line "ELM's errand?"
