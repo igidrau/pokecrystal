@@ -145,7 +145,7 @@ ScriptCommandTable:
 	dw Script_loadmenu                   ; 4f
 	dw Script_closewindow                ; 50
 	dw Script_jumptextfaceplayer         ; 51
-if _CRYSTAL
+if _PIKA
 	dw Script_farjumptext                ; 52
 endc
 	dw Script_jumptext                   ; 53
@@ -330,7 +330,7 @@ JumpTextScript:
 	closetext
 	end
 
-if _CRYSTAL
+if _PIKA
 
 Script_farjumptext:
 ; script command 0x52
@@ -687,13 +687,13 @@ Script_phonecall:
 	ld d, a
 	ld a, [wScriptBank]
 	ld b, a
-	farcall PhoneCall
+;	farcall PhoneCall
 	ret
 
 Script_hangup:
 ; script command 0x99
 
-	farcall HangUp
+;	farcall HangUp
 	ret
 
 Script_askforphonenumber:
@@ -704,7 +704,7 @@ Script_askforphonenumber:
 	jr c, .refused
 	call GetScriptByte
 	ld c, a
-	farcall AddPhoneNumber
+;	farcall AddPhoneNumber
 	jr c, .phonefull
 	xor a ; PHONE_CONTACT_GOT
 	jr .done
@@ -1386,8 +1386,8 @@ Script_reloadmapafterbattle:
 	ld a, [wBattleResult]
 	bit BATTLERESULT_BOX_FULL, a
 	jr z, .done
-	ld b, BANK(Script_SpecialBillCall)
-	ld de, Script_SpecialBillCall
+;	ld b, BANK(Script_SpecialBillCall)
+;	ld de, Script_SpecialBillCall
 	farcall LoadScriptBDE
 .done
 	jp Script_reloadmap
@@ -2230,7 +2230,7 @@ Script_addcellnum:
 	ld [wScriptVar], a
 	call GetScriptByte
 	ld c, a
-	farcall AddPhoneNumber
+;	farcall AddPhoneNumber
 	ret nc
 	ld a, TRUE
 	ld [wScriptVar], a
@@ -2244,7 +2244,7 @@ Script_delcellnum:
 	ld [wScriptVar], a
 	call GetScriptByte
 	ld c, a
-	farcall DelCellNum
+;	farcall DelCellNum
 	ret nc
 	ld a, TRUE
 	ld [wScriptVar], a
@@ -2259,7 +2259,7 @@ Script_checkcellnum:
 	ld [wScriptVar], a
 	call GetScriptByte
 	ld c, a
-	farcall CheckCellNum
+;	farcall CheckCellNum
 	ret nc
 	ld a, TRUE
 	ld [wScriptVar], a
@@ -2270,16 +2270,16 @@ Script_specialphonecall:
 ; parameters: call_id
 
 	call GetScriptByte
-	ld [wSpecialPhoneCallID], a
+;	ld [wSpecialPhoneCallID], a
 	call GetScriptByte
-	ld [wSpecialPhoneCallID + 1], a
+;	ld [wSpecialPhoneCallID + 1], a
 	ret
 
 Script_checkphonecall:
 ; script command 0x9d
 ; returns false if no special phone call is stored
 
-	ld a, [wSpecialPhoneCallID]
+;	ld a, [wSpecialPhoneCallID]
 	and a
 	jr z, .ok
 	ld a, TRUE

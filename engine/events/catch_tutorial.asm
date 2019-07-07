@@ -30,6 +30,8 @@ CatchTutorial::
 
 	call .LoadDudeData
 
+	predef TryAddMonToParty
+
 	xor a
 	ld [hJoyDown], a
 	ld [hJoyPressed], a
@@ -43,6 +45,7 @@ CatchTutorial::
 	call StartAutoInput
 	callfar StartBattle
 	call StopAutoInput
+	call .removeMon
 	pop af
 
 	ld [wOptions], a
@@ -51,6 +54,13 @@ CatchTutorial::
 	ld bc, NAME_LENGTH
 	call CopyBytes
 	ret
+
+.removeMon:
+	ld [wCurPartyMon], a
+    xor a ; REMOVE_PARTY
+    ld [wPokemonWithdrawDepositParameter], a
+    farcall RemoveMonFromPartyOrBox
+    ret
 
 .LoadDudeData:
 	ld hl, wDudeNumItems
@@ -75,7 +85,7 @@ CatchTutorial::
 	ret
 
 .Dude:
-	db "DUDE@"
+	db "OAK@"
 
 .AutoInput:
 	db NO_INPUT, $ff ; end

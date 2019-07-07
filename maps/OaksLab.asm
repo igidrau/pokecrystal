@@ -3,31 +3,40 @@
 	const OAKSLAB_SCIENTIST1
 	const OAKSLAB_SCIENTIST2
 	const OAKSLAB_SCIENTIST3
+	const OAKSLAB_RIVAL
 
 OaksLab_MapScripts:
-	db 0 ; scene scripts
+	db 5 ; scene scripts
+	scene_script .OaksNotThere
+	scene_script .EnterOaksLab
+	scene_script .CantLeave
+	scene_script .RivalFight
+	scene_script .DummyScene
 
 	db 0 ; callbacks
 
+.OaksNotThere
+	end
+
+.EnterOaksLab:
+	priorityjump .EnterOaksLabScript
+	end
+
+.CantLeave
+.RivalFight
 .DummyScene:
+	end
+
+.EnterOaksLabScript:
+	applymovement PLAYER, OaksLab_WalkUpToOakMovement
+	opentext
+
+	setscene 3
 	end
 
 Oak:
 	faceplayer
 	opentext
-	checkevent EVENT_OPENED_MT_SILVER
-	iftrue .CheckPokedex
-	checkevent EVENT_TALKED_TO_OAK_IN_KANTO
-	iftrue .CheckBadges
-	writetext OakWelcomeKantoText
-	buttonsound
-	setevent EVENT_TALKED_TO_OAK_IN_KANTO
-.CheckBadges:
-	checkcode VAR_BADGES
-	ifequal NUM_BADGES, .OpenMtSilver
-	ifequal NUM_JOHTO_BADGES, .Complain
-	jump .AhGood
-
 .CheckPokedex:
 	writetext OakLabDexCheckText
 	waitbutton
@@ -37,21 +46,8 @@ Oak:
 	closetext
 	end
 
-.OpenMtSilver:
-	writetext OakOpenMtSilverText
-	buttonsound
-	setevent EVENT_OPENED_MT_SILVER
-	jump .CheckPokedex
-
-.Complain:
-	writetext OakNoKantoBadgesText
-	buttonsound
-	jump .CheckPokedex
-
-.AhGood:
-	writetext OakYesKantoBadgesText
-	buttonsound
-	jump .CheckPokedex
+Rival:
+	end
 
 OaksAssistant1Script:
 	jumptextfaceplayer OaksAssistant1Text
@@ -77,20 +73,6 @@ OaksLabTrashcan:
 OaksLabPC:
 	jumptext OaksLabPCText
 
-OakWelcomeKantoText:
-	text "OAK: Ah, <PLAY_G>!"
-	line "It's good of you"
-
-	para "to come all this"
-	line "way to KANTO."
-
-	para "What do you think"
-	line "of the trainers"
-
-	para "out here?"
-	line "Pretty tough, huh?"
-	done
-
 OakLabDexCheckText:
 	text "How is your #-"
 	line "DEX coming?"
@@ -102,84 +84,6 @@ OakLabGoodbyeText:
 	text "If you're in the"
 	line "area, I hope you"
 	cont "come visit again."
-	done
-
-OakOpenMtSilverText:
-	text "OAK: Wow! That's"
-	line "excellent!"
-
-	para "You collected the"
-	line "BADGES of GYMS in"
-	cont "KANTO. Well done!"
-
-	para "I was right in my"
-	line "assessment of you."
-
-	para "Tell you what,"
-	line "<PLAY_G>. I'll make"
-
-	para "arrangements so"
-	line "that you can go to"
-	cont "MT.SILVER."
-
-	para "MT.SILVER is a big"
-	line "mountain that is"
-
-	para "home to many wild"
-	line "#MON."
-
-	para "It's too dangerous"
-	line "for your average"
-
-	para "trainer, so it's"
-	line "off limits. But"
-
-	para "we can make an"
-	line "exception in your"
-	cont "case, <PLAY_G>."
-
-	para "Go up to INDIGO"
-	line "PLATEAU. You can"
-
-	para "reach MT.SILVER"
-	line "from there."
-	done
-
-OakNoKantoBadgesText:
-	text "OAK: Hmm? You're"
-	line "not collecting"
-	cont "KANTO GYM BADGES?"
-
-	para "The GYM LEADERS in"
-	line "KANTO are as tough"
-
-	para "as any you battled"
-	line "in JOHTO."
-
-	para "I recommend that"
-	line "you challenge"
-	cont "them."
-	done
-
-OakYesKantoBadgesText:
-	text "OAK: Ah, you're"
-	line "collecting KANTO"
-	cont "GYM BADGES."
-
-	para "I imagine that"
-	line "it's hard, but the"
-
-	para "experience is sure"
-	line "to help you."
-
-	para "Come see me when"
-	line "you get them all."
-
-	para "I'll have a gift"
-	line "for you."
-
-	para "Keep trying hard,"
-	line "<PLAY_G>!"
 	done
 
 OaksAssistant1Text:
@@ -229,30 +133,308 @@ OaksLabTrashcanText:
 	done
 
 OaksLabPCText:
-	text "There's an e-mail"
-	line "message on the PC."
-
-	para "…"
-
-	para "PROF.OAK, how is"
-	line "your research"
-	cont "coming along?"
-
-	para "I'm still plugging"
-	line "away."
-
-	para "I heard rumors"
-	line "that <PLAY_G> is"
-
-	para "getting quite a"
-	line "reputation."
-
-	para "I'm delighted to"
-	line "hear that."
-
-	para "ELM in NEW BARK"
-	line "TOWN 8-)"
+	text " "
 	done
+
+_OaksLabGaryText1::
+	text "<RIVAL>: Yo"
+	line "<PLAYER>! Gramps"
+	cont "isn't around!"
+
+	para "I ran here 'cos"
+	line "he said he had a"
+	cont "#MON for me."
+	done
+
+_OaksLabGaryText3::
+	text "<RIVAL>: Heh, my"
+	line "#MON looks a"
+	cont "lot stronger."
+	done
+
+_OaksLabBall::
+	text "That's a #"
+	line "BALL. There's a"
+	cont "#MON inside!"
+	done
+
+_OaksLabPikachuText::
+	text "OAK: Go ahead,"
+	line "it's yours!"
+	done
+
+_OaksLabOakText2::
+	text "OAK: If a wild"
+	line "#MON appears,"
+	cont "your #MON can"
+	cont "fight against it!"
+
+	para "Afterward, go on"
+	line "to the next town."
+	done
+
+_OaksLabOakText3::
+	text "OAK: You should"
+	line "talk to it and"
+	cont "see how it feels."
+	done
+
+_OaksLabDeliverParcelText1::
+	text "OAK: Oh, <PLAYER>!"
+
+	para "How is my old"
+	line "#MON?"
+
+	para "Well, it seems to"
+	line "like you a lot."
+
+	para "You must be"
+	line "talented as a"
+	cont "#MON trainer!"
+
+	para "What? You have"
+	line "something for me?"
+
+	para "<PLAYER> delivered"
+	line "OAK's PARCEL.@@"
+
+_OaksLabDeliverParcelText2::
+	text ""
+	para "Ah! This is the"
+	line "custom # BALL"
+	cont "I ordered!"
+	cont "Thanks, <PLAYER>!"
+
+	para "By the way, I must"
+	line "ask you to do"
+	cont "something for me."
+	done
+
+_OaksLabAroundWorldText::
+	text "#MON around the"
+	line "world wait for"
+	cont "you, <PLAYER>!"
+	done
+
+_OaksLabGivePokeballsText1::
+	text "OAK: You can't get"
+	line "detailed data on"
+	cont "#MON by just"
+	cont "seeing them."
+
+	para "You must catch"
+	line "them! Use these"
+	cont "to capture wild"
+	cont "#MON."
+
+	para "<PLAYER> got 5"
+	line "# BALLs!@@"
+
+_OaksLabGivePokeballsText2::
+	text ""
+	para "When a wild"
+	line "#MON appears,"
+	cont "it's fair game."
+
+	para "Just like I showed"
+	line "you, throw a #"
+	cont "BALL at it and try"
+	cont "to catch it!"
+
+	para "This won't always"
+	line "work, though."
+
+	para "You'll have to aim"
+	line "carefully."
+	done
+
+_OaksLabPleaseVisitText::
+	text "OAK: Come see me"
+	line "sometimes."
+
+	para "I want to know how"
+	line "your #DEX is"
+	cont "coming along."
+	done
+
+
+_OaksLabPokedexText::
+	text "It's encyclopedia-"
+	line "like, but the"
+	cont "pages are blank!"
+	done
+
+_OaksLabChooseMonText::
+	para "Look, <PLAYER>! Do"
+	line "you see that ball"
+	cont "on the table?"
+
+	para "It's called a #"
+	line "BALL. It holds a"
+	cont "#MON inside."
+
+	para "You may have it!"
+	line "Go on, take it!"
+	done
+
+_OaksLabOakGivesText::
+	text "OAK: <PLAYER>, this"
+	line "is the #MON I"
+	cont "caught earlier."
+
+	para "You can have it."
+	line "I caught it in"
+	cont "the wild and it's"
+	cont "not tame yet."
+	prompt
+
+_OaksLabReceivedText::
+	text "<PLAYER> received"
+	line "a @"
+;	TX_RAM wcd6d
+	text "!@@"
+
+_OaksLabLeavingText::
+	text "OAK: Hey! Don't go"
+	line "away yet!"
+	done
+
+_OaksLabRivalChallengeText::
+	text "<RIVAL>: Wait"
+	line "<PLAYER>!"
+	cont "Let's check out"
+	cont "our #MON!"
+
+	para "Come on, I'll take"
+	line "you on!"
+	done
+
+_OaksLabWonBattleText::
+	text "WHAT?"
+	line "Unbelievable!"
+	cont "I picked the"
+	cont "wrong #MON!"
+	prompt
+
+_OaksLabLostBattleText::
+	text "<RIVAL>: Yeah! Am"
+	line "I great or what?"
+	prompt
+
+_OaksLabRivalToughenUpText::
+	text "<RIVAL>: Okay!"
+	line "I'll make my"
+	cont "#MON fight to"
+	cont "toughen it up!"
+	done
+
+_OaksLabPikachuDislikesPokeballsText1::
+	text "OAK: What?"
+	done
+
+_OaksLabPikachuDislikesPokeballsText2::
+	text "OAK: Would you"
+	line "look at that!"
+
+	para "It's odd, but it"
+	line "appears that your"
+	cont "PIKACHU dislikes"
+	cont "# BALLs."
+
+	para "You should just"
+	line "keep it with you."
+
+	para "That should make"
+	line "it happy!"
+
+	para "You can talk to it"
+	line "and see how it"
+	cont "feels about you."
+	done
+
+_OaksLabOakAsk::
+	text "OAK: Ah, <RIVAL>,"
+	line "good timing!"
+
+	para "I needed to ask"
+	line "both of you to do"
+	cont "something for me."
+	done
+
+_OaksLabOakDeskText::
+	text "On the desk there"
+	line "is my invention,"
+	cont "#DEX!"
+
+	para "It automatically"
+	line "records data on"
+	cont "#MON you've"
+	cont "seen or caught!"
+
+	para "It's a hi-tech"
+	line "encyclopedia!"
+	done
+
+_OaksLabOakDexText1::
+	text "OAK: <PLAYER> and"
+	line "<RIVAL>! Take"
+	cont "these with you!"
+
+	para "<PLAYER> got"
+	line "#DEX from OAK!@@"
+
+_OaksLabOakDexText2::
+	text "To make a complete"
+	line "guide on all the"
+	cont "#MON in the"
+	cont "world..."
+
+	para "That was my dream!"
+
+	para "But, I'm too old!"
+	line "I can't do it!"
+
+	para "So, I want you two"
+	line "to fulfill my"
+	cont "dream for me!"
+
+	para "Get moving, you"
+	line "two!"
+
+	para "This is a great"
+	line "undertaking in"
+	cont "#MON history!"
+	done
+
+_OaksLabGaryMap::
+	text "<RIVAL>: Alright"
+	line "Gramps! Leave it"
+	cont "all to me!"
+
+	para "<PLAYER>, I hate to"
+	line "say it, but I"
+	cont "don't need you!"
+
+	para "I know! I'll"
+	line "borrow a TOWN MAP"
+	cont "from my sis!"
+
+	para "I'll tell her not"
+	line "to lend you one,"
+	cont "<PLAYER>! Hahaha!"
+	done
+
+
+OaksLab_WalkUpToOakMovement:
+	step UP
+	step UP
+	step UP
+	step UP
+	step UP
+	step UP
+	step UP
+	step UP
+	step_end
 
 OaksLab_MapEvents:
 	db 0, 0 ; filler
@@ -282,7 +464,8 @@ OaksLab_MapEvents:
 	bg_event  0,  1, BGEVENT_READ, OaksLabPC
 
 	db 4 ; object events
-	object_event  4,  2, SPRITE_OAK, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Oak, -1
+	object_event  4,  2, SPRITE_OAK,       SPRITEMOVEDATA_STANDING_DOWN,   0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, Oak, -1
 	object_event  1,  8, SPRITE_SCIENTIST, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 1, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, OaksAssistant1Script, -1
-	object_event  8,  9, SPRITE_SCIENTIST, SPRITEMOVEDATA_WALK_UP_DOWN, 0, 1, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, OaksAssistant2Script, -1
-	object_event  1,  4, SPRITE_SCIENTIST, SPRITEMOVEDATA_WANDER, 1, 1, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, OaksAssistant3Script, -1
+	object_event  8,  9, SPRITE_SCIENTIST, SPRITEMOVEDATA_WALK_UP_DOWN,    0, 1, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, OaksAssistant2Script, -1
+	object_event  1,  4, SPRITE_SCIENTIST, SPRITEMOVEDATA_WANDER,          1, 1, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, OaksAssistant3Script, -1
+	object_event  5,  2, SPRITE_RIVAL,     SPRITEMOVEDATA_STANDING_DOWN,   0, 0,  1,  1, 0, OBJECTTYPE_SCRIPT, 0, Rival, -1

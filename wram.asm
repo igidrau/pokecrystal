@@ -2536,7 +2536,7 @@ wKarensRoomSceneID::                              db ; d982
 wLancesRoomSceneID::                              db ; d983
 wHallOfFameSceneID::                              db ; d984
 wRoute27SceneID::                                 db ; d985
-wNewBarkTownSceneID::                             db ; d986
+wPalletTownSceneID::                              db ; d986
 wElmsLabSceneID::                                 db ; d987
 wPlayersHouse1FSceneID::                          db ; d988
 wRoute29SceneID::                                 db ; d989
@@ -2595,8 +2595,9 @@ wFastShipB1FSceneID::                             db ; d9bd
 wMountMoonSquareSceneID::                         db ; d9be
 wMobileTradeRoomSceneID::                         db ; d9bf
 wMobileBattleRoomSceneID::                        db ; d9c0
+wOaksLabSceneID::								  db ; d9c1
 
-	ds 49
+	ds 50
 
 ; fight counts
 wJackFightCount::    db ; d9f2

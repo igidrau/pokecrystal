@@ -670,7 +670,7 @@ DiglettEvosAttacks:
 
 DugtrioEvosAttacks:
 	db 0 ; no more evolutions
-if _CRYSTAL
+if _PIKA
 	db 1, TRI_ATTACK
 endc
 	db 1, SCRATCH
@@ -1115,7 +1115,7 @@ MagnetonEvosAttacks:
 	db 16, SONICBOOM
 	db 21, THUNDER_WAVE
 	db 27, LOCK_ON
-if _CRYSTAL
+if _PIKA
 	db 35, TRI_ATTACK
 else
 	db 35, SWIFT
@@ -1235,7 +1235,7 @@ CloysterEvosAttacks:
 	db 1, SUPERSONIC
 	db 1, AURORA_BEAM
 	db 1, PROTECT
-if _CRYSTAL
+if _PIKA
 	db 33, SPIKES
 endc
 	db 41, SPIKE_CANNON
@@ -1814,7 +1814,7 @@ EeveeEvosAttacks:
 	db 16, GROWL
 	db 23, QUICK_ATTACK
 	db 30, BITE
-if _CRYSTAL
+if _PIKA
 	db 36, BATON_PASS
 else
 	db 36, FOCUS_ENERGY
@@ -2297,7 +2297,7 @@ SpinarakEvosAttacks:
 	db 23, LEECH_LIFE
 	db 30, FURY_SWIPES
 	db 37, SPIDER_WEB
-if _CRYSTAL
+if _PIKA
 	db 45, AGILITY
 else
 	db 45, SCREECH
@@ -2317,7 +2317,7 @@ AriadosEvosAttacks:
 	db 25, LEECH_LIFE
 	db 34, FURY_SWIPES
 	db 43, SPIDER_WEB
-if _CRYSTAL
+if _PIKA
 	db 53, AGILITY
 else
 	db 53, SCREECH
@@ -2544,7 +2544,7 @@ HoppipEvosAttacks:
 	db EVOLVE_LEVEL, 18, SKIPLOOM
 	db 0 ; no more evolutions
 	db 1, SPLASH
-if _CRYSTAL
+if _PIKA
 	db 5, SYNTHESIS
 else
 	db 1, SYNTHESIS
@@ -2566,7 +2566,7 @@ SkiploomEvosAttacks:
 	db 1, SYNTHESIS
 	db 1, TAIL_WHIP
 	db 1, TACKLE
-if _CRYSTAL
+if _PIKA
 	db 5, SYNTHESIS
 endc
 	db 5, TAIL_WHIP
@@ -2585,7 +2585,7 @@ JumpluffEvosAttacks:
 	db 1, SYNTHESIS
 	db 1, TAIL_WHIP
 	db 1, TACKLE
-if _CRYSTAL
+if _PIKA
 	db 5, SYNTHESIS
 endc
 	db 5, TAIL_WHIP
@@ -2641,7 +2641,7 @@ YanmaEvosAttacks:
 	db 19, SONICBOOM
 	db 25, DETECT
 	db 31, SUPERSONIC
-if _CRYSTAL
+if _PIKA
 	db 37, WING_ATTACK
 else
 	db 37, SWIFT
@@ -2857,7 +2857,7 @@ GranbullEvosAttacks:
 
 QwilfishEvosAttacks:
 	db 0 ; no more evolutions
-if _CRYSTAL
+if _PIKA
 	db 1, SPIKES
 endc
 	db 1, TACKLE
@@ -2919,7 +2919,7 @@ SneaselEvosAttacks:
 	db 41, AGILITY
 	db 49, SLASH
 	db 57, BEAT_UP
-if _CRYSTAL
+if _PIKA
 	db 65, METAL_CLAW
 endc
 	db 0 ; no more level-up moves
@@ -2989,7 +2989,7 @@ SwinubEvosAttacks:
 	db 28, TAKE_DOWN
 	db 37, MIST
 	db 46, BLIZZARD
-if _CRYSTAL
+if _PIKA
 	db 55, AMNESIA
 endc
 	db 0 ; no more level-up moves
@@ -3005,7 +3005,7 @@ PiloswineEvosAttacks:
 	db 33, FURY_ATTACK
 	db 42, MIST
 	db 56, BLIZZARD
-if _CRYSTAL
+if _PIKA
 	db 70, AMNESIA
 endc
 	db 0 ; no more level-up moves
@@ -3300,7 +3300,7 @@ SuicuneEvosAttacks:
 	db 0 ; no more evolutions
 	db 1, BITE
 	db 1, LEER
-if _CRYSTAL
+if _PIKA
 	db 11, BUBBLEBEAM
 	db 21, RAIN_DANCE
 	db 31, GUST

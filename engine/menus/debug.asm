@@ -1,47 +1,48 @@
-	const_def $6a
-	const DEBUGTEST_UP_ARROW ; $6a
-	const DEBUGTEST_TICKS    ; $6b
-	const DEBUGTEST_WHITE    ; $6c
-	const DEBUGTEST_LIGHT    ; $6d
-	const DEBUGTEST_DARK     ; $6e
-	const DEBUGTEST_BLACK    ; $6f
-	const DEBUGTEST_0        ; $70
-	const DEBUGTEST_1        ; $71
-	const DEBUGTEST_2        ; $72
-	const DEBUGTEST_3        ; $73
-	const DEBUGTEST_4        ; $74
-	const DEBUGTEST_5        ; $75
-	const DEBUGTEST_6        ; $76
-	const DEBUGTEST_7        ; $77
-	const DEBUGTEST_8        ; $78
-	const DEBUGTEST_9        ; $79
-	const DEBUGTEST_A        ; $7a
-	const DEBUGTEST_B        ; $7b
-	const DEBUGTEST_C        ; $7c
-	const DEBUGTEST_D        ; $7d
-	const DEBUGTEST_E        ; $7e
-	const DEBUGTEST_F        ; $7f
+	const_def $5a
+	const DEBUGTEST_UP_ARROW ; $5a
+	const DEBUGTEST_TICKS    ; $5b
+	const DEBUGTEST_WHITE    ; $5c
+	const DEBUGTEST_LIGHT    ; $5d
+	const DEBUGTEST_DARK     ; $5e
+	const DEBUGTEST_BLACK    ; $5f
+	const DEBUGTEST_0        ; $60
+	const DEBUGTEST_1        ; $61
+	const DEBUGTEST_2        ; $62
+	const DEBUGTEST_3        ; $63
+	const DEBUGTEST_4        ; $64
+	const DEBUGTEST_5        ; $65
+	const DEBUGTEST_6        ; $66
+	const DEBUGTEST_7        ; $67
+	const DEBUGTEST_8        ; $68
+	const DEBUGTEST_9        ; $69
+	const DEBUGTEST_A        ; $6a
+	const DEBUGTEST_B        ; $6b
+	const DEBUGTEST_C        ; $6c
+	const DEBUGTEST_D        ; $6d
+	const DEBUGTEST_E        ; $6e
+	const DEBUGTEST_F        ; $6f
 
 ColorTest:
 ; A debug menu to test monster and trainer palettes at runtime.
+; Setting [wd002] at zero display monsters' sprites, setting it at another value display trainers' sprites
 
-	ld a, [hCGB]
+	ld a, [hCGB]			; If we are on a GBC or SGB we continue, elseway we're done
 	and a
-	jr nz, .asm_818b5
+	jr nz, .NotDMG
 	ld a, [hSGB]
 	and a
 	ret z
 
-.asm_818b5
+.NotDMG
 	ld a, [hInMenu]
 	push af
 	ld a, $1
 	ld [hInMenu], a
 	call DisableLCD
 	call Function81948
-	call Function8197c
-	call Function819a7
-	call Function818f4
+	call LoadDebugTiles
+	call LoadDebugBGPalettes
+	call TrainersOrPokemons
 	call EnableLCD
 	ld de, MUSIC_NONE
 	call PlayMusic
@@ -49,77 +50,86 @@ ColorTest:
 	ld [wJumptableIndex], a
 	ld [wcf66], a
 	ld [wd003], a
-.asm_818de
+.loop
 	ld a, [wJumptableIndex]
 	bit 7, a
-	jr nz, .asm_818f0
+	jr nz, .b 			; Does that ever happen ?
 	call Function81a74
-	call Function81f5e
+	call DebugPlaceArrows
 	call DelayFrame
-	jr .asm_818de
+	jr .loop
 
-.asm_818f0
+.b
 	pop af
 	ld [hInMenu], a
+	ld a, $80
+	ld [wd002], a
 	ret
 
-Function818f4:
+TrainersOrPokemons:
 	ld a, [wd002]
 	and a
-	jr nz, Function81911
+	jr nz, LoadTrainersPalettes
 	ld hl, PokemonPalettes
 
-Function818fd:
+LoadPokemonsPalettes:			; Load the all 252 pokemons' palettes
 	ld de, wOverworldMapBlocks
 	ld c, NUM_POKEMON + 1
-.asm_81902
+.loop
 	push bc
 	push hl
-	call Function81928
+	call DebugLoadPalette
 	pop hl
 	ld bc, 8
 	add hl, bc
 	pop bc
 	dec c
-	jr nz, .asm_81902
+	jr nz, .loop
 	ret
 
-Function81911:
+LoadTrainersPalettes:			; Idem, but for the 67 trainers
 	ld hl, TrainerPalettes
 	ld de, wOverworldMapBlocks
 	ld c, NUM_TRAINER_CLASSES
-.asm_81919
+.loop
 	push bc
 	push hl
-	call Function81928
+	call DebugLoadPalette
 	pop hl
 	ld bc, 4
 	add hl, bc
 	pop bc
 	dec c
-	jr nz, .asm_81919
+	jr nz, .loop
 	ret
 
-Function81928:
+DebugLoadPalette:
+	ld b, $4
+.loop
+	dec b
 	ld a, BANK(PokemonPalettes) ; BANK(TrainerPalettes)
 	call GetFarByte
 	ld [de], a
 	inc de
 	inc hl
-	ld a, BANK(PokemonPalettes) ; BANK(TrainerPalettes)
-	call GetFarByte
-	ld [de], a
-	inc de
-	inc hl
-	ld a, BANK(PokemonPalettes) ; BANK(TrainerPalettes)
-	call GetFarByte
-	ld [de], a
-	inc de
-	inc hl
-	ld a, BANK(PokemonPalettes) ; BANK(TrainerPalettes)
-	call GetFarByte
-	ld [de], a
-	inc de
+	ld a, b
+	and a
+	jr nz, .loop
+;	ld a, BANK(PokemonPalettes) ; BANK(TrainerPalettes)
+;	call GetFarByte
+;	ld [de], a
+;	inc de
+;	inc hl
+;	ld a, BANK(PokemonPalettes) ; BANK(TrainerPalettes)
+;	call GetFarByte
+;	ld [de], a
+;	inc de
+;	inc hl
+;	ld a, BANK(PokemonPalettes) ; BANK(TrainerPalettes)
+;	call GetFarByte
+;	ld [de], a
+;	inc de
+	dec hl
 	ret
 
 Function81948:
@@ -146,16 +156,24 @@ Function81948:
 	call ClearSprites
 	ret
 
-Function8197c:
-	ld hl, DebugColorTestGFX + 1 tiles
+LoadDebugTiles:
+	ld hl, DebugColorTestGFX + 1 tiles 		; BG tiles (the whole file except the arrow)
 	ld de, vTiles2 tile DEBUGTEST_UP_ARROW
 	ld bc, 22 tiles
 	call CopyBytes
-	ld hl, DebugColorTestGFX
+
+	ld hl, DebugColorTestGFX 				; OB tiles (the arrow)
 	ld de, vTiles0
 	ld bc, 1 tiles
 	call CopyBytes
-	call LoadStandardFont
+
+											; BG tiles (a black space)
+	ld hl, DebugColorTestGFX + 6 tiles ; FontsExtra_SolidBlackGFX ; Why didn't it work ?
+	ld de, vTiles2 tile " "
+	ld bc, 1 tiles
+	call CopyBytes
+
+	call LoadStandardFont 		; Inverts the font's colour (white on black)
 	ld hl, vTiles1
 	lb bc, 8, 0
 .asm_8199d
@@ -168,7 +186,7 @@ Function8197c:
 	jr nz, .asm_8199d
 	ret
 
-Function819a7:
+LoadDebugBGPalettes:
 	ld a, [hCGB]
 	and a
 	ret z
@@ -180,15 +198,18 @@ Function819a7:
 	ld de, wBGPals2
 	ld bc, 16 palettes
 	call CopyBytes
+
 	ld a, 1 << rBGPI_AUTO_INCREMENT
 	ld [rBGPI], a
 	ld hl, Palette_DebugBG
 	ld c, 8 palettes
 	xor a
 .asm_819c8
+	add a, $07
 	ld [rBGPD], a
 	dec c
 	jr nz, .asm_819c8
+
 	ld a, 1 << rOBPI_AUTO_INCREMENT
 	ld [rOBPI], a
 	ld hl, Palette_DebugOB
@@ -198,6 +219,7 @@ Function819a7:
 	ld [rOBPD], a
 	dec c
 	jr nz, .asm_819d6
+
 	ld a, $94
 	ld [wc608], a
 	ld a, $52
@@ -220,16 +242,16 @@ Function81a74:
 	call JoyTextDelay
 	ld a, [wJumptableIndex]
 	cp $4
-	jr nc, .asm_81a8b
+	jr nc, .UseJumptable
 	ld hl, hJoyLast
 	ld a, [hl]
 	and SELECT
-	jr nz, .asm_81a9a
+	jr nz, .Select
 	ld a, [hl]
 	and START
-	jr nz, .asm_81aab
+	jr nz, .Start
 
-.asm_81a8b
+.UseJumptable
 	ld a, [wJumptableIndex]
 	ld e, a
 	ld d, 0
@@ -241,9 +263,9 @@ Function81a74:
 	ld l, a
 	jp hl
 
-.asm_81a9a
+.Select
 	call Function81eca
-	call Function81ac3
+	call LoopAroundPics
 	ld e, a
 	ld a, [wcf66]
 	inc a
@@ -252,13 +274,13 @@ Function81a74:
 	xor a
 	jr .asm_81aba
 
-.asm_81aab
+.Start
 	call Function81eca
 	ld a, [wcf66]
 	dec a
 	cp $ff
 	jr nz, .asm_81aba
-	call Function81ac3
+	call LoopAroundPics
 	dec a
 
 .asm_81aba
@@ -267,15 +289,15 @@ Function81a74:
 	ld [wJumptableIndex], a
 	ret
 
-Function81ac3:
+LoopAroundPics:
 ; Looping back around the pic set.
 	ld a, [wd002]
 	and a
-	jr nz, .asm_81acc
+	jr nz, .trainers
 	ld a, NUM_POKEMON ; CELEBI
 	ret
 
-.asm_81acc
+.trainers
 	ld a, NUM_TRAINER_CLASSES - 1 ; MYSTICALMAN
 	ret
 
@@ -284,29 +306,34 @@ Jumptable_81acf:
 	dw Function81c18
 	dw Function81c33
 	dw Function81cc2
-	dw Function81d8e
-	dw Function81daf
+	dw PlaceMoveDebugScreen
+	dw DebugMoveScreenAB
 
 Function81adb:
 	xor a
 	ld [hBGMapMode], a
-	hlcoord 0, 0
+
+	hlcoord 0, 0 						; Fill the screen with black tiles
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	ld a, DEBUGTEST_BLACK
 	call ByteFill
-	hlcoord 1, 3
+
+	hlcoord 1, 3 						; The white space in the middle of the screen
 	lb bc, 7, 18
 	ld a, DEBUGTEST_WHITE
-	call Bank20_FillBoxWithByte
-	hlcoord 11, 0
+	call FillBoxWithByte
+
+	hlcoord 11, 0 						; The rectangle corresponding to color 1
 	lb bc, 2, 3
 	ld a, DEBUGTEST_LIGHT
-	call Bank20_FillBoxWithByte
-	hlcoord 16, 0
+	call FillBoxWithByte
+
+	hlcoord 16, 0 						; The rectangle corresponding to color 2
 	lb bc, 2, 3
 	ld a, DEBUGTEST_DARK
-	call Bank20_FillBoxWithByte
-	call Function81bc0
+	call FillBoxWithByte
+
+	call DispRulers
 	call Function81bf4
 	ld a, [wcf66]
 	inc a
@@ -337,18 +364,18 @@ Function81adb:
 	predef PlaceGraphic
 	ld a, [wd003]
 	and a
-	jr z, .asm_81b66
-	ld de, String_81baf
-	jr .asm_81b69
+	jr z, .normalString
+	ld de, String_Shiny
+	jr .placeNormalShineyString
 
-.asm_81b66
-	ld de, String_81bb4
+.normalString
+	ld de, String_Normal
 
-.asm_81b69
-	hlcoord 7, 17
+.placeNormalShineyString
+	hlcoord 8, 17
 	call PlaceString
 	hlcoord 0, 17
-	ld de, String_81bb9
+	ld de, String_PressA
 	call PlaceString
 	jr .asm_81ba9
 
@@ -373,24 +400,24 @@ Function81adb:
 	ld [wJumptableIndex], a
 	ret
 
-String_81baf: db "レア", DEBUGTEST_BLACK, DEBUGTEST_BLACK, "@" ; rare (shiny)
-String_81bb4: db "ノーマル@" ; normal
-String_81bb9: db DEBUGTEST_A, "きりかえ▶@" ; (A) switches
+String_Shiny: db "Shiny@" ; "レア", DEBUGTEST_BLACK, DEBUGTEST_BLACK, "@" ; rare (shiny)
+String_Normal: db "Normal@" ; "ノーマル@" ; normal
+String_PressA: db "Press ", DEBUGTEST_A, "@" ; $7c, $7d, $7e, $7f, $80, $81, "@" ; DEBUGTEST_A, "きりかえ▶@" ; (A) switches
 
-Function81bc0:
+DispRulers:
 	decoord 0, 11, wAttrMap
 	hlcoord 2, 11
 	ld a, $1
-	call Function81bde
+	call DispOneRuler
 	decoord 0, 13, wAttrMap
 	hlcoord 2, 13
 	ld a, $2
-	call Function81bde
+	call DispOneRuler
 	decoord 0, 15, wAttrMap
 	hlcoord 2, 15
 	ld a, $3
 
-Function81bde:
+DispOneRuler:
 	push af
 	ld a, DEBUGTEST_UP_ARROW
 	ld [hli], a
@@ -553,7 +580,7 @@ Function81cc2:
 	ld b, 0
 	ld hl, PokemonPalettes
 	add hl, bc
-	call Function818fd
+	call LoadPokemonsPalettes
 	ld a, $0
 	ld [wJumptableIndex], a
 	ret
@@ -658,30 +685,38 @@ Function81d89:
 	inc [hl]
 	ret
 
-Function81d8e:
+PlaceMoveDebugScreen:
 	hlcoord 0, 10
 	ld bc, $a0
 	ld a, DEBUGTEST_BLACK
 	call ByteFill
-	hlcoord 2, 12
-	ld de, String_81fcd
+	hlcoord 1, 12
+	ld de, String_FinishedYN
 	call PlaceString
 	xor a
 	ld [wd004], a
-	call Function81df4
+	call PlaceMoveTest
 	ld a, $5
 	ld [wJumptableIndex], a
 	ret
 
-Function81daf:
+DebugMoveScreenAB:
 	ld hl, hJoyPressed
 	ld a, [hl]
 	and B_BUTTON
-	jr nz, .asm_81dbb
-	call Function81dc7
+	jr nz, .b
+	ld a, [hl]
+	and A_BUTTON
+	jp nz, .a
+	call DebugMoveScreenUpDown
 	ret
 
-.asm_81dbb
+.a
+	ld a, $80
+	ld [wJumptableIndex], a
+	ret
+
+.b
 	ld a, $0
 	ld [wJumptableIndex], a
 	ret
@@ -691,51 +726,50 @@ Function81dc1:
 	set 7, [hl]
 	ret
 
-Function81dc7:
+DebugMoveScreenUpDown:
 	ld hl, hJoyLast
 	ld a, [hl]
 	and D_UP
-	jr nz, .asm_81dd5
+	jr nz, .up
 	ld a, [hl]
 	and D_DOWN
-	jr nz, .asm_81de2
+	jr nz, .down
 	ret
 
-.asm_81dd5
+.up
 	ld a, [wd004]
-	cp $3b
-	jr z, .asm_81ddf
+	cp $3b				; Hardcoded value, probably the number of existing moves
+	jr z, .loopByUp
 	inc a
-	jr .asm_81ded
+	jr .changeMove
 
-.asm_81ddf
+.loopByUp
 	xor a
-	jr .asm_81ded
+	jr .changeMove
 
-.asm_81de2
+.down
 	ld a, [wd004]
 	and a
-	jr z, .asm_81deb
+	jr z, .loopByDown
 	dec a
-	jr .asm_81ded
+	jr .changeMove
 
-.asm_81deb
+.loopByDown
 	ld a, $3b
 
-.asm_81ded
+.changeMove
 	ld [wd004], a
-	call Function81df4
+	call PlaceMoveTest
 	ret
 
-Function81df4:
-	hlcoord 10, 11
-	call Function81e5e
-	hlcoord 10, 12
-	call Function81e5e
-	hlcoord 10, 13
-	call Function81e5e
+PlaceMoveTest:
+	ld a, [wd002]
+	and a
+	ret nz
 	hlcoord 10, 14
-	call Function81e5e
+	call DebugEraseString
+	hlcoord 10, 15
+	call DebugEraseString
 	ld a, [wd004]
 	inc a
 	ld [wd265], a
@@ -743,7 +777,7 @@ Function81df4:
 	ld a, [wd265]
 	ld [wPutativeTMHMMove], a
 	call GetMoveName
-	hlcoord 10, 12
+	hlcoord 8, 14
 	call PlaceString
 	ld a, [wd004]
 	call Function81e55
@@ -751,17 +785,17 @@ Function81df4:
 	predef CanLearnTMHMMove
 	ld a, c
 	and a
-	ld de, String_81e46
-	jr nz, .asm_81e3f
-	ld de, String_81e4d
+	ld de, String_Can
+	jr nz, .DispCanCannot
+	ld de, String_Cannot
 
-.asm_81e3f
-	hlcoord 10, 14
+.DispCanCannot
+	hlcoord 10, 15
 	call PlaceString
 	ret
 
-String_81e46: db "おぼえられる@" ; can be taught
-String_81e4d: db "おぼえられない@" ; cannot be taught
+String_Can: db "Can learn@" ; "おぼえられる@" ; can be taught
+String_Cannot: db "Can't learn@" ; "おぼえられない@" ; cannot be taught
 
 Function81e55:
 	cp $32
@@ -773,8 +807,8 @@ Function81e55:
 	add $bf
 	ret
 
-Function81e5e:
-	ld bc, 10
+DebugEraseString:
+	ld bc, 11
 	ld a, DEBUGTEST_BLACK
 	call ByteFill
 	ret
@@ -848,7 +882,7 @@ Function81eca:
 	add hl, hl
 	ld de, wOverworldMapBlocks
 	add hl, de
-	ld e, l
+	ld e, l 					; de = ([wcf66]*$400+$c800)%$ff
 	ld d, h
 	ld hl, wc608
 	ld bc, 4
@@ -880,22 +914,22 @@ Function81ee3:
 	jr nz, .asm_81ee3
 	ret
 
-Bank20_FillBoxWithByte:
+;Bank20_FillBoxWithByte:
 ; For some reason, we have another copy of FillBoxWithByte here
-.row
-	push bc
-	push hl
-.col
-	ld [hli], a
-	dec c
-	jr nz, .col
-	pop hl
-	ld bc, SCREEN_WIDTH
-	add hl, bc
-	pop bc
-	dec b
-	jr nz, .row
-	ret
+;.row
+;	push bc
+;	push hl
+;.col
+;	ld [hli], a
+;	dec c
+;	jr nz, .col
+;	pop hl
+;	ld bc, SCREEN_WIDTH
+;	add hl, bc
+;	pop bc
+;	dec b
+;	jr nz, .row
+;	ret
 
 Function81f0c:
 	ld a, [wcfbe]
@@ -956,8 +990,8 @@ Function81f1d:
 	jr nz, .asm_81f22
 	ret
 
-Function81f5e:
-	ld a, DEBUGTEST_BLACK
+DebugPlaceArrows:
+	ld a, DEBUGTEST_BLACK		; Hide the places where an horizontal arrow can be
 	hlcoord 10, 0
 	ld [hl], a
 	hlcoord 15, 0
@@ -968,42 +1002,46 @@ Function81f5e:
 	ld [hl], a
 	hlcoord 1, 15
 	ld [hl], a
+
 	ld a, [wJumptableIndex]
 	cp $3
-	jr nz, .asm_81fc9
-	ld a, [wcf64]
+	jr nz, .NoArrows
+
+	ld a, [wcf64]				; The position of the cursor (0:Select color ; 1:Red ; 2:Green ; 3:Blue)
 	and a
-	jr z, .asm_81f8d
+	jr z, .SelectColor
 	dec a
 	hlcoord 1, 11
 	ld bc, 2 * SCREEN_WIDTH
 	call AddNTimes
 	ld [hl], $ed
 
-.asm_81f8d
+.SelectColor
 	ld a, [wcf65]
-	and a
-	jr z, .asm_81f98
+	;and a
+	bit 0, a
+	jr z, .FirstColor
 	hlcoord 15, 0
-	jr .asm_81f9b
+	jr .PlaceArrows
 
-.asm_81f98
+.FirstColor
 	hlcoord 10, 0
 
-.asm_81f9b
+.PlaceArrows 					; Place the color selection arrow in the background and the three vertical arrows as sprites
 	ld [hl], $ed
+
 	ld b, $70
 	ld c, $5
 	ld hl, wVirtualOAM
-	ld de, wc608 + 10
-	call .asm_81fb7
-	ld de, wc608 + 11
-	call .asm_81fb7
-	ld de, wc608 + 12
-	call .asm_81fb7
+	ld de, wc608 + 10 			; Red value
+	call .PlaceVerticalArrow
+	ld de, wc608 + 11 			; Green value
+	call .PlaceVerticalArrow
+	ld de, wc608 + 12 			; Blue value
+	call .PlaceVerticalArrow
 	ret
 
-.asm_81fb7
+.PlaceVerticalArrow
 	ld a, b
 	ld [hli], a ; y
 	ld a, [de]
@@ -1021,14 +1059,14 @@ Function81f5e:
 	inc c
 	ret
 
-.asm_81fc9
+.NoArrows
 	call ClearSprites
 	ret
 
-String_81fcd:
-	db   "おわりますか？" ; Are you finished?
-	next "はい<DOT><DOT><DOT>", DEBUGTEST_A ; YES...(A)
-	next "いいえ<DOT><DOT>", DEBUGTEST_B ; NO..(B)
+String_FinishedYN:
+	db   "Finished?" ; "おわりますか？" ; Are you finished?
+	next "Yes ", DEBUGTEST_A ; "はい<DOT><DOT><DOT>", DEBUGTEST_A ; YES...(A)
+	next "No  ", DEBUGTEST_B ; "いいえ<DOT><DOT>", DEBUGTEST_B ; NO..(B)
 	db   "@"
 
 DebugColorTestGFX:

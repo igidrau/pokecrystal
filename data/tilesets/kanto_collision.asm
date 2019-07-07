@@ -1,4 +1,4 @@
-	tilecoll CUT_TREE, CUT_TREE, CUT_TREE, CUT_TREE ; 00
+	tilecoll WALL, FLOOR, WALL, WARP_CARPET_DOWN ; 00
 	tilecoll FLOOR, FLOOR, FLOOR, FLOOR ; 01
 	tilecoll WALL, WALL, WALL, DOOR ; 02
 	tilecoll WALL, WALL, WALL, WALL ; 03
@@ -107,7 +107,7 @@
 	tilecoll WATER, WALL, WATER, WALL ; 6a
 	tilecoll WATER, WATER, WALL, WALL ; 6b
 	tilecoll WALL, WALL, FLOOR, FLOOR ; 6c
-	tilecoll WALL, FLOOR, WALL, FLOOR ; 6d
+	tilecoll WALL, FLOOR, WALL, WARP_CARPET_DOWN ; 6d
 	tilecoll FLOOR, WALL, FLOOR, WALL ; 6e
 	tilecoll FLOOR, FLOOR, WALL, WALL ; 6f
 	tilecoll FLOOR, WALL, CAVE, WALL ; 70

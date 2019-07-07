@@ -457,7 +457,9 @@ INCLUDE "maps/SeafoamGym.asm"
 SECTION "Map Scripts 24", ROMX
 
 INCLUDE "maps/Route33.asm"
-INCLUDE "maps/Route2.asm"
+INCLUDE "maps/Route2Bottom.asm"
+INCLUDE "maps/Route2Top.asm"
+INCLUDE "maps/ViridianForest.asm"
 INCLUDE "maps/Route1.asm"
 INCLUDE "maps/PalletTown.asm"
 INCLUDE "maps/Route21.asm"

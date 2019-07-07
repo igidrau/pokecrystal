@@ -50,48 +50,49 @@ TrainerPokemaniacBrent:
 	trainer POKEMANIAC, BRENT1, EVENT_BEAT_POKEMANIAC_BRENT, PokemaniacBrentSeenText, PokemaniacBrentBeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_POKEMANIAC_BRENT
+;	writecode VAR_CALLERID, PHONE_POKEMANIAC_BRENT
 	endifjustbattled
 	opentext
 	checkflag ENGINE_BRENT
 	iftrue .WantsBattle
-	checkcellnum PHONE_POKEMANIAC_BRENT
-	iftrue .NumberAccepted
-	checkevent EVENT_BRENT_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskedAlready
-	writetext PokemaniacBrentAfterBattleText
-	buttonsound
-	setevent EVENT_BRENT_ASKED_FOR_PHONE_NUMBER
-	scall .AskNumber1
-	jump .AskForNumber
-
-.AskedAlready:
-	scall .AskNumber2
-.AskForNumber:
-	askforphonenumber PHONE_POKEMANIAC_BRENT
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
-	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	trainertotext POKEMANIAC, BRENT1, MEM_BUFFER_0
-	scall .RegisteredNumber
-	jump .NumberAccepted
-
+	end
+;	checkcellnum PHONE_POKEMANIAC_BRENT
+;	iftrue .NumberAccepted
+;	checkevent EVENT_BRENT_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskedAlready
+;	writetext PokemaniacBrentAfterBattleText
+;	buttonsound
+;	setevent EVENT_BRENT_ASKED_FOR_PHONE_NUMBER
+;	scall .AskNumber1
+;	jump .AskForNumber
+;
+;.AskedAlready:
+;	scall .AskNumber2
+;.AskForNumber:
+;	askforphonenumber PHONE_POKEMANIAC_BRENT
+;	ifequal PHONE_CONTACTS_FULL, .PhoneFull
+;	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
+;	trainertotext POKEMANIAC, BRENT1, MEM_BUFFER_0
+;	scall .RegisteredNumber
+;	jump .NumberAccepted
+;
 .WantsBattle:
-	scall .Rematch
+;	scall .Rematch
 	winlosstext PokemaniacBrentBeatenText, 0
-	copybytetovar wBrentFightCount
-	ifequal 3, .Fight3
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight3:
-	checkevent EVENT_RESTORED_POWER_TO_KANTO
-	iftrue .LoadFight3
-.Fight2:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight2
-.Fight1:
-	checkevent EVENT_CLEARED_ROCKET_HIDEOUT
-	iftrue .LoadFight1
+;	copybytetovar wBrentFightCount
+;	ifequal 3, .Fight3
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight3:
+;	checkevent EVENT_RESTORED_POWER_TO_KANTO
+;	iftrue .LoadFight3
+;.Fight2:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkevent EVENT_CLEARED_ROCKET_HIDEOUT
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer POKEMANIAC, BRENT1
 	startbattle
@@ -100,56 +101,56 @@ TrainerPokemaniacBrent:
 	clearflag ENGINE_BRENT
 	end
 
-.LoadFight1:
-	loadtrainer POKEMANIAC, BRENT2
-	startbattle
-	reloadmapafterbattle
-	loadvar wBrentFightCount, 2
-	clearflag ENGINE_BRENT
-	end
-
-.LoadFight2:
-	loadtrainer POKEMANIAC, BRENT3
-	startbattle
-	reloadmapafterbattle
-	loadvar wBrentFightCount, 3
-	clearflag ENGINE_BRENT
-	end
-
-.LoadFight3:
-	loadtrainer POKEMANIAC, BRENT4
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_BRENT
-	end
-
-.AskNumber1:
-	jumpstd asknumber1m
-	end
-
-.AskNumber2:
-	jumpstd asknumber2m
-	end
-
-.RegisteredNumber:
-	jumpstd registerednumberm
-	end
-
-.NumberAccepted:
-	jumpstd numberacceptedm
-	end
-
-.NumberDeclined:
-	jumpstd numberdeclinedm
-	end
-
-.PhoneFull:
-	jumpstd phonefullm
-	end
-
-.Rematch:
-	jumpstd rematchm
-	end
+;.LoadFight1:
+;	loadtrainer POKEMANIAC, BRENT2
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wBrentFightCount, 2
+;	clearflag ENGINE_BRENT
+;	end
+;
+;.LoadFight2:
+;	loadtrainer POKEMANIAC, BRENT3
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wBrentFightCount, 3
+;	clearflag ENGINE_BRENT
+;	end
+;
+;.LoadFight3:
+;	loadtrainer POKEMANIAC, BRENT4
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_BRENT
+;	end
+;
+;.AskNumber1:
+;	jumpstd asknumber1m
+;	end
+;
+;.AskNumber2:
+;	jumpstd asknumber2m
+;	end
+;
+;.RegisteredNumber:
+;	jumpstd registerednumberm
+;	end
+;
+;.NumberAccepted:
+;	jumpstd numberacceptedm
+;	end
+;
+;.NumberDeclined:
+;	jumpstd numberdeclinedm
+;	end
+;
+;.PhoneFull:
+;	jumpstd phonefullm
+;	end
+;
+;.Rematch:
+;	jumpstd rematchm
+;	end
 
 TrainerPokemaniacRon:
 	trainer POKEMANIAC, RON, EVENT_BEAT_POKEMANIAC_RON, PokemaniacRonSeenText, PokemaniacRonBeatenText, 0, .Script
@@ -177,52 +178,53 @@ TrainerPicnickerTiffany:
 	trainer PICNICKER, TIFFANY3, EVENT_BEAT_PICNICKER_TIFFANY, PicnickerTiffanySeenText, PicnickerTiffanyBeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_PICNICKER_TIFFANY
+;	writecode VAR_CALLERID, PHONE_PICNICKER_TIFFANY
 	endifjustbattled
 	opentext
 	checkflag ENGINE_TIFFANY
 	iftrue .WantsBattle
-	checkflag ENGINE_TIFFANY_HAS_PINK_BOW
-	iftrue .HasPinkBow
-	checkcellnum PHONE_PICNICKER_TIFFANY
-	iftrue .NumberAccepted
-	checkpoke CLEFAIRY
-	iffalse .NoClefairy
-	checkevent EVENT_TIFFANY_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskedAlready
-	writetext PicnickerTiffanyWantsPicnicText
-	buttonsound
-	setevent EVENT_TIFFANY_ASKED_FOR_PHONE_NUMBER
-	scall .AskNumber1
-	jump .AskForNumber
-
-.AskedAlready:
-	scall .AskNumber2
-.AskForNumber:
-	askforphonenumber PHONE_PICNICKER_TIFFANY
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
-	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	trainertotext PICNICKER, TIFFANY3, MEM_BUFFER_0
-	scall .RegisteredNumber
-	jump .NumberAccepted
-
+	end
+;	checkflag ENGINE_TIFFANY_HAS_PINK_BOW
+;	iftrue .HasPinkBow
+;	checkcellnum PHONE_PICNICKER_TIFFANY
+;	iftrue .NumberAccepted
+;	checkpoke CLEFAIRY
+;	iffalse .NoClefairy
+;	checkevent EVENT_TIFFANY_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskedAlready
+;	writetext PicnickerTiffanyWantsPicnicText
+;	buttonsound
+;	setevent EVENT_TIFFANY_ASKED_FOR_PHONE_NUMBER
+;	scall .AskNumber1
+;	jump .AskForNumber
+;
+;.AskedAlready:
+;	scall .AskNumber2
+;.AskForNumber:
+;	askforphonenumber PHONE_PICNICKER_TIFFANY
+;	ifequal PHONE_CONTACTS_FULL, .PhoneFull
+;	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
+;	trainertotext PICNICKER, TIFFANY3, MEM_BUFFER_0
+;	scall .RegisteredNumber
+;	jump .NumberAccepted
+;
 .WantsBattle:
-	scall .Rematch
+;	scall .Rematch
 	winlosstext PicnickerTiffanyBeatenText, 0
-	copybytetovar wTiffanyFightCount
-	ifequal 3, .Fight3
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight3:
-	checkevent EVENT_RESTORED_POWER_TO_KANTO
-	iftrue .LoadFight3
-.Fight2:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight2
-.Fight1:
-	checkevent EVENT_CLEARED_RADIO_TOWER
-	iftrue .LoadFight1
+;	copybytetovar wTiffanyFightCount
+;	ifequal 3, .Fight3
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight3:
+;	checkevent EVENT_RESTORED_POWER_TO_KANTO
+;	iftrue .LoadFight3
+;.Fight2:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkevent EVENT_CLEARED_RADIO_TOWER
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer PICNICKER, TIFFANY3
 	startbattle
@@ -231,81 +233,81 @@ TrainerPicnickerTiffany:
 	clearflag ENGINE_TIFFANY
 	end
 
-.LoadFight1:
-	loadtrainer PICNICKER, TIFFANY1
-	startbattle
-	reloadmapafterbattle
-	loadvar wTiffanyFightCount, 2
-	clearflag ENGINE_TIFFANY
-	end
-
-.LoadFight2:
-	loadtrainer PICNICKER, TIFFANY2
-	startbattle
-	reloadmapafterbattle
-	loadvar wTiffanyFightCount, 3
-	clearflag ENGINE_TIFFANY
-	end
-
-.LoadFight3:
-	loadtrainer PICNICKER, TIFFANY4
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_TIFFANY
-	end
-
-.HasPinkBow:
-	scall .Gift
-	verbosegiveitem PINK_BOW
-	iffalse .NoRoom
-	clearflag ENGINE_TIFFANY_HAS_PINK_BOW
-	setevent EVENT_TIFFANY_GAVE_PINK_BOW
-	jump .NumberAccepted
-
-.NoRoom:
-	jump .PackFull
-
-.NoClefairy:
-	writetext PicnickerTiffanyClefairyText
-	waitbutton
-	closetext
-	end
-
-.AskNumber1:
-	jumpstd asknumber1f
-	end
-
-.AskNumber2:
-	jumpstd asknumber2f
-	end
-
-.RegisteredNumber:
-	jumpstd registerednumberf
-	end
-
-.NumberAccepted:
-	jumpstd numberacceptedf
-	end
-
-.NumberDeclined:
-	jumpstd numberdeclinedf
-	end
-
-.PhoneFull:
-	jumpstd phonefullf
-	end
-
-.Rematch:
-	jumpstd rematchf
-	end
-
-.Gift:
-	jumpstd giftf
-	end
-
-.PackFull:
-	jumpstd packfullf
-	end
+;.LoadFight1:
+;	loadtrainer PICNICKER, TIFFANY1
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wTiffanyFightCount, 2
+;	clearflag ENGINE_TIFFANY
+;	end
+;
+;.LoadFight2:
+;	loadtrainer PICNICKER, TIFFANY2
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wTiffanyFightCount, 3
+;	clearflag ENGINE_TIFFANY
+;	end
+;
+;.LoadFight3:
+;	loadtrainer PICNICKER, TIFFANY4
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_TIFFANY
+;	end
+;
+;.HasPinkBow:
+;	scall .Gift
+;	verbosegiveitem PINK_BOW
+;	iffalse .NoRoom
+;	clearflag ENGINE_TIFFANY_HAS_PINK_BOW
+;	setevent EVENT_TIFFANY_GAVE_PINK_BOW
+;	jump .NumberAccepted
+;
+;.NoRoom:
+;	jump .PackFull
+;
+;.NoClefairy:
+;	writetext PicnickerTiffanyClefairyText
+;	waitbutton
+;	closetext
+;	end
+;
+;.AskNumber1:
+;	jumpstd asknumber1f
+;	end
+;
+;.AskNumber2:
+;	jumpstd asknumber2f
+;	end
+;
+;.RegisteredNumber:
+;	jumpstd registerednumberf
+;	end
+;
+;.NumberAccepted:
+;	jumpstd numberacceptedf
+;	end
+;
+;.NumberDeclined:
+;	jumpstd numberdeclinedf
+;	end
+;
+;.PhoneFull:
+;	jumpstd phonefullf
+;	end
+;
+;.Rematch:
+;	jumpstd rematchf
+;	end
+;
+;.Gift:
+;	jumpstd giftf
+;	end
+;
+;.PackFull:
+;	jumpstd packfullf
+;	end
 
 Route43Sign1:
 	jumptext Route43Sign1Text

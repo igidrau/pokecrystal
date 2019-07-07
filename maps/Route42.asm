@@ -38,50 +38,51 @@ TrainerFisherTully:
 	trainer FISHER, TULLY1, EVENT_BEAT_FISHER_TULLY, FisherTullySeenText, FisherTullyBeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_FISHER_TULLY
+;	writecode VAR_CALLERID, PHONE_FISHER_TULLY
 	endifjustbattled
 	opentext
 	checkflag ENGINE_TULLY
 	iftrue .WantsBattle
-	checkflag ENGINE_TULLY_HAS_WATER_STONE
-	iftrue .HasWaterStone
-	checkcellnum PHONE_FISHER_TULLY
-	iftrue .NumberAccepted
-	checkevent EVENT_TULLY_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskedAlready
-	writetext FisherTullyAfterBattleText
-	buttonsound
-	setevent EVENT_TULLY_ASKED_FOR_PHONE_NUMBER
-	scall .AskNumber1
-	jump .AskForNumber
-
-.AskedAlready:
-	scall .AskNumber2
-.AskForNumber:
-	askforphonenumber PHONE_FISHER_TULLY
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
-	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	trainertotext FISHER, TULLY1, MEM_BUFFER_0
-	scall .RegisteredNumber
-	jump .NumberAccepted
-
+	end
+;	checkflag ENGINE_TULLY_HAS_WATER_STONE
+;	iftrue .HasWaterStone
+;	checkcellnum PHONE_FISHER_TULLY
+;	iftrue .NumberAccepted
+;	checkevent EVENT_TULLY_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskedAlready
+;	writetext FisherTullyAfterBattleText
+;	buttonsound
+;	setevent EVENT_TULLY_ASKED_FOR_PHONE_NUMBER
+;	scall .AskNumber1
+;	jump .AskForNumber
+;
+;.AskedAlready:
+;	scall .AskNumber2
+;.AskForNumber:
+;	askforphonenumber PHONE_FISHER_TULLY
+;	ifequal PHONE_CONTACTS_FULL, .PhoneFull
+;	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
+;	trainertotext FISHER, TULLY1, MEM_BUFFER_0
+;	scall .RegisteredNumber
+;	jump .NumberAccepted
+;
 .WantsBattle:
-	scall .Rematch
+;	scall .Rematch
 	winlosstext FisherTullyBeatenText, 0
-	copybytetovar wTullyFightCount
-	ifequal 3, .Fight3
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight3:
-	checkevent EVENT_RESTORED_POWER_TO_KANTO
-	iftrue .LoadFight3
-.Fight2:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight2
-.Fight1:
-	checkevent EVENT_CLEARED_ROCKET_HIDEOUT
-	iftrue .LoadFight1
+;	copybytetovar wTullyFightCount
+;	ifequal 3, .Fight3
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight3:
+;	checkevent EVENT_RESTORED_POWER_TO_KANTO
+;	iftrue .LoadFight3
+;.Fight2:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkevent EVENT_CLEARED_ROCKET_HIDEOUT
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer FISHER, TULLY1
 	startbattle
@@ -90,75 +91,75 @@ TrainerFisherTully:
 	clearflag ENGINE_TULLY
 	end
 
-.LoadFight1:
-	loadtrainer FISHER, TULLY2
-	startbattle
-	reloadmapafterbattle
-	loadvar wTullyFightCount, 2
-	clearflag ENGINE_TULLY
-	end
-
-.LoadFight2:
-	loadtrainer FISHER, TULLY3
-	startbattle
-	reloadmapafterbattle
-	loadvar wTullyFightCount, 3
-	clearflag ENGINE_TULLY
-	end
-
-.LoadFight3:
-	loadtrainer FISHER, TULLY4
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_TULLY
-	end
-
-.HasWaterStone:
-	scall .Gift
-	verbosegiveitem WATER_STONE
-	iffalse .NoRoom
-	clearflag ENGINE_TULLY_HAS_WATER_STONE
-	setevent EVENT_TULLY_GAVE_WATER_STONE
-	jump .NumberAccepted
-
-.NoRoom:
-	jump .PackFull
-
-.AskNumber1:
-	jumpstd asknumber1m
-	end
-
-.AskNumber2:
-	jumpstd asknumber2m
-	end
-
-.RegisteredNumber:
-	jumpstd registerednumberm
-	end
-
-.NumberAccepted:
-	jumpstd numberacceptedm
-	end
-
-.NumberDeclined:
-	jumpstd numberdeclinedm
-	end
-
-.PhoneFull:
-	jumpstd phonefullm
-	end
-
-.Rematch:
-	jumpstd rematchm
-	end
-
-.Gift:
-	jumpstd giftm
-	end
-
-.PackFull:
-	jumpstd packfullm
-	end
+;.LoadFight1:
+;	loadtrainer FISHER, TULLY2
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wTullyFightCount, 2
+;	clearflag ENGINE_TULLY
+;	end
+;
+;.LoadFight2:
+;	loadtrainer FISHER, TULLY3
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wTullyFightCount, 3
+;	clearflag ENGINE_TULLY
+;	end
+;
+;.LoadFight3:
+;	loadtrainer FISHER, TULLY4
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_TULLY
+;	end
+;
+;.HasWaterStone:
+;	scall .Gift
+;	verbosegiveitem WATER_STONE
+;	iffalse .NoRoom
+;	clearflag ENGINE_TULLY_HAS_WATER_STONE
+;	setevent EVENT_TULLY_GAVE_WATER_STONE
+;	jump .NumberAccepted
+;
+;.NoRoom:
+;	jump .PackFull
+;
+;.AskNumber1:
+;	jumpstd asknumber1m
+;	end
+;
+;.AskNumber2:
+;	jumpstd asknumber2m
+;	end
+;
+;.RegisteredNumber:
+;	jumpstd registerednumberm
+;	end
+;
+;.NumberAccepted:
+;	jumpstd numberacceptedm
+;	end
+;
+;.NumberDeclined:
+;	jumpstd numberdeclinedm
+;	end
+;
+;.PhoneFull:
+;	jumpstd phonefullm
+;	end
+;
+;.Rematch:
+;	jumpstd rematchm
+;	end
+;
+;.Gift:
+;	jumpstd giftm
+;	end
+;
+;.PackFull:
+;	jumpstd packfullm
+;	end
 
 TrainerPokemaniacShane:
 	trainer POKEMANIAC, SHANE, EVENT_BEAT_POKEMANIAC_SHANE, PokemaniacShaneSeenText, PokemaniacShaneBeatenText, 0, .Script

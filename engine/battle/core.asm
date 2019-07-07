@@ -55,7 +55,7 @@ DoBattle:
 	ld a, [wBattleType]
 	cp BATTLETYPE_DEBUG
 	jp z, .tutorial_debug
-	cp BATTLETYPE_TUTORIAL
+	cp BATTLETYPE_TUTORIAL 
 	jp z, .tutorial_debug
 	xor a
 	ld [wCurPartyMon], a
@@ -3662,125 +3662,128 @@ CheckIfCurPartyMonIsFitToFight:
 
 TryToRunAwayFromBattle:
 ; Run away from battle, with or without item
-	ld a, [wBattleType]
-	cp BATTLETYPE_DEBUG
-	jp z, .can_escape
-	cp BATTLETYPE_CONTEST
-	jp z, .can_escape
-	cp BATTLETYPE_TRAP
-	jp z, .cant_escape
-	cp BATTLETYPE_CELEBI
-	jp z, .cant_escape
-	cp BATTLETYPE_SHINY
-	jp z, .cant_escape
-	cp BATTLETYPE_SUICUNE
-	jp z, .cant_escape
-
-	ld a, [wLinkMode]
-	and a
-	jp nz, .can_escape
-
 	ld a, [wBattleMode]
 	dec a
-	jp nz, .cant_run_from_trainer
-
-	ld a, [wEnemySubStatus5]
-	bit SUBSTATUS_CANT_RUN, a
-	jp nz, .cant_escape
-
-	ld a, [wPlayerWrapCount]
-	and a
-	jp nz, .cant_escape
-
-	push hl
-	push de
-	ld a, [wBattleMonItem]
-	ld [wd265], a
-	ld b, a
-	callfar GetItemHeldEffect
-	ld a, b
-	cp HELD_ESCAPE
-	pop de
-	pop hl
-	jr nz, .no_flee_item
-
-	call SetPlayerTurn
-	call GetItemName
-	ld hl, BattleText_UserFledUsingAStringBuffer1
-	call StdBattleTextBox
-	jp .can_escape
-
-.no_flee_item
-	ld a, [wNumFleeAttempts]
-	inc a
-	ld [wNumFleeAttempts], a
-	ld a, [hli]
-	ld [hStringCmpString2 + 0], a
-	ld a, [hl]
-	ld [hStringCmpString2 + 1], a
-	ld a, [de]
-	inc de
-	ld [hStringCmpString1 + 0], a
-	ld a, [de]
-	ld [hStringCmpString1 + 1], a
-	call Call_LoadTempTileMapToTileMap
-	ld de, hStringCmpString2
-	ld hl, hStringCmpString1
-	ld c, $2
-	call StringCmp
-	jr nc, .can_escape
-
-	xor a
-	ld [hMultiplicand], a
-	ld a, $20
-	ld [hMultiplier], a
-	call Multiply
-	ld a, [hProduct + 2]
-	ld [hDividend + 0], a
-	ld a, [hProduct + 3]
-	ld [hDividend + 1], a
-	ld a, [hStringCmpString1 + 0]
-	ld b, a
-	ld a, [hStringCmpString1 + 1]
-	srl b
-	rr a
-	srl b
-	rr a
-	and a
 	jr z, .can_escape
-	ld [hDivisor], a
-	ld b, 2
-	call Divide
-	ld a, [hQuotient + 1]
-	and a
-	jr nz, .can_escape
-	ld a, [wNumFleeAttempts]
-	ld c, a
-.loop
-	dec c
-	jr z, .cant_escape_2
-	ld b, 30
-	ld a, [hQuotient + 2]
-	add b
-	ld [hQuotient + 2], a
-	jr c, .can_escape
-	jr .loop
-
-.cant_escape_2
-	call BattleRandom
-	ld b, a
-	ld a, [hQuotient + 2]
-	cp b
-	jr nc, .can_escape
-	ld a, $1
-	ld [wBattlePlayerAction], a
-	ld hl, BattleText_CantEscape2
-	jr .print_inescapable_text
-
-.cant_escape
-	ld hl, BattleText_CantEscape
-	jr .print_inescapable_text
-
+;	ld a, [wBattleType]
+;	cp BATTLETYPE_DEBUG
+;	jp z, .can_escape
+;	cp BATTLETYPE_CONTEST
+;	jp z, .can_escape
+;	cp BATTLETYPE_TRAP
+;	jp z, .cant_escape
+;	cp BATTLETYPE_CELEBI
+;	jp z, .cant_escape
+;	cp BATTLETYPE_SHINY
+;	jp z, .cant_escape
+;	cp BATTLETYPE_SUICUNE
+;	jp z, .cant_escape
+;
+;	ld a, [wLinkMode]
+;	and a
+;	jp nz, .can_escape
+;
+;	ld a, [wBattleMode]
+;	dec a
+;	jp nz, .cant_run_from_trainer
+;
+;	ld a, [wEnemySubStatus5]
+;	bit SUBSTATUS_CANT_RUN, a
+;	jp nz, .cant_escape
+;
+;	ld a, [wPlayerWrapCount]
+;	and a
+;	jp nz, .cant_escape
+;
+;	push hl
+;	push de
+;	ld a, [wBattleMonItem]
+;	ld [wd265], a
+;	ld b, a
+;	callfar GetItemHeldEffect
+;	ld a, b
+;	cp HELD_ESCAPE
+;	pop de
+;	pop hl
+;	jr nz, .no_flee_item
+;
+;	call SetPlayerTurn
+;	call GetItemName
+;	ld hl, BattleText_UserFledUsingAStringBuffer1
+;	call StdBattleTextBox
+;	jp .can_escape
+;
+;.no_flee_item
+;	ld a, [wNumFleeAttempts]
+;	inc a
+;	ld [wNumFleeAttempts], a
+;	ld a, [hli]
+;	ld [hStringCmpString2 + 0], a
+;	ld a, [hl]
+;	ld [hStringCmpString2 + 1], a
+;	ld a, [de]
+;	inc de
+;	ld [hStringCmpString1 + 0], a
+;	ld a, [de]
+;	ld [hStringCmpString1 + 1], a
+;	call Call_LoadTempTileMapToTileMap
+;	ld de, hStringCmpString2
+;	ld hl, hStringCmpString1
+;	ld c, $2
+;	call StringCmp
+;	jr nc, .can_escape
+;
+;	xor a
+;	ld [hMultiplicand], a
+;	ld a, $20
+;	ld [hMultiplier], a
+;	call Multiply
+;	ld a, [hProduct + 2]
+;	ld [hDividend + 0], a
+;	ld a, [hProduct + 3]
+;	ld [hDividend + 1], a
+;	ld a, [hStringCmpString1 + 0]
+;	ld b, a
+;	ld a, [hStringCmpString1 + 1]
+;	srl b
+;	rr a
+;	srl b
+;	rr a
+;	and a
+;	jr z, .can_escape
+;	ld [hDivisor], a
+;	ld b, 2
+;	call Divide
+;	ld a, [hQuotient + 1]
+;	and a
+;	jr nz, .can_escape
+;	ld a, [wNumFleeAttempts]
+;	ld c, a
+;.loop
+;	dec c
+;	jr z, .cant_escape_2
+;	ld b, 30
+;	ld a, [hQuotient + 2]
+;	add b
+;	ld [hQuotient + 2], a
+;	jr c, .can_escape
+;	jr .loop
+;
+;.cant_escape_2
+;	call BattleRandom
+;	ld b, a
+;	ld a, [hQuotient + 2]
+;	cp b
+;	jr nc, .can_escape
+;	ld a, $1
+;	ld [wBattlePlayerAction], a
+;	ld hl, BattleText_CantEscape2
+;	jr .print_inescapable_text
+;
+;.cant_escape
+;	ld hl, BattleText_CantEscape
+;	jr .print_inescapable_text
+;
 .cant_run_from_trainer
 	ld hl, BattleText_TheresNoEscapeFromTrainerBattle
 
@@ -8009,10 +8012,14 @@ StartBattle:
 ; This check prevents you from entering a battle without any Pokemon.
 ; Those using walk-through-walls to bypass getting a Pokemon experience
 ; the effects of this check.
+	ld a, [wBattleType]
+	cp BATTLETYPE_TUTORIAL
+	jr z, .battleBegins
 	ld a, [wPartyCount]
 	and a
 	ret z
 
+.battleBegins
 	ld a, [wTimeOfDayPal]
 	push af
 	call BattleIntro

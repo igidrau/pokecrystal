@@ -20,44 +20,45 @@ TrainerBirdKeeperVance1:
 	trainer BIRD_KEEPER, VANCE1, EVENT_BEAT_BIRD_KEEPER_VANCE, BirdKeeperVance1SeenText, BirdKeeperVance1BeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_BIRDKEEPER_VANCE
+;	writecode VAR_CALLERID, PHONE_BIRDKEEPER_VANCE
 	endifjustbattled
 	opentext
 	checkflag ENGINE_VANCE
 	iftrue .WantsBattle
-	checkcellnum PHONE_BIRDKEEPER_VANCE
-	iftrue Route44NumberAcceptedM
-	checkevent EVENT_VANCE_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskedAlready
-	writetext BirdKeeperVanceLegendaryBirdsText
-	buttonsound
-	setevent EVENT_VANCE_ASKED_FOR_PHONE_NUMBER
-	scall Route44AskNumber1M
-	jump .AskForNumber
-
-.AskedAlready:
-	scall Route44AskNumber2M
-.AskForNumber:
-	askforphonenumber PHONE_BIRDKEEPER_VANCE
-	ifequal PHONE_CONTACTS_FULL, Route44PhoneFullM
-	ifequal PHONE_CONTACT_REFUSED, Route44NumberDeclinedM
-	trainertotext BIRD_KEEPER, VANCE1, MEM_BUFFER_0
-	scall Route44RegisteredNumberM
-	jump Route44NumberAcceptedM
-
+	end
+;	checkcellnum PHONE_BIRDKEEPER_VANCE
+;	iftrue Route44NumberAcceptedM
+;	checkevent EVENT_VANCE_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskedAlready
+;	writetext BirdKeeperVanceLegendaryBirdsText
+;	buttonsound
+;	setevent EVENT_VANCE_ASKED_FOR_PHONE_NUMBER
+;	scall Route44AskNumber1M
+;	jump .AskForNumber
+;
+;.AskedAlready:
+;	scall Route44AskNumber2M
+;.AskForNumber:
+;	askforphonenumber PHONE_BIRDKEEPER_VANCE
+;	ifequal PHONE_CONTACTS_FULL, Route44PhoneFullM
+;	ifequal PHONE_CONTACT_REFUSED, Route44NumberDeclinedM
+;	trainertotext BIRD_KEEPER, VANCE1, MEM_BUFFER_0
+;	scall Route44RegisteredNumberM
+;	jump Route44NumberAcceptedM
+;
 .WantsBattle:
-	scall Route44RematchM
+;	scall Route44RematchM
 	winlosstext BirdKeeperVance1BeatenText, 0
-	copybytetovar wVanceFightCount
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight2:
-	checkevent EVENT_RESTORED_POWER_TO_KANTO
-	iftrue .LoadFight2
-.Fight1:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight1
+;	copybytetovar wVanceFightCount
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight2:
+;	checkevent EVENT_RESTORED_POWER_TO_KANTO
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer BIRD_KEEPER, VANCE1
 	startbattle
@@ -66,86 +67,86 @@ TrainerBirdKeeperVance1:
 	clearflag ENGINE_VANCE
 	end
 
-.LoadFight1:
-	loadtrainer BIRD_KEEPER, VANCE2
-	startbattle
-	reloadmapafterbattle
-	loadvar wVanceFightCount, 2
-	clearflag ENGINE_VANCE
-	end
+;.LoadFight1:
+;	loadtrainer BIRD_KEEPER, VANCE2
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wVanceFightCount, 2
+;	clearflag ENGINE_VANCE
+;	end
+;
+;.LoadFight2:
+;	loadtrainer BIRD_KEEPER, VANCE3
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_VANCE
+;	checkevent EVENT_VANCE_CARBOS
+;	iftrue .Carbos
+;	checkevent EVENT_GOT_CARBOS_FROM_VANCE
+;	iftrue .ReceivedCarbosBefore
+;	scall Route44RematchGiftM
+;	verbosegiveitem CARBOS
+;	iffalse VancePackFull
+;	setevent EVENT_GOT_CARBOS_FROM_VANCE
+;	jump Route44NumberAcceptedM
+;
+;.ReceivedCarbosBefore:
+;	end
+;
+;.Carbos:
+;	opentext
+;	writetext BirdKeeperVance2BeatenText
+;	waitbutton
+;	verbosegiveitem CARBOS
+;	iffalse VancePackFull
+;	clearevent EVENT_VANCE_CARBOS
+;	setevent EVENT_GOT_CARBOS_FROM_VANCE
+;	jump Route44NumberAcceptedM
 
-.LoadFight2:
-	loadtrainer BIRD_KEEPER, VANCE3
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_VANCE
-	checkevent EVENT_VANCE_CARBOS
-	iftrue .Carbos
-	checkevent EVENT_GOT_CARBOS_FROM_VANCE
-	iftrue .ReceivedCarbosBefore
-	scall Route44RematchGiftM
-	verbosegiveitem CARBOS
-	iffalse VancePackFull
-	setevent EVENT_GOT_CARBOS_FROM_VANCE
-	jump Route44NumberAcceptedM
+;Route44AskNumber1M:
+;	jumpstd asknumber1m
+;	end
 
-.ReceivedCarbosBefore:
-	end
+;Route44AskNumber2M:
+;	jumpstd asknumber2m
+;	end
 
-.Carbos:
-	opentext
-	writetext BirdKeeperVance2BeatenText
-	waitbutton
-	verbosegiveitem CARBOS
-	iffalse VancePackFull
-	clearevent EVENT_VANCE_CARBOS
-	setevent EVENT_GOT_CARBOS_FROM_VANCE
-	jump Route44NumberAcceptedM
+;Route44RegisteredNumberM:
+;	jumpstd registerednumberm
+;	end
 
-Route44AskNumber1M:
-	jumpstd asknumber1m
-	end
+;Route44NumberAcceptedM:
+;	jumpstd numberacceptedm
+;	end
 
-Route44AskNumber2M:
-	jumpstd asknumber2m
-	end
+;Route44NumberDeclinedM:
+;	jumpstd numberdeclinedm
+;	end
 
-Route44RegisteredNumberM:
-	jumpstd registerednumberm
-	end
+;Route44PhoneFullM:
+;	jumpstd phonefullm
+;	end
+;
+;Route44RematchM:
+;	jumpstd rematchm
+;	end
 
-Route44NumberAcceptedM:
-	jumpstd numberacceptedm
-	end
+;Route44GiftM:
+;	jumpstd giftm
+;	end
 
-Route44NumberDeclinedM:
-	jumpstd numberdeclinedm
-	end
+;Route44PackFullM:
+;	jumpstd packfullm
+;	end
 
-Route44PhoneFullM:
-	jumpstd phonefullm
-	end
+;VancePackFull:
+;	setevent EVENT_VANCE_CARBOS
+;	jumpstd packfullm
+;	end
 
-Route44RematchM:
-	jumpstd rematchm
-	end
-
-Route44GiftM:
-	jumpstd giftm
-	end
-
-Route44PackFullM:
-	jumpstd packfullm
-	end
-
-VancePackFull:
-	setevent EVENT_VANCE_CARBOS
-	jumpstd packfullm
-	end
-
-Route44RematchGiftM:
-	jumpstd rematchgiftm
-	end
+;Route44RematchGiftM:
+;;	jumpstd rematchgiftm
+;	end
 
 TrainerPsychicPhil:
 	trainer PSYCHIC_T, PHIL, EVENT_BEAT_PSYCHIC_PHIL, PsychicPhilSeenText, PsychicPhilBeatenText, 0, .Script
@@ -162,35 +163,36 @@ TrainerFisherWilton1:
 	trainer FISHER, WILTON1, EVENT_BEAT_FISHER_WILTON, FisherWilton1SeenText, FisherWilton1BeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_FISHER_WILTON
+;	writecode VAR_CALLERID, PHONE_FISHER_WILTON
 	endifjustbattled
 	opentext
 	checkflag ENGINE_WILTON
 	iftrue .WantsBattle
-	checkflag ENGINE_WILTON_HAS_ITEM
-	iftrue .HasItem
-	checkcellnum PHONE_FISHER_WILTON
-	iftrue Route44NumberAcceptedM
-	checkevent EVENT_WILTON_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskedAlready
-	writetext FisherWiltonHugePoliwagText
-	buttonsound
-	setevent EVENT_WILTON_ASKED_FOR_PHONE_NUMBER
-	scall Route44AskNumber1M
-	jump .AskForNumber
-
-.AskedAlready:
-	scall Route44AskNumber2M
-.AskForNumber:
-	askforphonenumber PHONE_FISHER_WILTON
-	ifequal PHONE_CONTACTS_FULL, Route44PhoneFullM
-	ifequal PHONE_CONTACT_REFUSED, Route44NumberDeclinedM
-	trainertotext FISHER, WILTON1, MEM_BUFFER_0
-	scall Route44RegisteredNumberM
-	jump Route44NumberAcceptedM
-
+	end
+;	checkflag ENGINE_WILTON_HAS_ITEM
+;	iftrue .HasItem
+;	checkcellnum PHONE_FISHER_WILTON
+;	iftrue Route44NumberAcceptedM
+;	checkevent EVENT_WILTON_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskedAlready
+;	writetext FisherWiltonHugePoliwagText
+;	buttonsound
+;	setevent EVENT_WILTON_ASKED_FOR_PHONE_NUMBER
+;	scall Route44AskNumber1M
+;	jump .AskForNumber
+;
+;.AskedAlready:
+;	scall Route44AskNumber2M
+;.AskForNumber:
+;	askforphonenumber PHONE_FISHER_WILTON
+;	ifequal PHONE_CONTACTS_FULL, Route44PhoneFullM
+;	ifequal PHONE_CONTACT_REFUSED, Route44NumberDeclinedM
+;	trainertotext FISHER, WILTON1, MEM_BUFFER_0
+;	scall Route44RegisteredNumberM
+;	jump Route44NumberAcceptedM
+;
 .WantsBattle:
-	scall Route44RematchM
+;	scall Route44RematchM
 	winlosstext FisherWilton1BeatenText, 0
 	copybytetovar wWiltonFightCount
 	ifequal 2, .Fight2
@@ -225,33 +227,33 @@ TrainerFisherWilton1:
 	clearflag ENGINE_WILTON
 	end
 
-.HasItem:
-	scall Route44GiftM
-	checkevent EVENT_WILTON_HAS_ULTRA_BALL
-	iftrue .UltraBall
-	checkevent EVENT_WILTON_HAS_GREAT_BALL
-	iftrue .GreatBall
-	checkevent EVENT_WILTON_HAS_POKE_BALL
-	iftrue .PokeBall
-.UltraBall:
-	verbosegiveitem ULTRA_BALL
-	iffalse .Route44PackFullM
-	jump .ItemReceived
-
-.GreatBall:
-	verbosegiveitem GREAT_BALL
-	iffalse .Route44PackFullM
-	jump .ItemReceived
-
-.PokeBall:
-	verbosegiveitem POKE_BALL
-	iffalse .Route44PackFullM
-.ItemReceived:
-	clearflag ENGINE_WILTON_HAS_ITEM
-	jump Route44NumberAcceptedM
-
-.Route44PackFullM:
-	jump Route44PackFullM
+;.HasItem:
+;	scall Route44GiftM
+;	checkevent EVENT_WILTON_HAS_ULTRA_BALL
+;	iftrue .UltraBall
+;	checkevent EVENT_WILTON_HAS_GREAT_BALL
+;	iftrue .GreatBall
+;	checkevent EVENT_WILTON_HAS_POKE_BALL
+;	iftrue .PokeBall
+;.UltraBall:
+;	verbosegiveitem ULTRA_BALL
+;	iffalse .Route44PackFullM
+;	jump .ItemReceived
+;
+;.GreatBall:
+;	verbosegiveitem GREAT_BALL
+;	iffalse .Route44PackFullM
+;	jump .ItemReceived
+;
+;.PokeBall:
+;	verbosegiveitem POKE_BALL
+;	iffalse .Route44PackFullM
+;.ItemReceived:
+;	clearflag ENGINE_WILTON_HAS_ITEM
+;	jump Route44NumberAcceptedM
+;
+;.Route44PackFullM:
+;	jump Route44PackFullM
 
 TrainerFisherEdgar:
 	trainer FISHER, EDGAR, EVENT_BEAT_FISHER_EDGAR, FisherEdgarSeenText, FisherEdgarBeatenText, 0, .Script

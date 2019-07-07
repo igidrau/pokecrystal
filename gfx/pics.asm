@@ -100,7 +100,6 @@ SandslashFrontpic:   INCBIN "gfx/pokemon/sandslash/front.animated.2bpp.lz"
 JolteonFrontpic:     INCBIN "gfx/pokemon/jolteon/front.animated.2bpp.lz"
 DonphanFrontpic:     INCBIN "gfx/pokemon/donphan/front.animated.2bpp.lz"
 PinsirFrontpic:      INCBIN "gfx/pokemon/pinsir/front.animated.2bpp.lz"
-UnownEFrontpic:      INCBIN "gfx/pokemon/unown_e/front.animated.2bpp.lz"
 
 
 SECTION "Pics 5", ROMX
@@ -782,6 +781,7 @@ INCBIN "gfx/pokemon/unown_r/back.2bpp.lz"
 ; but entries for their banks exist in FixPicBank (see engine/gfx/load_pics.asm).
 
 SECTION "Pics 20", ROMX
+UnownEFrontpic:      INCBIN "gfx/pokemon/unown_e/front.animated.2bpp.lz"
 
 SECTION "Pics 21", ROMX
 

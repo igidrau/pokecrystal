@@ -40,52 +40,52 @@ TrainerYoungsterJoey:
 	trainer YOUNGSTER, JOEY1, EVENT_BEAT_YOUNGSTER_JOEY, YoungsterJoey1SeenText, YoungsterJoey1BeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_YOUNGSTER_JOEY
+;	writecode VAR_CALLERID, PHONE_YOUNGSTER_JOEY
 	endifjustbattled
 	opentext
 	checkflag ENGINE_JOEY
 	iftrue .Rematch
-	checkcellnum PHONE_YOUNGSTER_JOEY
-	iftrue .NumberAccepted
-	checkevent EVENT_JOEY_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskAgain
-	writetext YoungsterJoey1AfterText
-	buttonsound
-	setevent EVENT_JOEY_ASKED_FOR_PHONE_NUMBER
-	scall .AskNumber1
-	jump .RequestNumber
-
-.AskAgain:
-	scall .AskNumber2
-.RequestNumber:
-	askforphonenumber PHONE_YOUNGSTER_JOEY
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
-	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
-	trainertotext YOUNGSTER, JOEY1, MEM_BUFFER_0
-	scall .RegisteredNumber
-	jump .NumberAccepted
-
+;	checkcellnum PHONE_YOUNGSTER_JOEY
+;	iftrue .NumberAccepted
+;	checkevent EVENT_JOEY_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskAgain
+;	writetext YoungsterJoey1AfterText
+;	buttonsound
+;	setevent EVENT_JOEY_ASKED_FOR_PHONE_NUMBER
+;	scall .AskNumber1
+;	jump .RequestNumber
+;
+;.AskAgain:
+;	scall .AskNumber2
+;.RequestNumber:
+;	askforphonenumber PHONE_YOUNGSTER_JOEY
+;	ifequal PHONE_CONTACTS_FULL, .PhoneFull
+;	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
+;	trainertotext YOUNGSTER, JOEY1, MEM_BUFFER_0
+;	scall .RegisteredNumber
+;	jump .NumberAccepted
+;
 .Rematch:
-	scall .RematchStd
+;	scall .RematchStd
 	winlosstext YoungsterJoey1BeatenText, 0
-	copybytetovar wJoeyFightCount
-	ifequal 4, .Fight4
-	ifequal 3, .Fight3
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight4:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight4
-.Fight3:
-	checkevent EVENT_CLEARED_RADIO_TOWER
-	iftrue .LoadFight3
-.Fight2:
-	checkflag ENGINE_FLYPOINT_OLIVINE
-	iftrue .LoadFight2
-.Fight1:
-	checkflag ENGINE_FLYPOINT_GOLDENROD
-	iftrue .LoadFight1
+;	copybytetovar wJoeyFightCount
+;	ifequal 4, .Fight4
+;	ifequal 3, .Fight3
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight4:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight4
+;.Fight3:
+;	checkevent EVENT_CLEARED_RADIO_TOWER
+;	iftrue .LoadFight3
+;.Fight2:
+;	checkflag ENGINE_FLYPOINT_OLIVINE
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkflag ENGINE_FLYPOINT_GOLDENROD
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer YOUNGSTER, JOEY1
 	startbattle
@@ -94,94 +94,94 @@ TrainerYoungsterJoey:
 	clearflag ENGINE_JOEY
 	end
 
-.LoadFight1:
-	loadtrainer YOUNGSTER, JOEY2
-	startbattle
-	reloadmapafterbattle
-	loadvar wJoeyFightCount, 2
-	clearflag ENGINE_JOEY
-	end
-
-.LoadFight2:
-	loadtrainer YOUNGSTER, JOEY3
-	startbattle
-	reloadmapafterbattle
-	loadvar wJoeyFightCount, 3
-	clearflag ENGINE_JOEY
-	end
-
-.LoadFight3:
-	loadtrainer YOUNGSTER, JOEY4
-	startbattle
-	reloadmapafterbattle
-	loadvar wJoeyFightCount, 4
-	clearflag ENGINE_JOEY
-	end
-
-.LoadFight4:
-	loadtrainer YOUNGSTER, JOEY5
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_JOEY
-	checkevent EVENT_JOEY_HP_UP
-	iftrue .GiveHPUp
-	checkevent EVENT_GOT_HP_UP_FROM_JOEY
-	iftrue .done
-	scall .RematchGift
-	verbosegiveitem HP_UP
-	iffalse .PackFull
-	setevent EVENT_GOT_HP_UP_FROM_JOEY
-	jump .NumberAccepted
-
+;.LoadFight1:
+;	loadtrainer YOUNGSTER, JOEY2
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wJoeyFightCount, 2
+;	clearflag ENGINE_JOEY
+;	end
+;
+;.LoadFight2:
+;	loadtrainer YOUNGSTER, JOEY3
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wJoeyFightCount, 3
+;	clearflag ENGINE_JOEY
+;	end
+;
+;.LoadFight3:
+;	loadtrainer YOUNGSTER, JOEY4
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wJoeyFightCount, 4
+;	clearflag ENGINE_JOEY
+;	end
+;
+;.LoadFight4:
+;	loadtrainer YOUNGSTER, JOEY5
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_JOEY
+;	checkevent EVENT_JOEY_HP_UP
+;	iftrue .GiveHPUp
+;	checkevent EVENT_GOT_HP_UP_FROM_JOEY
+;	iftrue .done
+;	scall .RematchGift
+;	verbosegiveitem HP_UP
+;	iffalse .PackFull
+;	setevent EVENT_GOT_HP_UP_FROM_JOEY
+;	jump .NumberAccepted
+;
 .done
 	end
 
-.GiveHPUp:
-	opentext
-	writetext YoungsterJoeyText_GiveHPUpAfterBattle
-	waitbutton
-	verbosegiveitem HP_UP
-	iffalse .PackFull
-	clearevent EVENT_JOEY_HP_UP
-	setevent EVENT_GOT_HP_UP_FROM_JOEY
-	jump .NumberAccepted
-
-.AskNumber1:
-	jumpstd asknumber1m
-	end
-
-.AskNumber2:
-	jumpstd asknumber2m
-	end
-
-.RegisteredNumber:
-	jumpstd registerednumberm
-	end
-
-.NumberAccepted:
-	jumpstd numberacceptedm
-	end
-
-.NumberDeclined:
-	jumpstd numberdeclinedm
-	end
-
-.PhoneFull:
-	jumpstd phonefullm
-	end
-
-.RematchStd:
-	jumpstd rematchm
-	end
-
-.PackFull:
-	setevent EVENT_JOEY_HP_UP
-	jumpstd packfullm
-	end
-
-.RematchGift:
-	jumpstd rematchgiftm
-	end
+;.GiveHPUp:
+;	opentext
+;	writetext YoungsterJoeyText_GiveHPUpAfterBattle
+;	waitbutton
+;	verbosegiveitem HP_UP
+;	iffalse .PackFull
+;	clearevent EVENT_JOEY_HP_UP
+;	setevent EVENT_GOT_HP_UP_FROM_JOEY
+;	jump .NumberAccepted
+;
+;.AskNumber1:
+;	jumpstd asknumber1m
+;	end
+;
+;.AskNumber2:
+;	jumpstd asknumber2m
+;	end
+;
+;.RegisteredNumber:
+;	jumpstd registerednumberm
+;	end
+;
+;.NumberAccepted:
+;	jumpstd numberacceptedm
+;	end
+;
+;.NumberDeclined:
+;	jumpstd numberdeclinedm
+;	end
+;
+;.PhoneFull:
+;	jumpstd phonefullm
+;	end
+;
+;.RematchStd:
+;	jumpstd rematchm
+;	end
+;
+;.PackFull:
+;	setevent EVENT_JOEY_HP_UP
+;	jumpstd packfullm
+;	end
+;
+;.RematchGift:
+;	jumpstd rematchgiftm
+;	end
 
 TrainerYoungsterMikey:
 	trainer YOUNGSTER, MIKEY, EVENT_BEAT_YOUNGSTER_MIKEY, YoungsterMikeySeenText, YoungsterMikeyBeatenText, 0, .Script

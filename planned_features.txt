@@ -1,0 +1,50 @@
+EN
+- Skill based capture system
+- New protags / rival
+- Pikachu as a starter (Eevee in the other version)
+- Friendly rival
+- Every gen 1 mon available within one game (except for Mew)
+- Following mons (how?)
+- Region : Kanto
+- Script : classic
+
+Spriting :
+- Protags and rival
+- Eevee (a lot)
+
+Mapping :
+- New Mt moon (GSC/HGSS)
+
+Capture system :
+- The wild pokemon move randomly between 4 positions
+- Before each shifting, the sprite moves a little in the chosen direction
+- The player have to follow the opposing mon position with the +key
+- When the player feels ready, he presses A to throw the selected ball
+- The time (seconds? shiftings?) during wich the player managed to follow the opposing mon is counted
+- The pokemon is captured with ((something+time)²/(something else))/255 chances
+
+
+FR
+- Système de capture dynamique
+- Nouveaux PJ et rival
+- Starter : Pikachu (Evoli dans l'autre version)
+- Rival ami
+- Tous les pokémon de la 1G dans chaque jeux (sauf Mew)
+- Pokémons suiveurs
+- L'aventure se passe à Kanto
+- Scénario classique
+
+Sprites :
+- PJ et rival
+- Evoli (beaucoup trop)
+
+Maps :
+- Nouveau mont sélénite (celui de OAC/HGSS)
+
+Système de capture :
+- Le pokémon adverse se déplace aléatoirement suivant 4 positions
+- Avant chaque déplacement, le sprite bouge d'un ou deux pixels dans la direction choisie
+- Le joueur doit suivre la position du pokémon adverse avec la croix directionnelle
+- Quand le joueur se sent près, il appuie sur A pour lancer la pokéball
+- Un compteur compte le temps (secondes? déplacements?) pendant lequel le joueur a réussi à suivre le pokémon adverse
+- Le pokémon est capturé avec une probabilité de ((quelque chose + temps)²/(quelque chose d'autre))/255

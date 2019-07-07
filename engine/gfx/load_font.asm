@@ -85,7 +85,7 @@ LoadFrame:
 	ld hl, vTiles2 tile "┌" ; $79
 	lb bc, BANK(Frames), 6 ; "┌" to "┘"
 	call Get1bpp_2
-	ld hl, vTiles2 tile " " ; $7f
+	ld hl, vTiles2 tile " " ; $3f
 	ld de, TextBoxSpaceGFX
 	lb bc, BANK(TextBoxSpaceGFX), 1
 	call Get1bpp_2

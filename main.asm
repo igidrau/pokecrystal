@@ -265,9 +265,9 @@ UnknownEggPic::
 INCBIN "gfx/unknown/unknown_egg.2bpp.lz"
 
 
-SECTION "Crystal Phone Text", ROMX
-
-INCLUDE "data/phone/text/extra.asm"
+SECTION "Debug", ROMX
+INCLUDE "engine/menus/debug.asm"
+INCLUDE "engine/menus/debug_menu.asm"
 
 
 SECTION "bank20", ROMX
@@ -276,7 +276,7 @@ INCLUDE "engine/overworld/player_movement.asm"
 INCLUDE "engine/events/engine_flags.asm"
 INCLUDE "engine/overworld/variables.asm"
 INCLUDE "data/text/battle.asm"
-INCLUDE "engine/menus/debug.asm"
+;INCLUDE "data/phone/text/extra.asm"
 
 
 SECTION "bank21", ROMX
@@ -312,7 +312,7 @@ INCLUDE "engine/gfx/mon_icons.asm"
 
 SECTION "bank24", ROMX
 
-INCLUDE "engine/phone/phone.asm"
+;INCLUDE "engine/phone/phone.asm"
 INCLUDE "engine/rtc/timeset.asm"
 INCLUDE "engine/pokegear/pokegear.asm"
 INCLUDE "engine/events/fish.asm"
@@ -321,8 +321,8 @@ INCLUDE "engine/games/slot_machine.asm"
 
 SECTION "Phone Engine", ROMX
 
-INCLUDE "engine/phone/phone_callers.asm"
-INCLUDE "engine/phone/phone_gossip.asm"
+;INCLUDE "engine/phone/phone_callers.asm"
+;INCLUDE "engine/phone/phone_gossip.asm"
 INCLUDE "engine/phone/buenas_password.asm"
 
 
@@ -360,8 +360,8 @@ INCLUDE "engine/pokemon/mail_2.asm"
 SECTION "bank2F", ROMX
 
 INCLUDE "engine/events/std_scripts.asm"
-INCLUDE "engine/phone/phone_scripts.asm"
-INCLUDE "engine/phone/generic_calls.asm"
+;INCLUDE "engine/phone/phone_scripts.asm"
+;INCLUDE "engine/phone/generic_calls.asm"
 INCLUDE "engine/events/trainer_scripts.asm"
 
 
@@ -518,7 +518,7 @@ INCLUDE "mobile/mobile_5c.asm"
 
 SECTION "Crystal Phone Text 2", ROMX
 
-INCLUDE "data/phone/text/extra2.asm"
+;INCLUDE "data/phone/text/extra2.asm"
 
 
 SECTION "UpdateBattleHUDs", ROMX
@@ -557,7 +557,7 @@ SECTION "Special Phone Text", ROMX
 INCLUDE "data/phone/text/mom.asm"
 INCLUDE "data/phone/text/bill.asm"
 INCLUDE "data/phone/text/elm.asm"
-INCLUDE "data/phone/text/trainers.asm"
+;INCLUDE "data/phone/text/trainers.asm"
 
 
 SECTION "Miscellaneous Text", ROMX

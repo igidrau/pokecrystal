@@ -24,9 +24,6 @@ CeladonCity_Blocks:
 SaffronCity_Blocks:
 	INCBIN "maps/SaffronCity.blk"
 
-Route2_Blocks:
-	INCBIN "maps/Route2.blk"
-
 ElmsHouse_Blocks:
 	INCBIN "maps/ElmsHouse.blk"
 
@@ -1045,3 +1042,11 @@ BetaBlank_Blocks:
 
 GoldenrodDeptStoreRoof_Blocks:
 	INCBIN "maps/GoldenrodDeptStoreRoof.blk"
+
+Route2_Blocks:
+Route2Bottom_Blocks:
+Route2Top_Blocks:
+	INCBIN "maps/Route2.blk"
+
+ViridianForest_Blocks:
+	INCBIN "maps/ViridianForest.blk"

@@ -168,10 +168,10 @@ Buena:
 	writetext UnknownText_0x5de10
 	waitbutton
 	closetext
-	checkcellnum PHONE_BUENA
-	iftrue .Registered0
-	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER
-	iftrue .OfferedNumberBefore
+;	checkcellnum PHONE_BUENA
+;	iftrue .Registered0
+;	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER
+;	iftrue .OfferedNumberBefore
 .Registered0:
 	turnobject RADIOTOWER2F_BUENA, RIGHT
 	end
@@ -190,10 +190,10 @@ Buena:
 	writetext UnknownText_0x5df6c
 	waitbutton
 	closetext
-	checkcellnum PHONE_BUENA
-	iftrue .Registered1
-	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER
-	iftrue .OfferedNumberBefore
+;	checkcellnum PHONE_BUENA
+;	iftrue .Registered1
+;	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER
+;	iftrue .OfferedNumberBefore
 .Registered1:
 	turnobject RADIOTOWER2F_BUENA, RIGHT
 	pause 10
@@ -227,10 +227,10 @@ Buena:
 	writetext UnknownText_0x5e192
 	waitbutton
 	closetext
-	checkcellnum PHONE_BUENA
-	iftrue .Registered2
-	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER_NO_BLUE_CARD
-	iftrue .OfferedNumberBefore
+;	checkcellnum PHONE_BUENA
+;	iftrue .Registered2
+;	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER_NO_BLUE_CARD
+;	iftrue .OfferedNumberBefore
 .Registered2:
 	turnobject RADIOTOWER2F_BUENA, RIGHT
 	end
@@ -239,10 +239,10 @@ Buena:
 	writetext UnknownText_0x5e0f1
 	waitbutton
 	closetext
-	checkcellnum PHONE_BUENA
-	iftrue .Registered3
-	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER_NO_BLUE_CARD
-	iftrue .OfferedNumberBefore
+;	checkcellnum PHONE_BUENA
+;	iftrue .Registered3
+;	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER_NO_BLUE_CARD
+;	iftrue .OfferedNumberBefore
 .Registered3:
 	turnobject RADIOTOWER2F_BUENA, RIGHT
 	end
@@ -251,10 +251,10 @@ Buena:
 	writetext UnknownText_0x5e131
 	waitbutton
 	closetext
-	checkcellnum PHONE_BUENA
-	iftrue .Registered4
-	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER
-	iftrue .OfferedNumberBefore
+;	checkcellnum PHONE_BUENA
+;	iftrue .Registered4
+;	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER
+;	iftrue .OfferedNumberBefore
 .Registered4:
 	end
 
@@ -266,11 +266,11 @@ Buena:
 	pause 15
 	turnobject PLAYER, UP
 	pause 15
-	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER_NO_BLUE_CARD
-	iftrue .OfferedNumberBefore
-	showemote EMOTE_SHOCK, RADIOTOWER2F_BUENA, 15
-	setevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER_NO_BLUE_CARD
-	setevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER
+;	checkevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER_NO_BLUE_CARD
+;	iftrue .OfferedNumberBefore
+;	showemote EMOTE_SHOCK, RADIOTOWER2F_BUENA, 15
+;	setevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER_NO_BLUE_CARD
+;	setevent EVENT_BUENA_OFFERED_HER_PHONE_NUMBER
 	opentext
 	writetext UnknownText_0x5e1ee
 	jump .AskForNumber
@@ -279,9 +279,9 @@ Buena:
 	opentext
 	writetext UnknownText_0x5e2bf
 .AskForNumber:
-	askforphonenumber PHONE_BUENA
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
-	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
+;	askforphonenumber PHONE_BUENA
+;	ifequal PHONE_CONTACTS_FULL, .PhoneFull
+;	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	writetext UnknownText_0x5e2f3
 	playsound SFX_REGISTER_PHONE_NUMBER
 	waitsfx
@@ -290,7 +290,7 @@ Buena:
 	waitbutton
 	closetext
 	turnobject RADIOTOWER2F_BUENA, RIGHT
-	addcellnum PHONE_BUENA
+;	addcellnum PHONE_BUENA
 	end
 
 .NumberDeclined:

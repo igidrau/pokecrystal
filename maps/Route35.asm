@@ -31,57 +31,60 @@ TrainerJugglerIrwin:
 	trainer JUGGLER, IRWIN1, EVENT_BEAT_JUGGLER_IRWIN, JugglerIrwin1SeenText, JugglerIrwin1BeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_JUGGLER_IRWIN
+;	writecode VAR_CALLERID, PHONE_JUGGLER_IRWIN
 	endifjustbattled
 	opentext
-	checkcellnum PHONE_JUGGLER_IRWIN
-	iftrue Route35NumberAcceptedM
-	checkevent EVENT_IRWIN_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskedAlready
+;	checkcellnum PHONE_JUGGLER_IRWIN
+;	iftrue Route35NumberAcceptedM
+;	checkevent EVENT_IRWIN_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskedAlready
 	writetext JugglerIrwinAfterBattleText
-	buttonsound
-	setevent EVENT_IRWIN_ASKED_FOR_PHONE_NUMBER
-	scall Route35AskNumber1M
-	jump .AskForNumber
-
-.AskedAlready:
-	scall Route35AskNumber2M
-.AskForNumber:
-	askforphonenumber PHONE_JUGGLER_IRWIN
-	ifequal PHONE_CONTACTS_FULL, Route35PhoneFullM
-	ifequal PHONE_CONTACT_REFUSED, Route35NumberDeclinedM
-	trainertotext JUGGLER, IRWIN1, MEM_BUFFER_0
-	scall Route35RegisteredNumberM
-	jump Route35NumberAcceptedM
-
-Route35AskNumber1M:
-	jumpstd asknumber1m
+	waitbutton
+	closetext
 	end
+;	buttonsound
+;	setevent EVENT_IRWIN_ASKED_FOR_PHONE_NUMBER
+;	scall Route35AskNumber1M
+;	jump .AskForNumber
 
-Route35AskNumber2M:
-	jumpstd asknumber2m
-	end
-
-Route35RegisteredNumberM:
-	jumpstd registerednumberm
-	end
-
-Route35NumberAcceptedM:
-	jumpstd numberacceptedm
-	end
-
-Route35NumberDeclinedM:
-	jumpstd numberdeclinedm
-	end
-
-Route35PhoneFullM:
-	jumpstd phonefullm
-	end
-
-Route35RematchM:
-	jumpstd rematchm
-	end
-
+;.AskedAlready:
+;	scall Route35AskNumber2M
+;.AskForNumber:
+;	askforphonenumber PHONE_JUGGLER_IRWIN
+;	ifequal PHONE_CONTACTS_FULL, Route35PhoneFullM
+;	ifequal PHONE_CONTACT_REFUSED, Route35NumberDeclinedM
+;	trainertotext JUGGLER, IRWIN1, MEM_BUFFER_0
+;	scall Route35RegisteredNumberM
+;	jump Route35NumberAcceptedM
+;
+;Route35AskNumber1M:
+;	jumpstd asknumber1m
+;	end
+;
+;Route35AskNumber2M:
+;	jumpstd asknumber2m
+;	end
+;
+;Route35RegisteredNumberM:
+;	jumpstd registerednumberm
+;	end
+;
+;Route35NumberAcceptedM:
+;	jumpstd numberacceptedm
+;	end
+;
+;Route35NumberDeclinedM:
+;	jumpstd numberdeclinedm
+;	end
+;
+;Route35PhoneFullM:
+;	jumpstd phonefullm
+;	end
+;
+;Route35RematchM:
+;	jumpstd rematchm
+;	end
+;
 TrainerCamperIvan:
 	trainer CAMPER, IVAN, EVENT_BEAT_CAMPER_IVAN, CamperIvanSeenText, CamperIvanBeatenText, 0, .Script
 
@@ -130,54 +133,55 @@ TrainerBugCatcherArnie:
 	trainer BUG_CATCHER, ARNIE1, EVENT_BEAT_BUG_CATCHER_ARNIE, BugCatcherArnieSeenText, BugCatcherArnieBeatenText, 0, .Script
 
 .Script:
-	writecode VAR_CALLERID, PHONE_BUG_CATCHER_ARNIE
+;	writecode VAR_CALLERID, PHONE_BUG_CATCHER_ARNIE
 	endifjustbattled
 	opentext
 	checkflag ENGINE_ARNIE
 	iftrue .WantsBattle
-	checkflag ENGINE_YANMA_SWARM
-	iftrue .YanmaSwarming
-	checkcellnum PHONE_BUG_CATCHER_ARNIE
-	iftrue Route35NumberAcceptedM
-	checkevent EVENT_ARNIE_ASKED_FOR_PHONE_NUMBER
-	iftrue .AskedAlready
-	writetext BugCatcherArnieAfterBattleText
-	buttonsound
-	setevent EVENT_ARNIE_ASKED_FOR_PHONE_NUMBER
-	scall Route35AskNumber1M
-	jump .AskForNumber
-
-.AskedAlready:
-	scall Route35AskNumber2M
-.AskForNumber:
-	askforphonenumber PHONE_BUG_CATCHER_ARNIE
-	ifequal PHONE_CONTACTS_FULL, Route35PhoneFullM
-	ifequal PHONE_CONTACT_REFUSED, Route35NumberDeclinedM
-	trainertotext BUG_CATCHER, ARNIE1, MEM_BUFFER_0
-	scall Route35RegisteredNumberM
-	jump Route35NumberAcceptedM
-
+	end
+;	checkflag ENGINE_YANMA_SWARM
+;	iftrue .YanmaSwarming
+;	checkcellnum PHONE_BUG_CATCHER_ARNIE
+;	iftrue Route35NumberAcceptedM
+;	checkevent EVENT_ARNIE_ASKED_FOR_PHONE_NUMBER
+;	iftrue .AskedAlready
+;	writetext BugCatcherArnieAfterBattleText
+;	buttonsound
+;	setevent EVENT_ARNIE_ASKED_FOR_PHONE_NUMBER
+;	scall Route35AskNumber1M
+;	jump .AskForNumber
+;
+;.AskedAlready:
+;	scall Route35AskNumber2M
+;.AskForNumber:
+;	askforphonenumber PHONE_BUG_CATCHER_ARNIE
+;	ifequal PHONE_CONTACTS_FULL, Route35PhoneFullM
+;	ifequal PHONE_CONTACT_REFUSED, Route35NumberDeclinedM
+;	trainertotext BUG_CATCHER, ARNIE1, MEM_BUFFER_0
+;	scall Route35RegisteredNumberM
+;	jump Route35NumberAcceptedM
+;
 .WantsBattle:
-	scall Route35RematchM
+;	scall Route35RematchM
 	winlosstext BugCatcherArnieBeatenText, 0
-	copybytetovar wArnieFightCount
-	ifequal 4, .Fight4
-	ifequal 3, .Fight3
-	ifequal 2, .Fight2
-	ifequal 1, .Fight1
-	ifequal 0, .LoadFight0
-.Fight4:
-	checkevent EVENT_RESTORED_POWER_TO_KANTO
-	iftrue .LoadFight4
-.Fight3:
-	checkevent EVENT_BEAT_ELITE_FOUR
-	iftrue .LoadFight3
-.Fight2:
-	checkflag ENGINE_FLYPOINT_BLACKTHORN
-	iftrue .LoadFight2
-.Fight1:
-	checkflag ENGINE_FLYPOINT_LAKE_OF_RAGE
-	iftrue .LoadFight1
+;	copybytetovar wArnieFightCount
+;	ifequal 4, .Fight4
+;	ifequal 3, .Fight3
+;	ifequal 2, .Fight2
+;	ifequal 1, .Fight1
+;	ifequal 0, .LoadFight0
+;.Fight4:
+;	checkevent EVENT_RESTORED_POWER_TO_KANTO
+;	iftrue .LoadFight4
+;.Fight3:
+;	checkevent EVENT_BEAT_ELITE_FOUR
+;	iftrue .LoadFight3
+;.Fight2:
+;	checkflag ENGINE_FLYPOINT_BLACKTHORN
+;	iftrue .LoadFight2
+;.Fight1:
+;	checkflag ENGINE_FLYPOINT_LAKE_OF_RAGE
+;	iftrue .LoadFight1
 .LoadFight0:
 	loadtrainer BUG_CATCHER, ARNIE1
 	startbattle
@@ -186,42 +190,42 @@ TrainerBugCatcherArnie:
 	clearflag ENGINE_ARNIE
 	end
 
-.LoadFight1:
-	loadtrainer BUG_CATCHER, ARNIE2
-	startbattle
-	reloadmapafterbattle
-	loadvar wArnieFightCount, 2
-	clearflag ENGINE_ARNIE
-	end
-
-.LoadFight2:
-	loadtrainer BUG_CATCHER, ARNIE3
-	startbattle
-	reloadmapafterbattle
-	loadvar wArnieFightCount, 3
-	clearflag ENGINE_ARNIE
-	end
-
-.LoadFight3:
-	loadtrainer BUG_CATCHER, ARNIE4
-	startbattle
-	reloadmapafterbattle
-	loadvar wArnieFightCount, 4
-	clearflag ENGINE_ARNIE
-	end
-
-.LoadFight4:
-	loadtrainer BUG_CATCHER, ARNIE5
-	startbattle
-	reloadmapafterbattle
-	clearflag ENGINE_ARNIE
-	end
-
-.YanmaSwarming:
-	writetext BugCatcherArnieYanmaText
-	waitbutton
-	closetext
-	end
+;.LoadFight1:
+;	loadtrainer BUG_CATCHER, ARNIE2
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wArnieFightCount, 2
+;	clearflag ENGINE_ARNIE
+;	end
+;
+;.LoadFight2:
+;	loadtrainer BUG_CATCHER, ARNIE3
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wArnieFightCount, 3
+;	clearflag ENGINE_ARNIE
+;	end
+;
+;.LoadFight3:
+;	loadtrainer BUG_CATCHER, ARNIE4
+;	startbattle
+;	reloadmapafterbattle
+;	loadvar wArnieFightCount, 4
+;	clearflag ENGINE_ARNIE
+;	end
+;
+;.LoadFight4:
+;	loadtrainer BUG_CATCHER, ARNIE5
+;	startbattle
+;	reloadmapafterbattle
+;	clearflag ENGINE_ARNIE
+;	end
+;
+;.YanmaSwarming:
+;	writetext BugCatcherArnieYanmaText
+;	waitbutton
+;	closetext
+;	end
 
 TrainerFirebreatherWalt:
 	trainer FIREBREATHER, WALT, EVENT_BEAT_FIREBREATHER_WALT, FirebreatherWaltSeenText, FirebreatherWaltBeatenText, 0, .Script

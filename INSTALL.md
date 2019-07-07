@@ -16,11 +16,11 @@ cd rgbds
 sudo make install
 cd ..
 
-git clone https://github.com/pret/pokecrystal
+git clone https://github.com/igidrau/pokepika
 cd pokecrystal
 ```
 
-To build **pokecrystal.gbc**:
+To build **pokepika.gbc**:
 
 ```bash
 make
@@ -39,11 +39,11 @@ cd rgbds
 sudo make install
 cd ..
 
-git clone https://github.com/pret/pokecrystal
+git clone https://github.com/igidrau/pokepika
 cd pokecrystal
 ```
 
-To build **pokecrystal.gbc**:
+To build **pokepika.gbc**:
 
 ```bash
 make
@@ -67,11 +67,11 @@ Then download [**rgbds**](https://github.com/rednex/rgbds/releases/): the latest
 In the **Cygwin terminal**, enter these commands:
 
 ```bash
-git clone https://github.com/pret/pokecrystal
-cd pokecrystal
+git clone https://github.com/igidrau/pokepika
+cd pokepika
 ```
 
-To build **pokecrystal.gbc**:
+To build **pokepika.gbc**:
 
 ```bash
 make

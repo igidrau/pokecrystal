@@ -68,14 +68,14 @@ BillsMomScript:
 BillsSisterScript:
 	faceplayer
 	opentext
-	checkcellnum PHONE_BILL
-	iftrue .GotBillsNumber
+;	checkcellnum PHONE_BILL
+;	iftrue .GotBillsNumber
 	writetext UnknownText_0x54f9e
-	askforphonenumber PHONE_BILL
-	ifequal PHONE_CONTACTS_FULL, .NoRoom
-	ifequal PHONE_CONTACT_REFUSED, .Refused
+;	askforphonenumber PHONE_BILL
+;	ifequal PHONE_CONTACTS_FULL, .NoRoom
+;	ifequal PHONE_CONTACT_REFUSED, .Refused
 	waitsfx
-	addcellnum PHONE_BILL
+;	addcellnum PHONE_BILL
 	writetext UnknownText_0x54fd9
 	playsound SFX_REGISTER_PHONE_NUMBER
 	waitsfx
