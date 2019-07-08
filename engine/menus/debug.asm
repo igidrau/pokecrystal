@@ -770,6 +770,8 @@ PlaceMoveTest:
 	call DebugEraseString
 	hlcoord 10, 15
 	call DebugEraseString
+	hlcoord 10, 16
+	call DebugEraseString
 	ld a, [wd004]
 	inc a
 	ld [wd265], a
@@ -790,7 +792,15 @@ PlaceMoveTest:
 	ld de, String_Cannot
 
 .DispCanCannot
+	hlcoord 10, 16
+	call PlaceString
+	
+.DispCategory
+	ld a, [wd265]
+	ld b, a
+	farcall GetMoveCategoryName
 	hlcoord 10, 15
+	ld de, wStringBuffer1
 	call PlaceString
 	ret
 
