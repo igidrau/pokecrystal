@@ -6,7 +6,7 @@
 ; - TypeBoostItems (see data/types/type_boost_items.asm)
 	const_def
 
-PHYSICAL EQU const_value
+; PHYSICAL EQU const_value
 	const NORMAL
 	const FIGHTING
 	const FLYING
@@ -31,7 +31,7 @@ UNUSED_TYPES EQU const_value
 	const CURSE_T
 UNUSED_TYPES_END EQU const_value
 
-SPECIAL EQU const_value
+; SPECIAL EQU const_value
 	const FIRE
 	const WATER
 	const GRASS
@@ -43,3 +43,9 @@ SPECIAL EQU const_value
 TYPES_END EQU const_value
 
 NUM_TYPES EQU TYPES_END + UNUSED_TYPES - UNUSED_TYPES_END
+
+TYPE_MASK EQU %00111111
+UNKNOWN   EQU %00000000
+PHYSICAL  EQU %01000000
+SPECIAL   EQU %10000000
+STATUS    EQU %11000000
