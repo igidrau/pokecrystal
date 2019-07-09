@@ -139,8 +139,8 @@ Route34IlexForestGate_MapEvents:
 	db 4 ; warp events
 	warp_event  4,  0, ROUTE_34, 1
 	warp_event  5,  0, ROUTE_34, 2
-	warp_event  4,  7, ILEX_FOREST, 1
-	warp_event  5,  7, ILEX_FOREST, 1
+	warp_event  4,  7, ILEX_FOREST_AZALEA_GATE, 1
+	warp_event  5,  7, ILEX_FOREST_AZALEA_GATE, 2
 
 	db 1 ; coord events
 	coord_event  4,  7, SCENE_DEFAULT, Route34IlexForestGateCelebiEvent

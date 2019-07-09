@@ -937,8 +937,8 @@ Route32_MapEvents:
 	warp_event  4,  3, ROUTE_32_RUINS_OF_ALPH_GATE, 4
 	warp_event  6, 79, UNION_CAVE_1F, 4
 
-	db 2 ; coord events
-	coord_event 18,  8, SCENE_DEFAULT, Route32CooltrainerMStopsYouScene
+	db 1 ; coord events
+	; coord_event 18,  8, SCENE_DEFAULT, Route32CooltrainerMStopsYouScene
 	coord_event  7, 71, SCENE_ROUTE32_OFFER_SLOWPOKETAIL, Route32WannaBuyASlowpokeTailScript
 
 	db 6 ; bg events

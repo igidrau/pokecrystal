@@ -387,7 +387,7 @@ UnknownText_0x9a49c:
 EcruteakGym_MapEvents:
 	db 0, 0 ; filler
 
-	db 33 ; warp events
+	db 32 ; warp events
 	warp_event  4, 17, ECRUTEAK_CITY, 10
 	warp_event  5, 17, ECRUTEAK_CITY, 10
 	warp_event  4, 14, ECRUTEAK_GYM, 4
@@ -395,7 +395,7 @@ EcruteakGym_MapEvents:
 	warp_event  3,  4, ECRUTEAK_GYM, 3
 	warp_event  4,  4, ECRUTEAK_GYM, 3
 	warp_event  4,  5, ECRUTEAK_GYM, 3
-	warp_event  6,  7, ECRUTEAK_GYM, 3
+	; warp_event  6,  7, ECRUTEAK_GYM, 3
 	warp_event  7,  4, ECRUTEAK_GYM, 3
 	warp_event  2,  6, ECRUTEAK_GYM, 3
 	warp_event  3,  6, ECRUTEAK_GYM, 3

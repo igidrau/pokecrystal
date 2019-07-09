@@ -77,10 +77,10 @@ VermilionPokecenter1FBugCatcherText:
 VermilionPokecenter1F_MapEvents:
 	db 0, 0 ; filler
 
-	db 3 ; warp events
+	db 2 ; warp events
 	warp_event  3,  7, VERMILION_CITY, 2
 	warp_event  4,  7, VERMILION_CITY, 2
-	warp_event  0,  7, POKECENTER_2F, 1
+	; warp_event  0,  7, POKECENTER_2F, 1
 
 	db 0 ; coord events
 
